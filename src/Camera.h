@@ -80,5 +80,7 @@ private:
     float m_MouseSensitivity;
     float m_Zoom;
     
+    glm::mat4 m_ViewMatrix;
+    
     void Update();
 };

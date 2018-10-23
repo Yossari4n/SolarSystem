@@ -12,27 +12,28 @@
 
 #include "ShaderProgram.h"
 #include "Camera.h"
+#include "Time.h"
+#include "Sphere.h"
 
-// screen setting
+// Screen setting
 const int SCR_WIDTH = 800;
 const int SCR_HEIGHT = 600;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-// controller
+// Controller
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void process_input(GLFWwindow *window);
 
-// time
-float delta_time = 0.0f;
-float last_frame = 0.0f;
-
-// camera
+// Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
+
+// Global time struct
+Time g_Time;
 
 int main() {
     glfwInit();
@@ -41,7 +42,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
-    // create window
+    // Create window
     GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "SolarSystem", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
@@ -50,126 +51,57 @@ int main() {
     }
     glfwMakeContextCurrent(window);
     
-    // set callbacks
+    // Set callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
     
-    // capture the mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // Capture the mouse
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
-    // load glad
+    // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD\n";
         return EXIT_FAILURE;
     }
-    
-    // data
-    float vertices[] = {
-        // coords
-        // back
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        
-        // front
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        
-        // left
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        
-        // right
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        
-        // down
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
-        
-        // top
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f
-    };
-
-    // buffer objects
-    unsigned int VBO, VAO;
-    glGenBuffers(1, &VBO);
-    glGenVertexArrays(1, &VAO);
-    
-    glBindVertexArray(VAO);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-    
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
      
-    // shader program
+    // Shader programs
     ShaderProgram shader_light_source;
     shader_light_source.AttachShaders("/Users/jakubstokowski/Desktop/openGL/SolarSystem/src/VertexShader.vs",
                                       "/Users/jakubstokowski/Desktop/openGL/SolarSystem/src/FramgentShader.fs");
-
-    // settings
+    
+    // Settings
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_PRIMITIVE_RESTART_INDEX);
     
-    // render loop
+    shader_light_source.Use();
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    shader_light_source.SetMat4("projection", projection);
+    
+    Sphere::Init();
+    Sphere planet;
+    planet.Color(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+    
+    // Render loop
     while (!glfwWindowShouldClose(window)) {
-        // per frame time logic
-        float current_frame = glfwGetTime();
-        delta_time = current_frame - last_frame;
-        last_frame = current_frame;
+        // Per-frame time logic
+        g_Time.current_time = glfwGetTime();
+        g_Time.delta_time = g_Time.current_time - g_Time.last_frame;
+        g_Time.last_frame = g_Time.current_time;
         
-        // clear buffers
+        // Clear buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        // input
+        // Input
         process_input(window);
         
-        // stuff
-        shader_light_source.Use();
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        shader_light_source.SetMat4("projection", projection);
+        // Render objects
+        planet.Draw(shader_light_source);
         
-        //glm::mat4 view = camera.ViewMatrix();
-        glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        // Get camera view
+        glm::mat4 view = camera.ViewMatrix();
         shader_light_source.SetMat4("view", view);
-        
-        glm::mat4 model;
-        shader_light_source.SetMat4("model", model);
-        
-        int color_loc = glGetUniformLocation(shader_light_source.GetID(), "Color");
-        glUniform4f(color_loc, 1.0f, 1.0f, 1.0f, 1.0f);
-        
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -183,22 +115,20 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-// controller
 void process_input(GLFWwindow *window) {
-    // exit application
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
     
-    // camera movement
+    // Camera movement
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::FORWARD, delta_time);
+        camera.ProcessKeyboard(CameraMovement::FORWARD, g_Time.delta_time);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::BACKWARD, delta_time);
+        camera.ProcessKeyboard(CameraMovement::BACKWARD, g_Time.delta_time);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::LEFT, delta_time);
+        camera.ProcessKeyboard(CameraMovement::LEFT, g_Time.delta_time);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::RIGHT, delta_time);
+        camera.ProcessKeyboard(CameraMovement::RIGHT, g_Time.delta_time);
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
