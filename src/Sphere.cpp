@@ -7,10 +7,8 @@ unsigned int Sphere::m_VerticesCount = 0;
 
 Sphere::Sphere()
     : m_Position(glm::vec3(0.0f))
-    , m_Rotation(glm::vec3(1.0f))
-    , m_Angle(0.0f)
+    , m_Rotation(glm::vec3(0.0f))
     , m_Scale(glm::vec3(1.0f)){
-    
 }
 
 Sphere::~Sphere() {
@@ -89,9 +87,8 @@ void Sphere::Position(const glm::vec3& position) {
     UpdateModel();
 }
 
-void Sphere::Rotation(float angle, const glm::vec3& rotation_axis) {
-    m_Rotation = rotation_axis;
-    m_Angle = angle;
+void Sphere::Rotation(const glm::vec3& rotation) {
+    m_Rotation = rotation;
     
     UpdateModel();
 }
@@ -104,6 +101,8 @@ void Sphere::Scale(const glm::vec3& scale) {
 
 void Sphere::UpdateModel() {
     m_Model = glm::translate(glm::mat4(), m_Position);
-    m_Model = glm::rotate(m_Model, m_Angle, m_Rotation);
+    m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+    m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
     m_Model = glm::scale(m_Model, m_Scale);
 }

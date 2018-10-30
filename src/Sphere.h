@@ -28,7 +28,7 @@ public:
     void Position(const glm::vec3& position);
     
     const glm::vec3& Rotation() const { return m_Rotation; }
-    void Rotation(float angle, const glm::vec3& rotation_axis);
+    void Rotation(const glm::vec3& rotation_axis);
     
     const glm::vec3& Scale() const { return m_Scale; }
     void Scale(const glm::vec3& scale);
@@ -37,13 +37,12 @@ public:
     void Color(const glm::vec4& color) { m_Color = color; }
     
 private:
-    // positiom
     glm::mat4 m_Model;
     glm::vec3 m_Position;
-    glm::vec3 m_Rotation; // TODO better rotation representation
-    float m_Angle;
+    glm::vec3 m_Rotation;
     glm::vec3 m_Scale;
     
+    // TODO add textures
     glm::vec4 m_Color;
     
     static unsigned int m_VBO;
