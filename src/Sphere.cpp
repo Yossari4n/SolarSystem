@@ -5,7 +5,11 @@ unsigned int Sphere::m_VBO = 0;
 unsigned int Sphere::m_EBO = 0;
 unsigned int Sphere::m_VerticesCount = 0;
 
-Sphere::Sphere() {
+Sphere::Sphere()
+    : m_Position(glm::vec3(0.0f))
+    , m_Rotation(glm::vec3(1.0f))
+    , m_Angle(0.0f)
+    , m_Scale(glm::vec3(1.0f)){
     
 }
 
@@ -68,13 +72,12 @@ void Sphere::Init() {
     m_VerticesCount = static_cast<unsigned int>(indices.size());
 }
 
-void Sphere::Draw(const ShaderProgram& shader_program) {
+void Sphere::Draw(const ShaderProgram& shader_program) const {
     shader_program.Use();
     shader_program.SetMat4("model", m_Model);
     shader_program.SetVec4("Color", m_Color);
     
-    glBindVertexArray(m_VAO);
-    glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+    glBindVertexArray(m_VAO);glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     glPrimitiveRestartIndex(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
     glDrawElements(GL_TRIANGLE_STRIP, m_VerticesCount, GL_UNSIGNED_INT, NULL);
@@ -83,17 +86,24 @@ void Sphere::Draw(const ShaderProgram& shader_program) {
 void Sphere::Position(const glm::vec3& position) {
     m_Position = position;
     
-    m_Model = glm::translate(glm::mat4(), m_Position);
+    UpdateModel();
 }
 
 void Sphere::Rotation(float angle, const glm::vec3& rotation_axis) {
     m_Rotation = rotation_axis;
+    m_Angle = angle;
     
-    m_Model = glm::rotate(glm::mat4(), angle, rotation_axis);
+    UpdateModel();
 }
 
 void Sphere::Scale(const glm::vec3& scale) {
     m_Scale = scale;
     
-    m_Model = glm::scale(glm::mat4(), m_Scale);
+    UpdateModel();
+}
+
+void Sphere::UpdateModel() {
+    m_Model = glm::translate(glm::mat4(), m_Position);
+    m_Model = glm::rotate(m_Model, m_Angle, m_Rotation);
+    m_Model = glm::scale(m_Model, m_Scale);
 }

@@ -20,7 +20,7 @@ public:
     
     static void Init();
     
-    void Draw(const ShaderProgram& shader_program);
+    void Draw(const ShaderProgram& shader_program) const;
     
     const glm::mat4& Model() const { return m_Model; }
     
@@ -41,6 +41,7 @@ private:
     glm::mat4 m_Model;
     glm::vec3 m_Position;
     glm::vec3 m_Rotation; // TODO better rotation representation
+    float m_Angle;
     glm::vec3 m_Scale;
     
     glm::vec4 m_Color;
@@ -49,4 +50,6 @@ private:
     static unsigned int m_VAO;
     static unsigned int m_EBO;
     static unsigned int m_VerticesCount;
+    
+    void UpdateModel();
 };
