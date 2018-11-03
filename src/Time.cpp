@@ -14,8 +14,10 @@ void Time::Update() {
     m_DeltaTime = m_CurrentTime - m_LastFrame;
     m_LastFrame = m_CurrentTime;
     
-    m_FixedDeltaTime = m_DeltaTime * m_TimeMultiplier;
-    m_FixedCurrentTime +=  m_FixedDeltaTime;
+    if (m_TimeMultiplier > 0.0f) {
+        m_FixedDeltaTime = m_DeltaTime * m_TimeMultiplier;
+        m_FixedCurrentTime +=  m_FixedDeltaTime;
+    }
 }
 
 void Time::TimeMultiplayer(float time_multiplayer) {

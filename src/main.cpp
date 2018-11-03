@@ -30,12 +30,12 @@ const int SCR_HEIGHT = 600;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-// Controller
+// Input functions
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 void scroll_callback(GLFWwindow* window, double x_offset, double y_offset);
 void process_input(GLFWwindow *window);
 
-// Camera
+// Global obejcts
 Camera g_Camera(glm::vec3(0.0f, 0.0f, -30.0f));
 Time g_Time;
 
@@ -181,7 +181,7 @@ void process_input(GLFWwindow *window) {
         glfwSetWindowShouldClose(window, true);
     }
     
-    // Camera movement
+    // Camera controller
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         g_Camera.ProcessKeyboard(CameraMovement::FORWARD, g_Time.DeltaTime());
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -197,7 +197,9 @@ void process_input(GLFWwindow *window) {
     }
     
     // Time controller
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
+        g_Time.TimeMultiplayer(0.0f);
+    } else if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
         g_Time.TimeMultiplayer(1.0f);
     } else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
         g_Time.TimeMultiplayer(2.0f);
