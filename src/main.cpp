@@ -17,12 +17,12 @@
 #include "Sphere.h"
 #include "AstronomicalObject.h"
 
-#define DOUBLE_PI (M_PI * 2)
+#define DOUBLE_PI (M_PI * 2.0f)
 
 #define EARTH_RADIUS (1.21f / M_PI)
-#define EARTH_ROTATION_SPEED
+#define EARTH_ROTATION_SPEED -1.0f
 #define EARTH_ORBIT_RADIUS (150.0f / 3.0f)
-#define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / 60.0f) // w = 2pi / T, where T := time for one cycle
+#define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / 360.0f) // w = 2pi / T, where T := time in seconds for planet to make full cycle
 
 // Screen setting
 const int SCR_WIDTH = 800;
@@ -81,46 +81,46 @@ int main() {
     
     Sphere::Init();
     
-    AstronomicalObject sun("Sun", 0.0f);
+    AstronomicalObject sun("Sun", EARTH_ROTATION_SPEED * 1.04f);
     sun.Color(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
     sun.Scale(glm::vec3(109.0f / DOUBLE_PI));
     
-    AstronomicalObject merkury("Merkur", 0.0f);
+    AstronomicalObject merkury("Merkur", EARTH_ROTATION_SPEED * 58.0f);
     merkury.Scale(glm::vec3(0.38f * EARTH_RADIUS));
     merkury.Color(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
     merkury.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 0.38f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0 / 0.24f));
     
-    AstronomicalObject wenus("Wenus", 0.0f);
+    AstronomicalObject wenus("Wenus", EARTH_ROTATION_SPEED * 243.0f);
     wenus.Scale(glm::vec3(0.9f * EARTH_RADIUS));
     wenus.Color(glm::vec4(1.0f));
     wenus.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 0.72f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 0.61f));
     
-    AstronomicalObject earth("Earth", 0.0f);
+    AstronomicalObject earth("Earth", EARTH_ROTATION_SPEED);
     earth.Scale(glm::vec3(EARTH_RADIUS));
-    earth.Color(glm::vec4(1.0f));
+    earth.Color(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
     earth.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS, EARTH_ORBIT_ANGULAR_VELOCITY));
     
-    AstronomicalObject mars("Mars", 0.0f);
+    AstronomicalObject mars("Mars", EARTH_ROTATION_SPEED);
     mars.Scale(glm::vec3(0.53f * EARTH_RADIUS));
     mars.Color(glm::vec4(1.0f));
     mars.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 1.52, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 1.88f));
     
-    AstronomicalObject jupiter("Jupiter", 0.0f);
+    AstronomicalObject jupiter("Jupiter", EARTH_ROTATION_SPEED * 0.37f);
     jupiter.Scale(glm::vec3(11.2f * EARTH_RADIUS));
     jupiter.Color(glm::vec4(1.0f));
     jupiter.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 5.2f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 11.86f));
     
-    AstronomicalObject saturn("Saturn", 0.0f);
+    AstronomicalObject saturn("Saturn", EARTH_ROTATION_SPEED * 0.42f);
     saturn.Scale(glm::vec3(9.4f * EARTH_RADIUS));
     saturn.Color(glm::vec4(1.0f));
     saturn.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 9.53f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 29.44f));
     
-    AstronomicalObject uranus("Uranus", 0.0f);
+    AstronomicalObject uranus("Uranus", EARTH_ROTATION_SPEED * 0.7f);
     uranus.Scale(glm::vec3(4.0f * EARTH_RADIUS));
     uranus.Color(glm::vec4(1.0f));
     uranus.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 19.19f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 84.07f));
     
-    AstronomicalObject neptune("Neptune", 0.0f);
+    AstronomicalObject neptune("Neptune", EARTH_ROTATION_SPEED * 0.67f);
     neptune.Scale(glm::vec3(3.8f * EARTH_RADIUS));
     neptune.Color(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
     neptune.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 30.06f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 164.88f));

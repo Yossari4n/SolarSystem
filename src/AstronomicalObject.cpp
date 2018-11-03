@@ -16,7 +16,6 @@ void AstronomicalObject::Update() {
     // Orbit calculations
     if (m_Orbit.Center != nullptr) {
         float time = g_Time.current_time;
-        
         float pos_x = cos(time * m_Orbit.AngularVelocity) * m_Orbit.Radius + m_Orbit.Center->x;
         float pos_z = sin(time * m_Orbit.AngularVelocity) * m_Orbit.Radius + m_Orbit.Center->z;
         Position(glm::vec3(pos_x, 0.0f, pos_z));

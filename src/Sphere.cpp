@@ -9,6 +9,8 @@ Sphere::Sphere()
     : m_Position(glm::vec3(0.0f))
     , m_Rotation(glm::vec3(0.0f))
     , m_Scale(glm::vec3(1.0f)){
+    
+        
 }
 
 Sphere::~Sphere() {
@@ -75,10 +77,32 @@ void Sphere::Draw(const ShaderProgram& shader_program) const {
     shader_program.SetMat4("model", m_Model);
     shader_program.SetVec4("Color", m_Color);
     
-    glBindVertexArray(m_VAO);glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+    glBindVertexArray(m_VAO);
+    glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     glPrimitiveRestartIndex(GL_PRIMITIVE_RESTART_FIXED_INDEX);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
     glDrawElements(GL_TRIANGLE_STRIP, m_VerticesCount, GL_UNSIGNED_INT, NULL);
+}
+
+void Sphere::Move(const glm::vec3& vector, Space space) {
+    switch (space) {
+        case Space::Local:
+            break;
+        
+        case Space::World:
+            break;
+    }
+}
+
+void Sphere::Rotate(const glm::vec3 &rotation, Space space) {
+    switch (space) {
+        case Space::Local:
+            
+            break;
+            
+        case Space::World:
+            break;
+    }
 }
 
 void Sphere::Position(const glm::vec3& position) {
