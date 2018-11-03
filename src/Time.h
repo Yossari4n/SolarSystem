@@ -1,20 +1,31 @@
 #ifndef Time_h
 #define Time_h
 
-struct Time {
-    Time() {
-        current_time = 0;
-        delta_time = 0;
-        last_frame = 0;
-        
-        time_multiplier = 1;
-    }
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+class Time {
+public:
+    Time();
     
-    float current_time;
-    float delta_time;
-    float last_frame;
+    void Update();
     
-    float time_multiplier;
+    float CurrentTime() const { return m_CurrentTime; }
+    float FixedCurrentTime() const { return m_FixedCurrentTime; }
+    float DeltaTime() const { return m_DeltaTime; }
+    float FixedDeltaTime() const { return m_FixedDeltaTime; }
+    
+    float TimeMultiplayer() const { return m_TimeMultiplier; }
+    void TimeMultiplayer(float time_multiplayer);
+    
+private:
+    float m_CurrentTime;
+    float m_FixedCurrentTime;
+    float m_DeltaTime;
+    float m_FixedDeltaTime;
+    float m_TimeMultiplier;
+    
+    float m_LastFrame;
 };
 
 extern Time g_Time;

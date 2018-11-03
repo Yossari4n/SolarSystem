@@ -31,17 +31,12 @@ const int SCR_HEIGHT = 600;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 // Controller
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
+void scroll_callback(GLFWwindow* window, double x_offset, double y_offset);
 void process_input(GLFWwindow *window);
 
 // Camera
-Camera camera(glm::vec3(0.0f, 0.0f, -30.0f));
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
-
-// Global time struct
+Camera g_Camera(glm::vec3(0.0f, 0.0f, -30.0f));
 Time g_Time;
 
 int main() {
@@ -139,9 +134,7 @@ int main() {
     // Render loop
     while (!glfwWindowShouldClose(window)) {
         // Per-frame time logic
-        g_Time.current_time = glfwGetTime();
-        g_Time.delta_time = g_Time.current_time - g_Time.last_frame;
-        g_Time.last_frame = g_Time.current_time;
+        g_Time.Update();
         
         // Clear buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -149,7 +142,7 @@ int main() {
         // Input
         process_input(window);
         
-        // Update
+        // Update objects
         sun.Update();
         for (AstronomicalObject& planet : planets) {
             planet.Update();
@@ -162,7 +155,7 @@ int main() {
         }
         
         // Get camera view
-        glm::mat4 view = camera.ViewMatrix();
+        glm::mat4 view = g_Camera.ViewMatrix();
         shader_light_source.SetMat4("view", view);
         
         glfwSwapBuffers(window);
@@ -179,46 +172,62 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 void process_input(GLFWwindow *window) {
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+    
+    // Exit application
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
     
     // Camera movement
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::FORWARD, g_Time.delta_time);
+        g_Camera.ProcessKeyboard(CameraMovement::FORWARD, g_Time.DeltaTime());
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::BACKWARD, g_Time.delta_time);
+        g_Camera.ProcessKeyboard(CameraMovement::BACKWARD, g_Time.DeltaTime());
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::LEFT, g_Time.delta_time);
+        g_Camera.ProcessKeyboard(CameraMovement::LEFT, g_Time.DeltaTime());
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(CameraMovement::RIGHT, g_Time.delta_time);
+        g_Camera.ProcessKeyboard(CameraMovement::RIGHT, g_Time.DeltaTime());
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-        camera.MovementSpeed(SPEED * 50.0f);
+        g_Camera.MovementSpeed(SPEED * 50.0f);
     } else {
-        camera.MovementSpeed(SPEED * 5.0f);
+        g_Camera.MovementSpeed(SPEED * 5.0f);
     }
     
-    
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // Time controller
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+        g_Time.TimeMultiplayer(1.0f);
+    } else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+        g_Time.TimeMultiplayer(2.0f);
+    } else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+        g_Time.TimeMultiplayer(5.0f);
+    } else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+        g_Time.TimeMultiplayer(15.0f);
+    }
 }
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
+    static float last_x = SCR_WIDTH / 2.0f;
+    static float last_y = SCR_HEIGHT / 2.0f;
+    static bool firstMouse = true;
+    
     if (firstMouse) {
-        lastX = xpos;
-        lastY = ypos;
+        last_x = x_pos;
+        last_y = y_pos;
         firstMouse = false;
     }
     
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to top
+    float xoffset = x_pos - last_x;
+    float yoffset = last_y - y_pos; // Reversed since y-coordinates go from bottom to top
     
-    lastX = xpos;
-    lastY = ypos;
+    last_x = x_pos;
+    last_y = y_pos;
     
-    camera.ProcessMouseMovement(xoffset, yoffset, GL_TRUE);
+    g_Camera.ProcessMouseMovement(xoffset, yoffset, GL_TRUE);
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-    camera.ProcessMouseScroll(yoffset);
+void scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
+    g_Camera.ProcessMouseScroll(y_offset);
 }
