@@ -11,11 +11,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "ShaderProgram.h"
 #include "Camera.h"
 #include "Time.h"
 #include "Sphere.h"
 #include "AstronomicalObject.h"
+#include "Model.h"
 
 #define DOUBLE_PI (M_PI * 2.0f)
 
@@ -32,11 +35,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 // Input functions
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
-void scroll_callback(GLFWwindow* window, double x_offset, double y_offset);
 void process_input(GLFWwindow *window);
 
 // Global obejcts
-Camera g_Camera(glm::vec3(0.0f, 0.0f, -30.0f));
+Camera g_Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 Time g_Time;
 
 int main() {
@@ -58,7 +60,6 @@ int main() {
     // Set callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetScrollCallback(window, scroll_callback);
     
     // Capture the mouse
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -74,6 +75,7 @@ int main() {
     shader_light_source.AttachShaders("/Users/jakubstokowski/Desktop/openGL/SolarSystem/src/VertexShader.vs",
                                       "/Users/jakubstokowski/Desktop/openGL/SolarSystem/src/FramgentShader.fs");
     
+    // Init sphere
     Sphere::Init();
     
     AstronomicalObject sun("Sun", EARTH_ROTATION_SPEED * 1.04f);
@@ -120,9 +122,9 @@ int main() {
     neptune.Color(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
     neptune.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 30.06f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 164.88f));
     
-    std::array<AstronomicalObject, 8> planets({merkury, wenus, earth, mars, jupiter, saturn, uranus, neptune});
+    std::array<AstronomicalObject, 9> solar_system({sun, merkury, wenus, earth, mars, jupiter, saturn, uranus, neptune});
     
-    // Settings
+    // Render settings
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PRIMITIVE_RESTART_INDEX);
@@ -131,32 +133,27 @@ int main() {
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 5000.0f);
     shader_light_source.SetMat4("projection", projection);
     
+    
     // Render loop
     while (!glfwWindowShouldClose(window)) {
-        // Per-frame time logic
         g_Time.Update();
         
-        // Clear buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        // Input
         process_input(window);
         
-        // Update objects
-        sun.Update();
-        for (AstronomicalObject& planet : planets) {
+        shader_light_source.Use();
+        
+        glm::mat4 view = g_Camera.ViewMatrix();
+        shader_light_source.SetMat4("view", view);
+        
+        for (AstronomicalObject& planet : solar_system) {
             planet.Update();
         }
         
-        // Render objects
-        sun.Draw(shader_light_source);
-        for (const AstronomicalObject& planet : planets) {
+        for (const AstronomicalObject& planet : solar_system) {
             planet.Draw(shader_light_source);
         }
-        
-        // Get camera view
-        glm::mat4 view = g_Camera.ViewMatrix();
-        shader_light_source.SetMat4("view", view);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -197,7 +194,7 @@ void process_input(GLFWwindow *window) {
     }
     
     // Time controller
-    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         g_Time.TimeMultiplayer(0.0f);
     } else if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
         g_Time.TimeMultiplayer(1.0f);
@@ -228,8 +225,4 @@ void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
     last_y = y_pos;
     
     g_Camera.ProcessMouseMovement(xoffset, yoffset, GL_TRUE);
-}
-
-void scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
-    g_Camera.ProcessMouseScroll(y_offset);
 }

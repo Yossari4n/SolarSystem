@@ -103,9 +103,9 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     m_Yaw += xoffset;
     m_Pitch += yoffset;
     
-    // prevent screen flipping when pitch out of bounds
+    // Prevent screen flipping when pitch out of bounds
     if (constrain_pitch) {
-        // keep pitch in range of (-89, 89)
+        // Keep pitch in range of (-89, 89)
         m_Pitch = m_Pitch > 89.0f ? 89.0f : m_Pitch < -89.0f ? -89.0f : m_Pitch;
     }
     
@@ -117,7 +117,7 @@ void Camera::ProcessMouseScroll(float y_offset) {
         m_Zoom -= y_offset;
     }
     
-    // keep zoom in range of <1, 45>
+    // Keep zoom in range of <1, 45>
     m_Zoom = m_Zoom <= 1.0f ? 1.0f : m_Zoom >= 45.0f ? 45.0f : m_Zoom;
 }
 

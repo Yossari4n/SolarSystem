@@ -23,6 +23,7 @@ public:
     Sphere();
     ~Sphere();
     
+    /// This function should be called before any drawing related calls
     static void Init();
     
     void Draw(const ShaderProgram& shader_program) const;
@@ -49,7 +50,6 @@ private:
     glm::vec3 m_Rotation;
     glm::vec3 m_Scale;
     
-    // TODO add textures
     glm::vec4 m_Color;
     
     static unsigned int m_VBO;

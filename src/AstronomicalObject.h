@@ -30,7 +30,6 @@ public:
 private:
     std::string m_Name;
     float m_RotationSpeed;
-    
     struct Orbit m_Orbit;
 };
 
