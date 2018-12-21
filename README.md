@@ -31,5 +31,7 @@ Assimp
 
 
 ================SPECIAL THANKS================
-3D planet model: https://free3d.com/user/printable_models 
+
+3D planet model: https://free3d.com/user/printable_models
+
 Textures: https://www.solarsystemscope.com/textures/

@@ -5,7 +5,7 @@ ShaderProgram::ShaderProgram() {
 }
 
 ShaderProgram::~ShaderProgram() {
-    glDeleteShader(m_ID);
+    glDeleteProgram(m_ID);
 }
 
 void ShaderProgram::Use() const {
@@ -73,7 +73,7 @@ void ShaderProgram::SetMat4(const std::string &name, const glm::mat4 &mat) const
     glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-int ShaderProgram::GetID() const {
+int ShaderProgram::ID() const {
     return m_ID;
 }
 

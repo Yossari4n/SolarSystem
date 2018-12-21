@@ -1,9 +1,16 @@
 #ifndef AstronomicalObject_hpp
 #define AstronomicalObject_hpp
 
+#include <glm/glm.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <iostream>
 #include <string>
 
-#include "Sphere.h"
+#include "IComponent.h"
+#include "../utilities/Time.h"
+#include "../utilities/Input.h"
 
 struct Orbit {
     Orbit(const glm::vec3* center = nullptr, float radius = 0, float angular_velocity = 0)
@@ -17,18 +24,19 @@ struct Orbit {
     float AngularVelocity;
 };
 
-class AstronomicalObject: public Sphere {
+class AstronomicalObject : public IComponent {
 public:
-    AstronomicalObject(const std::string& name = "", float rotation_speed = 0);
+    AstronomicalObject(float rotation_speed = 0);
     ~AstronomicalObject();
     
-    void Update();
+    void Initialize() override;
+    void Update() override;
+    void Destroy() override {};
     
     const Orbit& Orbit() const { return m_Orbit; }
     void Orbit(const struct Orbit& orbit) { m_Orbit = orbit; }
     
 private:
-    std::string m_Name;
     float m_RotationSpeed;
     struct Orbit m_Orbit;
 };

@@ -1,20 +1,26 @@
-#include "Model.h"
+#include "MeshRenderer.h"
 
-Model::Model(char *path) {
+MeshRenderer::MeshRenderer(char *path, ShaderType type) {
+    m_ShaderType = type;
+    
     LoadModel(path);
 }
 
-Model::~Model() {
-    // TODO add stuff
+MeshRenderer::~MeshRenderer() {}
+
+void MeshRenderer::Initialize() {
+    // register draw call
 }
 
-void Model::Draw(ShaderProgram shader) {
-    for (unsigned int i = 0; i < m_Meshes.size(); ++i) {
-        m_Meshes[i].Draw(shader);
+void MeshRenderer::Draw(const ShaderProgram &shader) {
+    shader.SetMat4("model", Object().Model());
+    
+    for (const Mesh &mesh: m_Meshes) {
+        mesh.Draw(shader);
     }
 }
 
-void Model::LoadModel(std::string path) {
+void MeshRenderer::LoadModel(std::string path) {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
     
@@ -27,7 +33,7 @@ void Model::LoadModel(std::string path) {
     ProcessNode(scene->mRootNode, scene);
 }
 
-void Model::ProcessNode(aiNode *node, const aiScene *scene) {
+void MeshRenderer::ProcessNode(aiNode *node, const aiScene *scene) {
     for (unsigned int i = 0; i < node->mNumMeshes; ++i) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
         m_Meshes.push_back(ProcessMesh(mesh, scene));
@@ -38,7 +44,7 @@ void Model::ProcessNode(aiNode *node, const aiScene *scene) {
     }
 }
 
-Mesh Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
+Mesh MeshRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture> textures;
@@ -57,7 +63,7 @@ Mesh Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
         vector.z = mesh->mNormals[i].z;
         vertex.Normal = vector;
         
-        // does mesh contains texture coordinates
+        // Check if mesh contains texture coordinates
         if (mesh->mTextureCoords[0]) {
             glm::vec2 texCoords;
             texCoords.x = mesh->mTextureCoords[0][i].x;
@@ -91,35 +97,24 @@ Mesh Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
     return Mesh(vertices, indices, textures);
 }
 
-std::vector<Texture> Model::LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string typeName) {
+std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string typeName) {
     std::vector<Texture> textures;
     
     for (unsigned int i = 0; i < material->GetTextureCount(type); ++i) {
         aiString string;
         material->GetTexture(type, i, &string);
         
-        bool skip = false;
-        for (unsigned int j = 0; j < m_TexturesLoaded.size(); ++j) {
-            if (std::strcmp(m_TexturesLoaded[j].Path.c_str(), string.C_Str()) == 0) {
-                textures.push_back(m_TexturesLoaded[j]);
-                skip = true;
-                break;
-            }
-        }
-        
-        if (!skip) {
-            Texture texture;
-            texture.ID = TextureFromFile(string.C_Str(), m_Directory);
-            texture.Type = typeName;
-            texture.Path = string.C_Str();
-            textures.push_back(texture);
-        }
+        Texture texture;
+        texture.ID = TextureFromFile(string.C_Str(), m_Directory);
+        texture.Type = typeName;
+        texture.Path = string.C_Str();
+        textures.push_back(texture);
     }
     
     return textures;
 }
 
-unsigned int Model::TextureFromFile(const char *path, const std::string &directory, bool gamma) {
+unsigned int MeshRenderer::TextureFromFile(const char *path, const std::string &directory, bool gamma) {
     std::string filename = std::string(path);
     filename = directory + '/' + filename;
     
@@ -129,7 +124,7 @@ unsigned int Model::TextureFromFile(const char *path, const std::string &directo
     int width, height, nrComponents;
     unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
     if (data) {
-        GLenum format;
+        GLenum format = 0;
         if (nrComponents == 1) {
             format = GL_RED;
         } else if (nrComponents == 3) {

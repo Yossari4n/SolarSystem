@@ -23,11 +23,12 @@ const float ZOOM = 45.0f;
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera {
 public:
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
-    Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch);
+    Camera(glm::mat4 projection, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    Camera(glm::mat4 projection, float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch);
     ~Camera();
     
-    glm::mat4 ViewMatrix();
+    glm::mat4 ViewMatrix() const;
+    const glm::mat4& Projection() const { return m_Projection; }
     
     const glm::vec3& Position() const { return m_Position; }
     void Position(const glm::vec3& position);
@@ -70,6 +71,7 @@ private:
     glm::vec3 m_Up;
     glm::vec3 m_Right;
     glm::vec3 m_WorldUp;
+    glm::mat4 m_Projection;
     
     // Euler Angles
     float m_Yaw;
@@ -84,3 +86,5 @@ private:
     
     void Update();
 };
+
+extern Camera g_Camera;

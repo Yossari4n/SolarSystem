@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-#include "ShaderProgram.h"
+#include "../../rendering/ShaderProgram.h"
 
 // TODO to new files
 struct Vertex {
@@ -27,13 +27,20 @@ struct Texture {
 };
 
 class Mesh {
+    friend class MeshRenderer;
+    
 public:
-    Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indicies, std::vector<Texture> textures);
+    Mesh(const std::vector<Vertex> &verticies, const std::vector<unsigned int> &indicies, const std::vector<Texture> &textures);
+    //Mesh(Mesh &other) = delete; 
     ~Mesh();
     
-    void Draw(ShaderProgram shader);
+    void Draw(const ShaderProgram &shader) const;
     
-//private:
+    const std::vector<Vertex>& Vertices() const { return m_Vertices; }
+    const std::vector<unsigned int>& Indicies() const { return m_Indices; }
+    const std::vector<Texture>& Textures() const { return m_Textures; }
+    
+private:
     std::vector<Vertex> m_Vertices;
     std::vector<unsigned int> m_Indices;
     std::vector<Texture> m_Textures;

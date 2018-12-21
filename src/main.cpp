@@ -7,41 +7,36 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 #define STB_IMAGE_IMPLEMENTATION
 
-#include "ShaderProgram.h"
+#include "components/MeshRenderer/MeshRenderer.h"
+#include "utilities/Time.h"
+#include "utilities/Input.h"
+#include "scenes/Scene.h"
 #include "Camera.h"
-#include "Time.h"
-#include "Sphere.h"
-#include "AstronomicalObject.h"
-#include "Model.h"
-
-#define DOUBLE_PI (M_PI * 2.0f)
-
-#define EARTH_RADIUS (1.21f / M_PI)
-#define EARTH_ROTATION_SPEED -1.0f
-#define EARTH_ORBIT_RADIUS (150.0f / 3.0f)
-#define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / 360.0f) // w = 2pi / T, where T := time in seconds for planet to make full cycle
 
 // Screen setting
-const int SCR_WIDTH = 800;
-const int SCR_HEIGHT = 600;
+const int SCR_WIDTH = 2880;
+const int SCR_HEIGHT = 1800;
 
+// Callbacks
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 
 // Input functions
-void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 void process_input(GLFWwindow *window);
 
-// Global obejcts
-Camera g_Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+// Global objects
+Camera g_Camera(glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 5000.0f),
+                glm::vec3(-5.0f, 20.0f, 5.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f),
+                -30.0f,
+                -30.0f);
 Time g_Time;
+Input g_Input;
 
 int main() {
+    // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -60,6 +55,7 @@ int main() {
     // Set callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
+    g_Input.m_Window = window;
     
     // Capture the mouse
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -70,96 +66,31 @@ int main() {
         return EXIT_FAILURE;
     }
     
-    // Shader programs
-    ShaderProgram shader_light_source;
-    shader_light_source.AttachShaders("/Users/jakubstokowski/Desktop/openGL/SolarSystem/src/VertexShader.vs",
-                                      "/Users/jakubstokowski/Desktop/openGL/SolarSystem/src/FramgentShader.fs");
-    
-    // Init sphere
-    Sphere::Init();
-    
-    AstronomicalObject sun("Sun", EARTH_ROTATION_SPEED * 1.04f);
-    sun.Color(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
-    sun.Scale(glm::vec3(109.0f / DOUBLE_PI));
-    
-    AstronomicalObject merkury("Merkur", EARTH_ROTATION_SPEED * 58.0f);
-    merkury.Scale(glm::vec3(0.38f * EARTH_RADIUS));
-    merkury.Color(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-    merkury.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 0.38f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0 / 0.24f));
-    
-    AstronomicalObject wenus("Wenus", EARTH_ROTATION_SPEED * 243.0f);
-    wenus.Scale(glm::vec3(0.9f * EARTH_RADIUS));
-    wenus.Color(glm::vec4(1.0f));
-    wenus.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 0.72f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 0.61f));
-    
-    AstronomicalObject earth("Earth", EARTH_ROTATION_SPEED);
-    earth.Scale(glm::vec3(EARTH_RADIUS));
-    earth.Color(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-    earth.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS, EARTH_ORBIT_ANGULAR_VELOCITY));
-    
-    AstronomicalObject mars("Mars", EARTH_ROTATION_SPEED);
-    mars.Scale(glm::vec3(0.53f * EARTH_RADIUS));
-    mars.Color(glm::vec4(1.0f));
-    mars.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 1.52, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 1.88f));
-    
-    AstronomicalObject jupiter("Jupiter", EARTH_ROTATION_SPEED * 0.37f);
-    jupiter.Scale(glm::vec3(11.2f * EARTH_RADIUS));
-    jupiter.Color(glm::vec4(1.0f));
-    jupiter.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 5.2f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 11.86f));
-    
-    AstronomicalObject saturn("Saturn", EARTH_ROTATION_SPEED * 0.42f);
-    saturn.Scale(glm::vec3(9.4f * EARTH_RADIUS));
-    saturn.Color(glm::vec4(1.0f));
-    saturn.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 9.53f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 29.44f));
-    
-    AstronomicalObject uranus("Uranus", EARTH_ROTATION_SPEED * 0.7f);
-    uranus.Scale(glm::vec3(4.0f * EARTH_RADIUS));
-    uranus.Color(glm::vec4(1.0f));
-    uranus.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 19.19f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 84.07f));
-    
-    AstronomicalObject neptune("Neptune", EARTH_ROTATION_SPEED * 0.67f);
-    neptune.Scale(glm::vec3(3.8f * EARTH_RADIUS));
-    neptune.Color(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-    neptune.Orbit(Orbit(&sun.Position(), EARTH_ORBIT_RADIUS * 30.06f, EARTH_ORBIT_ANGULAR_VELOCITY * 1.0f / 164.88f));
-    
-    std::array<AstronomicalObject, 9> solar_system({sun, merkury, wenus, earth, mars, jupiter, saturn, uranus, neptune});
+    // Main scene
+    Scene MainScene;
+    MainScene.Initialize();
     
     // Render settings
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PRIMITIVE_RESTART_INDEX);
     
-    shader_light_source.Use();
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 5000.0f);
-    shader_light_source.SetMat4("projection", projection);
-    
-    
     // Render loop
     while (!glfwWindowShouldClose(window)) {
         g_Time.Update();
+        g_Input.Update(window);
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         process_input(window);
-        
-        shader_light_source.Use();
-        
-        glm::mat4 view = g_Camera.ViewMatrix();
-        shader_light_source.SetMat4("view", view);
-        
-        for (AstronomicalObject& planet : solar_system) {
-            planet.Update();
-        }
-        
-        for (const AstronomicalObject& planet : solar_system) {
-            planet.Draw(shader_light_source);
-        }
+        MainScene.Run();
         
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
     
     // End of application
+    MainScene.PostRun();
     glfwTerminate();
     return EXIT_SUCCESS;
 }
@@ -190,7 +121,7 @@ void process_input(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
         g_Camera.MovementSpeed(SPEED * 50.0f);
     } else {
-        g_Camera.MovementSpeed(SPEED * 5.0f);
+        g_Camera.MovementSpeed(SPEED * 2.5f);
     }
     
     // Time controller
@@ -204,6 +135,12 @@ void process_input(GLFWwindow *window) {
         g_Time.TimeMultiplayer(5.0f);
     } else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
         g_Time.TimeMultiplayer(15.0f);
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+        g_Camera.Position(glm::vec3(-5.0f, 20.0f, 5.0f));
+        g_Camera.Yaw(-30.0f);
+        g_Camera.Pitch(-30.0f);
     }
 }
 

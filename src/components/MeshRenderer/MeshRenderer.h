@@ -15,17 +15,28 @@
 #include <string>
 #include <vector>
 
-#include "ShaderProgram.h"
 #include "Mesh.h"
+#include "../IComponent.h"
+#include "../../rendering/ShaderProgram.h"
+#include "../../rendering/IDrawable.h"
+#include "../../utilities/DrawManager.h"
+#include "../../scenes/Scene.h"
 
-class Model {
+class MeshRenderer : public IComponent, public IDrawable {
 public:
-    Model(char *path);
-    ~Model();
+    MeshRenderer(char *path, ShaderType type);
+    ~MeshRenderer();
     
-    void Draw(ShaderProgram shader);
+    void Initialize() override;
+    void Destroy() override {}
     
-//private:
+    void Draw(const ShaderProgram &shader) override;
+    
+    const std::vector<Mesh>& Meshes() const { return m_Meshes; }
+    const std::vector<Texture>& TexturesLoaded() const { return m_TexturesLoaded; }
+    const std::string& Directory() const { return m_Directory; }
+    
+private:
     std::vector<Mesh> m_Meshes;
     std::vector<Texture> m_TexturesLoaded;
     std::string m_Directory;

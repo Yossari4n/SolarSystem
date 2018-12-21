@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ShaderProgram_h
+#define ShaderProgram_h
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -11,13 +12,14 @@
 class ShaderProgram {
 public:
     ShaderProgram();
+    ShaderProgram(const ShaderProgram&) = delete;
+    ShaderProgram& operator=(const ShaderProgram&) = delete;
     ~ShaderProgram();
     
+    void AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path = nullptr);
     void Use() const;
     
-    void AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path = nullptr);
-    
-    int GetID() const;
+    int ID() const;
     
     void SetBool(const std::string &name, bool value) const;
     void SetInt(const std::string &name, int value) const;
@@ -38,3 +40,5 @@ private:
     void LinkProgram();
     unsigned int AttachShader(const char *path, GLenum shader);
 };
+
+#endif

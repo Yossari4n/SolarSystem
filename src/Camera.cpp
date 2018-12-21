@@ -2,21 +2,23 @@
 
 #include <iostream>
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-    : m_Front(glm::vec3(0.0f, 0.0f, -1.0f))
+Camera::Camera(glm::mat4 projection, glm::vec3 position, glm::vec3 up, float yaw, float pitch)
+    : m_Projection(projection)
+    , m_Front(glm::vec3(0.0f, 0.0f, -1.0f))
     , m_MovementSpeed(SPEED)
     , m_MouseSensitivity(SENSITIVITY)
-    , m_Zoom(ZOOM) {
-    this->m_Position = position;
-    this->m_WorldUp = up;
-    this->m_Yaw = yaw;
-    this->m_Pitch = pitch;
+    , m_Zoom(ZOOM)
+    , m_Position(position)
+    , m_WorldUp(up)
+    , m_Yaw(yaw)
+    , m_Pitch(pitch) {
     
     Update();
 }
 
-Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch)
-    : m_Front(glm::vec3(0.0f, 0.0f, -1.0f))
+Camera::Camera(glm::mat4 projection, float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch)
+    : m_Projection(projection)
+    , m_Front(glm::vec3(0.0f, 0.0f, -1.0f))
     , m_MovementSpeed(SPEED)
     , m_MouseSensitivity(SENSITIVITY)
     , m_Zoom(ZOOM) {
@@ -30,7 +32,7 @@ Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, fl
 
 Camera::~Camera() {}
 
-glm::mat4 Camera::ViewMatrix() {
+glm::mat4 Camera::ViewMatrix() const {
     return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 }
 

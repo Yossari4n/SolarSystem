@@ -4,6 +4,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#define FPS_LIMIT30 (1.0f / 30.0f)
+#define FPS_LIMIT60 (1.0f / 60.0f)
+#define FPS_LIMIT300 (1.0f / 300.0f)
+
+/* Time class
+ * Class providing global time object with relative time, modified by TimeMultiplier, and absolute time.
+ * Time flow starts at begining of the applications.
+*/
 class Time {
 public:
     Time();

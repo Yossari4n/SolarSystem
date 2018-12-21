@@ -11,13 +11,14 @@ Time::Time()
 
 void Time::Update() {
     m_CurrentTime = glfwGetTime();
+    
+    // Absolute time calculations
     m_DeltaTime = m_CurrentTime - m_LastFrame;
     m_LastFrame = m_CurrentTime;
     
-    if (m_TimeMultiplier > 0.0f) {
-        m_FixedDeltaTime = m_DeltaTime * m_TimeMultiplier;
-        m_FixedCurrentTime +=  m_FixedDeltaTime;
-    }
+    // Relative time calculations
+    m_FixedDeltaTime = m_DeltaTime * m_TimeMultiplier;
+    m_FixedCurrentTime +=  m_FixedDeltaTime;
 }
 
 void Time::TimeMultiplayer(float time_multiplayer) {
