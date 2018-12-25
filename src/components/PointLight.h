@@ -9,9 +9,6 @@ class PointLight : public IComponent {
 public:
     PointLight(glm::vec3 ambient, glm::vec3 diffuse, float constant, float linear, float quadratic);
     
-    void Initialize() override {}
-    void Destroy() override {}
-    
     const glm::vec3& Ambient() const { return m_Ambient; }
     void Ambient(const glm::vec3& ambient) { m_Ambient = ambient; }
     

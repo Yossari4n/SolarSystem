@@ -16,6 +16,10 @@ public:
 //private:
     ObjectManager m_ObjectManager;
     DrawManager m_DrawManager;
+    
+protected:
+    // Object* CreateObject();
+    // 
 };
 
 #endif

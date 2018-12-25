@@ -1,7 +1,7 @@
 #include "Input.h"
 
 void Input::Update(GLFWwindow *window) {
-    for (int i = GLFW_KEY_SPACE + 1; i < GLFW_KEY_MENU + 1; ++i) {
+    for (int i = GLFW_KEY_SPACE; i < GLFW_KEY_MENU + 1; ++i) {
         m_Keys[i] = glfwGetKey(m_Window, i) == GLFW_PRESS;
     }
 }

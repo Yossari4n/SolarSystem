@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "../components/MeshRenderer/MeshRenderer.h"
 #include "../components/AstronomicalObject.h"
+#include "../components/test.h"
 
 #define PI 3.14159265358979323846f
 #define DOUBLE_PI (PI * 2.0f)
@@ -20,108 +21,82 @@ void Scene::Initialize() {
     // SUN
     Object *sun = new Object("Sun");
     sun->Scale(109.0f * EARTH_RADIUS * model_scale);
-    MeshRenderer *sunMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/sun/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_SOURCE);
-    AstronomicalObject *sunAstronomicalObject = new AstronomicalObject(EARTH_ROTATION_SPEED / 1.04f);
-    sun->AddComponent(sunMeshRenderer);
-    sun->AddComponent(sunAstronomicalObject);
+    auto sun_mr = sun->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/sun/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_SOURCE);
+    sun->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 1.04f);
     m_ObjectManager.RegisterObject(sun);
-    m_DrawManager.RegsiterDrawCall(sunMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(sun_mr.get());
     
     // MERKURY
     Object *merkury = new Object("Merkury");
     merkury->Scale(0.38f * EARTH_RADIUS * model_scale);
-    MeshRenderer *merkuryMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/merkury/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *merkuryAstronomicalObject = new AstronomicalObject(EARTH_ROTATION_SPEED / 58.0f);
-    Orbit *merkuryOrbit = new Orbit(&sun->Position(), 0.39f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f);
-    merkuryAstronomicalObject->Orbit(*merkuryOrbit);
-    merkury->AddComponent(merkuryMeshRenderer);
-    merkury->AddComponent(merkuryAstronomicalObject);
+    auto merkury_mr = merkury->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/merkury/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto merkury_ao = merkury->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 58.0f);
+    merkury_ao->Orbit(Orbit(&sun->Position(), 0.39f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f));
     m_ObjectManager.RegisterObject(merkury);
-    m_DrawManager.RegsiterDrawCall(merkuryMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(merkury_mr.get());
     
     // WENUS
     Object *wenus = new Object("Wenus");
     wenus->Scale(0.94f * EARTH_RADIUS * model_scale);
-    MeshRenderer *wenusMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/wenus/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *wenusAstronomicalObject = new AstronomicalObject(EARTH_ROTATION_SPEED / 243.0f);
-    Orbit *wenusOrbit = new Orbit(&sun->Position(), 0.72f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 0.61f);
-    wenusAstronomicalObject->Orbit(*wenusOrbit);
-    wenus->AddComponent(wenusMeshRenderer);
-    wenus->AddComponent(wenusAstronomicalObject);
+    auto wenus_mr = wenus->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/wenus/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto wenus_ao = wenus->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 243.0f);
+    wenus_ao->Orbit(Orbit(&sun->Position(), 0.72f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 0.61f));
     m_ObjectManager.RegisterObject(wenus);
-    m_DrawManager.RegsiterDrawCall(wenusMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(wenus_mr.get());
     
     // EARTH
     Object *earth = new Object("Earth");
     earth->Scale(EARTH_RADIUS * model_scale);
-    MeshRenderer *earthMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/earth/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *eartAstronomicalObject = new AstronomicalObject(EARTH_ROTATION_SPEED);
-    Orbit *earthOrbit = new Orbit(&sun->Position(), EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY);
-    eartAstronomicalObject->Orbit(*earthOrbit);
-    earth->AddComponent(earthMeshRenderer);
-    earth->AddComponent(eartAstronomicalObject);
+    auto earth_mr = earth->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/earth/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto earth_ao = earth->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
+    earth_ao->Orbit(Orbit(&sun->Position(), EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY));
     m_ObjectManager.RegisterObject(earth);
-    m_DrawManager.RegsiterDrawCall(earthMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(earth_mr.get());
     
     // MARS
     Object *mars = new Object("Mars");
     mars->Scale(0.53f * EARTH_RADIUS * model_scale);
-    MeshRenderer *marsMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/mars/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *marsAstronomicalObject = new AstronomicalObject(EARTH_ROTATION_SPEED);
-    Orbit *marsOrbit = new Orbit(&sun->Position(), 1.52f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 1.88f);
-    marsAstronomicalObject->Orbit(*marsOrbit);
-    mars->AddComponent(marsMeshRenderer);
-    mars->AddComponent(marsAstronomicalObject);
+    auto mars_mr = mars->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/mars/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto mars_ao = mars->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
+    mars_ao->Orbit(Orbit(&sun->Position(), 1.52f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 1.88f));
     m_ObjectManager.RegisterObject(mars);
-    m_DrawManager.RegsiterDrawCall(marsMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(mars_mr.get());
     
     // JUPITER
     Object *jupiter = new Object("Jupiter");
     jupiter->Scale(11.2f * EARTH_RADIUS * model_scale);
-    MeshRenderer *jupiterMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/jupiter/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *jupiterAstronomicalObject = new AstronomicalObject(0.37f * EARTH_ROTATION_SPEED);
-    Orbit *jupiterOrbit = new Orbit(&sun->Position(), 5.2f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 11.86f);
-    jupiterAstronomicalObject->Orbit(*jupiterOrbit);
-    jupiter->AddComponent(jupiterMeshRenderer);
-    jupiter->AddComponent(jupiterAstronomicalObject);
+    auto jupiter_mr = jupiter->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/jupiter/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto jupiter_ao = jupiter->CreateComponent<AstronomicalObject>(0.37f * EARTH_ROTATION_SPEED);
+    jupiter_ao->Orbit(Orbit(&sun->Position(), 5.2f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 11.86f));
     m_ObjectManager.RegisterObject(jupiter);
-    m_DrawManager.RegsiterDrawCall(jupiterMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(jupiter_mr.get());
     
     // SATURN
     Object *saturn = new Object("Saturn");
     saturn->Scale(9.45f * EARTH_RADIUS * model_scale);
-    MeshRenderer *saturnMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/saturn/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *saturnAstronomicalObject = new AstronomicalObject(0.42f * EARTH_ROTATION_SPEED);
-    Orbit *saturnOrbit = new Orbit(&sun->Position(), 9.54f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 29.44f);
-    saturnAstronomicalObject->Orbit(*saturnOrbit);
-    saturn->AddComponent(saturnMeshRenderer);
-    saturn->AddComponent(saturnAstronomicalObject);
+    auto saturn_mr = saturn->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/saturn/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto saturn_ao = saturn->CreateComponent<AstronomicalObject>(0.42f * EARTH_ROTATION_SPEED);
+    saturn_ao->Orbit(Orbit(&sun->Position(), 9.54f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 29.44f));
     m_ObjectManager.RegisterObject(saturn);
-    m_DrawManager.RegsiterDrawCall(saturnMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(saturn_mr.get());
     
     // URANUS
     Object *uranus = new Object("Uranus");
     uranus->Scale(4.0f * EARTH_RADIUS * model_scale);
-    MeshRenderer *uranusMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/uranus/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *uranusAstronomicalObject = new AstronomicalObject(0.7f * EARTH_ROTATION_SPEED);
-    Orbit *uranusOrbit = new Orbit(&sun->Position(), 19.19f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 84.07f);
-    uranusAstronomicalObject->Orbit(*uranusOrbit);
-    uranus->AddComponent(uranusMeshRenderer);
-    uranus->AddComponent(uranusAstronomicalObject);
+    auto uranus_mr = uranus->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/uranus/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto uranus_ao = uranus->CreateComponent<AstronomicalObject>(0.7f * EARTH_ROTATION_SPEED);
+    uranus_ao->Orbit(Orbit(&sun->Position(), 19.19f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 84.07f));
     m_ObjectManager.RegisterObject(uranus);
-    m_DrawManager.RegsiterDrawCall(uranusMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(uranus_mr.get());
     
     // NEPTUN
     Object *neptun = new Object("Neptun");
     neptun->Scale(3.88f * EARTH_RADIUS * model_scale);
-    MeshRenderer *neptunMeshRenderer = new MeshRenderer("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/neptun/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
-    AstronomicalObject *neptunAstronomicalObject = new AstronomicalObject(0.67f * EARTH_ROTATION_SPEED);
-    Orbit *neptunOrbit = new Orbit(&sun->Position(), 30.06f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f);
-    neptunAstronomicalObject->Orbit(*neptunOrbit);
-    neptun->AddComponent(neptunMeshRenderer);
-    neptun->AddComponent(neptunAstronomicalObject);
+    auto neptun_mr = neptun->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/neptun/13902_Earth_v1_l3.obj", IDrawable::ShaderType::LIGHT_RECEIVER);
+    auto neptun_ao = neptun->CreateComponent<AstronomicalObject>(0.67f * EARTH_ROTATION_SPEED);
+    neptun_ao->Orbit(Orbit(&sun->Position(), 30.06f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f));
     m_ObjectManager.RegisterObject(neptun);
-    m_DrawManager.RegsiterDrawCall(neptunMeshRenderer);
+    m_DrawManager.RegsiterDrawCall(neptun_mr.get());
 }
 
 void Scene::Run() {

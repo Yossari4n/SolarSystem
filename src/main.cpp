@@ -10,10 +10,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "components/MeshRenderer/MeshRenderer.h"
+#include "components/Camera.h"
 #include "utilities/Time.h"
 #include "utilities/Input.h"
 #include "scenes/Scene.h"
-#include "Camera.h"
 
 // Screen setting
 const int SCR_WIDTH = 2880;

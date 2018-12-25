@@ -1,15 +1,13 @@
 #include "MeshRenderer.h"
 
-MeshRenderer::MeshRenderer(char *path, ShaderType type) {
+MeshRenderer::MeshRenderer(std::string path, ShaderType type) {
     m_ShaderType = type;
     
     LoadModel(path);
 }
 
-MeshRenderer::~MeshRenderer() {}
-
-void MeshRenderer::Initialize() {
-    // register draw call
+MeshRenderer::~MeshRenderer() {
+    // delete objects in nodes
 }
 
 void MeshRenderer::Draw(const ShaderProgram &shader) {

@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "../Camera.h"
+#include "../components/Camera.h"
 #include "../rendering/IDrawable.h"
 #include "../rendering/ShaderProgram.h"
 

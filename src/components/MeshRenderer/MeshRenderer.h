@@ -24,11 +24,8 @@
 
 class MeshRenderer : public IComponent, public IDrawable {
 public:
-    MeshRenderer(char *path, ShaderType type);
+    MeshRenderer(std::string path, ShaderType type);
     ~MeshRenderer();
-    
-    void Initialize() override;
-    void Destroy() override {}
     
     void Draw(const ShaderProgram &shader) override;
     

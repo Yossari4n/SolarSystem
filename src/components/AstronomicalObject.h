@@ -29,13 +29,11 @@ public:
     AstronomicalObject(float rotation_speed = 0);
     ~AstronomicalObject();
     
-    void Initialize() override;
     void Update() override;
-    void Destroy() override {};
     
     const Orbit& Orbit() const { return m_Orbit; }
-    void Orbit(const struct Orbit& orbit) { m_Orbit = orbit; }
-    
+    void Orbit(struct Orbit orbit) { m_Orbit = orbit; }
+
 private:
     float m_RotationSpeed;
     struct Orbit m_Orbit;

@@ -6,10 +6,6 @@ AstronomicalObject::AstronomicalObject(float rotation_speed)
 
 AstronomicalObject::~AstronomicalObject() {}
 
-void AstronomicalObject::Initialize() {
-    RegisterUpdate();
-}
-
 void AstronomicalObject::Update() {
     // Spinning
     float dt = g_Time.FixedDeltaTime();
