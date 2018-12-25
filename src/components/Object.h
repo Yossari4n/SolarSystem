@@ -37,10 +37,23 @@ public:
     }
     
     template <class T>
-    void RemoveComponent() {}
+    void RemoveComponent() {
+        m_Components.erase(std::remove_if(m_Components.begin(),
+                                          m_Components.end(),
+                                          [](std::shared_ptr<IComponent> &comp) { return dynamic_cast<T*>(comp.get()) != nullptr; }),
+                           m_Components.end());
+    }
     
     template <class T>
-    std::shared_ptr<T> GetComponent() {}
+    std::shared_ptr<T> GetComponent() {
+        auto it = m_Components.begin();
+        
+        while (it != m_Components.end() && dynamic_cast<T*>((*it).get()) == nullptr ) {
+            it++;
+        }
+        
+        return std::dynamic_pointer_cast<T>(*it);
+    }
     
     const std::string& Name() const { return m_Name; }
     void Name(const std::string& name) { m_Name = name; }

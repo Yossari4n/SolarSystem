@@ -1,8 +1,7 @@
 #include "AstronomicalObject.h"
 
 AstronomicalObject::AstronomicalObject(float rotation_speed)
-    : m_RotationSpeed(rotation_speed) {
-}
+    : m_RotationSpeed(rotation_speed) {}
 
 AstronomicalObject::~AstronomicalObject() {}
 

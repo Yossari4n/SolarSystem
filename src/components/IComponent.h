@@ -11,7 +11,7 @@ class IComponent {
     friend class Object;
 
 public:
-    virtual ~IComponent() { std::cout << "Dest comp\n"; };
+    virtual ~IComponent() {};
     
     virtual void Initialize() {};
     virtual void Update() {};
