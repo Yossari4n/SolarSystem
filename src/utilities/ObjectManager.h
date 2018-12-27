@@ -2,8 +2,7 @@
 #define ObjectManager_h
 
 #include <vector>
-
-#include "../components/Object.h"
+#include <string>
 
 class IScene;
 class Object;

@@ -18,18 +18,22 @@ PointLight::PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
 }
 
 void PointLight::Initialize() {
-    // get draw manager and add source of light
+    Object().Scene().RegisterLightSource(this);
+}
+
+void PointLight::Destroy() {
+    Object().Scene().UnregisterLightSource(this);
 }
 
 void PointLight::SetLightProperties(const ShaderProgram& shader) {
     std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
     
-    shader.SetVec3("pointLight.position", Object().Position());
-    shader.SetVec3("pointLight.ambient", m_Ambient);
-    shader.SetVec3("pointLight.diffuse", m_Diffuse);
-    shader.SetFloat("pointLight.constant", m_Constant);
-    shader.SetFloat("pointLight.linear", m_Linear);
-    shader.SetFloat("pointLight.quadratic", m_Quadratic);
+    shader.SetVec3(pointLight + "position", Object().Position());
+    shader.SetVec3(pointLight + "ambient", m_Ambient);
+    shader.SetVec3(pointLight + "diffuse", m_Diffuse);
+    shader.SetFloat(pointLight + "constant", m_Constant);
+    shader.SetFloat(pointLight + "linear", m_Linear);
+    shader.SetFloat(pointLight + "quadratic", m_Quadratic);
 }
 
 void PointLight::Ambient(const glm::vec3& ambient) {

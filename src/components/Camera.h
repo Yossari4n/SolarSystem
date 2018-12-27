@@ -28,6 +28,10 @@ public:
     Camera(glm::mat4 projection, float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch);
     ~Camera();
     
+    void Initialize() override;
+    void Update() override;
+    void Destroy() override;
+    
     glm::mat4 ViewMatrix() const;
     const glm::mat4& Projection() const { return m_Projection; }
     
@@ -85,7 +89,7 @@ private:
     
     glm::mat4 m_ViewMatrix;
     
-    void Update();
+    void UpdateAttributes();
 };
 
 extern Camera g_Camera;

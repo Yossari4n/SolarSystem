@@ -2,20 +2,30 @@
 
 #include "../components/MeshRenderer/MeshRenderer.h"
 #include "../components/AstronomicalObject.h"
+#include "../components/PointLight.h"
+#include "../components/FirstPersonController.h"
 
 #define PI 3.14159265358979323846f
 #define DOUBLE_PI (PI * 2.0f)
 
 // angular velocity w = 2pi / T
 // where T := time in seconds for planet to make full cycle
-#define EARTH_RADIUS (1.21f / PI)
+#define EARTH_RADIUS 1.0f
 #define EARTH_ROTATION_SPEED (360.f / 5.0f) // full rotation takes 5 second
-#define EARTH_ORBIT_RADIUS (150.0f / 3.0f)
+#define EARTH_ORBIT_RADIUS (150.0f / 2.0f) // all distances are divided by two
 #define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / (360.0f * 5.0f)) // full orbit takes 5 minutes
 
 void MainScene::CreateScene() {
     glm::vec3 model_scale(1.0f / (976.032f * 2.0f), 1.0f / (976.032f * 2.0f), 1.0f / (986.312f * 2.0f));
     glm::vec3 model_rotation(-90.0f, 0.0f, 0.0f);
+    
+    auto camera = CreateObject("Camera");
+    /*camera->CreateComponent<Camera>(glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 3000.0f),
+                                    glm::vec3(-5.0f, 20.0f, 5.0f),
+                                    glm::vec3(0.0f, 1.0f, 0.0f),
+                                    -30.0f,
+                                    -30.0f);
+    camera->CreateComponent<FirstPersonComponent>();*/
     
     // SUN
     auto sun = CreateObject("Sun");
@@ -23,6 +33,7 @@ void MainScene::CreateScene() {
     sun->Rotation(model_rotation);
     auto sun_mr = sun->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/sun/13902_Earth_v1_l3.obj", IDrawable::ShaderTypes::LIGHT_SOURCE);
     sun->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 1.04f);
+    sun->CreateComponent<PointLight>(glm::vec3(0.2f), glm::vec3(0.8f), glm::vec3(0.5f), 1.0f, 0.0014f, 0.000007f);
     
     // MERKURY
     auto merkury = CreateObject("Merkury");

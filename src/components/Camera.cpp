@@ -1,7 +1,5 @@
 #include "Camera.h"
 
-#include <iostream>
-
 Camera::Camera(glm::mat4 projection, glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     : m_Projection(projection)
     , m_Front(glm::vec3(0.0f, 0.0f, -1.0f))
@@ -13,7 +11,7 @@ Camera::Camera(glm::mat4 projection, glm::vec3 position, glm::vec3 up, float yaw
     , m_Yaw(yaw)
     , m_Pitch(pitch) {
     
-    Update();
+    UpdateAttributes();
 }
 
 Camera::Camera(glm::mat4 projection, float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch)
@@ -27,10 +25,22 @@ Camera::Camera(glm::mat4 projection, float pos_x, float pos_y, float pos_z, floa
     this->m_Yaw = yaw;
     this->m_Pitch = pitch;
     
-    Update();
+    UpdateAttributes();
 }
 
 Camera::~Camera() {}
+
+void Camera::Initialize() {
+    
+}
+
+void Camera::Update() {
+    // calculate stuff based on Object
+}
+
+void Camera::Destroy() {
+    
+}
 
 glm::mat4 Camera::ViewMatrix() const {
     return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
@@ -42,32 +52,32 @@ void Camera::Position(const glm::vec3 &position) {
 
 void Camera::Front(const glm::vec3 &front) {
     m_Front = front;
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::Up(const glm::vec3 &up) {
     m_Up = up;
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::Right(const glm::vec3 &right) {
     m_Right = right;
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::WorldUp(const glm::vec3 &world_up) {
     m_WorldUp = world_up;
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::Yaw(const float &yaw) {
     m_Yaw = yaw;
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::Pitch(const float &pitch) {
     m_Pitch = pitch;
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::MovementSpeed(const float &movement_speed) {
@@ -111,7 +121,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
         m_Pitch = m_Pitch > 89.0f ? 89.0f : m_Pitch < -89.0f ? -89.0f : m_Pitch;
     }
     
-    Update();
+    UpdateAttributes();
 }
 
 void Camera::ProcessMouseScroll(float y_offset) {
@@ -123,7 +133,7 @@ void Camera::ProcessMouseScroll(float y_offset) {
     m_Zoom = m_Zoom <= 1.0f ? 1.0f : m_Zoom >= 45.0f ? 45.0f : m_Zoom;
 }
 
-void Camera::Update() {
+void Camera::UpdateAttributes() {
     // recalculate front vector
     m_Front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
     m_Front.y = sin(glm::radians(m_Pitch));

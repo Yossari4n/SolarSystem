@@ -9,12 +9,11 @@
 #include <vector>
 #include <algorithm>
 
+#include "../scenes/IScene.h"
+
 class IComponent;
-class IScene;
 
 class Object {
-    typedef void (IComponent::*UpdateCall)(void);
-    
 public:
     Object(IScene& scene, std::string name = "object");
     ~Object();

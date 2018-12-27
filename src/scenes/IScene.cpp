@@ -1,5 +1,7 @@
 #include "IScene.h"
-#include "../utilities/ObjectManager.h"
+
+#include "../rendering/IDrawable.h"
+#include "../rendering/ILightSource.h"
 
 void IScene::PreRun() {
     m_DrawManager.Initialize();
@@ -22,6 +24,14 @@ void IScene::RegisterDrawable(IDrawable* component) {
 
 void IScene::UnregisterDrawable(IDrawable* component) {
     m_DrawManager.UnregisterDrawCall(component);
+}
+
+void IScene::RegisterLightSource(ILightSource *light_source) {
+    m_DrawManager.RegisterLightSource(light_source);
+}
+
+void IScene::UnregisterLightSource(ILightSource *light_source) {
+    m_DrawManager.UnregisterLightSource(light_source);
 }
 
 std::shared_ptr<Object> IScene::CreateObject(std::string name) {

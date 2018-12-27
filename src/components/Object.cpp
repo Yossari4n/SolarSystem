@@ -1,6 +1,8 @@
 #include "Object.h"
+
+// Forward declarations
 #include "IComponent.h"
-#include "../scenes/IScene.h"
+
 
 Object::Object(class IScene& scene, std::string name)
     : m_Name(name)

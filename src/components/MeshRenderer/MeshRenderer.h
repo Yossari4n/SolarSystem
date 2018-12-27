@@ -17,10 +17,7 @@
 
 #include "Mesh.h"
 #include "../IComponent.h"
-#include "../../rendering/ShaderProgram.h"
 #include "../../rendering/IDrawable.h"
-#include "../../utilities/DrawManager.h"
-#include "../../scenes/IScene.h"
 
 class MeshRenderer : public IComponent, public IDrawable {
 public:

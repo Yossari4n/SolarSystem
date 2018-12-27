@@ -27,7 +27,7 @@ void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);
 void process_input(GLFWwindow *window);
 
 // Global objects
-Camera g_Camera(glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 5000.0f),
+Camera g_Camera(glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 3000.0f),
                 glm::vec3(-5.0f, 20.0f, 5.0f),
                 glm::vec3(0.0f, 1.0f, 0.0f),
                 -30.0f,
@@ -55,7 +55,7 @@ int main() {
     // Set callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
-    g_Input.m_Window = window;
+    //glfwSetCursorPosCallback(window, MouseCallback);
     
     // Capture the mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -80,7 +80,7 @@ int main() {
     // Render loop
     while (!glfwWindowShouldClose(window)) {
         g_Time.Update();
-        g_Input.Update(window);
+        g_Input.KeyUpdate(window);
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         

@@ -1,9 +1,6 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 
-#include <iostream>
-
-#include "../utilities/Time.h"
 #include "../utilities/ObjectManager.h"
 #include "../utilities/DrawManager.h"
 
@@ -17,6 +14,9 @@ public:
     
     void RegisterDrawable(IDrawable* component);
     void UnregisterDrawable(IDrawable* component);
+    
+    void RegisterLightSource(ILightSource* light_source);
+    void UnregisterLightSource(ILightSource* light_source);
     
 protected:
     std::shared_ptr<Object> CreateObject(std::string name = "");

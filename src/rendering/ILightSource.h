@@ -3,7 +3,7 @@
 
 #include "ShaderProgram.h"
 
-class ILighSource {
+class ILightSource {
 public:
     virtual void SetLightProperties(const ShaderProgram& shader) = 0;
 };

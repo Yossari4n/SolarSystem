@@ -3,15 +3,15 @@
 
 #include <glm/glm.hpp>
 
-#include "../rendering/ILighSource.h"
-#include "../utilities/DrawManager.h"
+#include "../rendering/ILightSource.h"
 #include "IComponent.h"
 
-class PointLight : public IComponent, public ILighSource {
+class PointLight : public IComponent, public ILightSource {
 public:
     PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
     
     void Initialize() override;
+    void Destroy() override;
     
     void SetLightProperties(const ShaderProgram& shader) override;
     

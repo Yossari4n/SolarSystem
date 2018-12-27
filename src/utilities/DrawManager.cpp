@@ -1,5 +1,8 @@
 #include "DrawManager.h"
 
+#include "../components/Camera.h"
+#include "../rendering/ILightSource.h"
+
 DrawManager::DrawManager() {
 }
 
@@ -29,12 +32,19 @@ void DrawManager::UnregisterDrawCall(IDrawable* component) {
     }
 }
 
-void DrawManager::RegisterLightSource(IDrawable* light_source) {
-    // implement
+void DrawManager::RegisterLightSource(ILightSource* light_source) {
+    if (std::find(m_LightSources.begin(), m_LightSources.end(), light_source) == m_LightSources.end()) {
+        m_LightSources.push_back(light_source);
+    }
 }
 
-void DrawManager::UnregisterLightSource(IDrawable* light_source) {
-    // implement
+void DrawManager::UnregisterLightSource(ILightSource* light_source) {
+    auto it = std::find(m_LightSources.begin(), m_LightSources.end(), light_source);
+    
+    if (it != m_LightSources.end()) {
+        long index = std::distance(m_LightSources.begin(), it);
+        m_LightSources.erase(m_LightSources.begin() + index);
+    }
 }
 
 void DrawManager::CallDraws() const {
@@ -52,15 +62,9 @@ void DrawManager::CallDraws() const {
             curr_shader.SetFloat("material.shininess", 32.0f);
             
             // for all ILightSources SetLightProperties
-            
-            // deprecated
-            curr_shader.SetVec3("pointLights[0].position", glm::vec3(0.0f, 0.0f, 0.0f));
-            curr_shader.SetVec3("pointLights[0].ambient", glm::vec3(0.1f));
-            curr_shader.SetVec3("pointLights[0].diffuse", glm::vec3(0.8f));
-            curr_shader.SetVec3("pointLights[0].specular", glm::vec3(0.5f));
-            curr_shader.SetFloat("pointLights[0].constant", 1.0f);
-            curr_shader.SetFloat("pointLights[0].linear", 0.0014f);
-            curr_shader.SetFloat("pointLights[0].quadratic", 0.000007f);
+            for (auto it = m_LightSources.begin(); it != m_LightSources.end(); ++it) {
+                (*it)->SetLightProperties(curr_shader);
+            }
         }
         
         (*it)->Draw(curr_shader);
