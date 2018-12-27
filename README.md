@@ -13,9 +13,9 @@ MOUSE to rotate
 
 LEFT SHIFT to move faster
 
-1, 2, 3, 4 keys to change time flow
+1, 2, 3, 4 to change time flow
 
-0 to puase time
+SPACE to puase time
 
 
 
@@ -23,8 +23,11 @@ LEFT SHIFT to move faster
 ================DEPENDENCIES================
 
 OpenGL 3.3 core
+
 GLAD
+
 GLM
+
 Assimp
 
 
