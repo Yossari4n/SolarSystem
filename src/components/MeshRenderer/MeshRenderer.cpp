@@ -1,6 +1,6 @@
 #include "MeshRenderer.h"
 
-MeshRenderer::MeshRenderer(std::string path, ShaderType type) {
+MeshRenderer::MeshRenderer(std::string path, ShaderTypes type) {
     m_ShaderType = type;
     
     LoadModel(path);
@@ -10,7 +10,15 @@ MeshRenderer::~MeshRenderer() {
     // delete objects in nodes
 }
 
-void MeshRenderer::Draw(const ShaderProgram &shader) {
+void MeshRenderer::Initialize() {
+    Object().Scene().RegisterDrawable(this);
+}
+
+void MeshRenderer::Destroy() {
+    Object().Scene().UnregisterDrawable(this);
+}
+
+void MeshRenderer::Draw(const ShaderProgram &shader) const {
     shader.SetMat4("model", Object().Model());
     
     for (const Mesh &mesh: m_Meshes) {

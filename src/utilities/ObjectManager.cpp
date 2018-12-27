@@ -1,4 +1,5 @@
 #include "ObjectManager.h"
+#include "../scenes/IScene.h"
 
 void ObjectManager::InitializeObjects() {
     for (auto it = m_Objects.begin(); it != m_Objects.end(); it++) {
@@ -18,17 +19,8 @@ void ObjectManager::DestroyObjects() {
     }
 }
 
-void ObjectManager::RegisterObject(Object *object) {
-    if (std::find(m_Objects.begin(), m_Objects.end(), object) == m_Objects.end()) {
-        m_Objects.push_back(object);
-    }
-}
-
-void ObjectManager::UnregisterObject(Object *object) {
-    auto it = std::find(m_Objects.begin(), m_Objects.end(), object);
+std::shared_ptr<Object> ObjectManager::CreateObject(IScene& scene, std::string name) {
+    m_Objects.push_back(std::make_shared<Object>(scene, name));
     
-    if (it != m_Objects.end()) {
-        long index = std::distance(m_Objects.begin(), it);
-        m_Objects.erase(m_Objects.begin() + index);
-    }
+    return m_Objects.at(m_Objects.size() - 1);
 }

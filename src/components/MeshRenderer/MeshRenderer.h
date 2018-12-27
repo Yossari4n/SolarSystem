@@ -20,14 +20,17 @@
 #include "../../rendering/ShaderProgram.h"
 #include "../../rendering/IDrawable.h"
 #include "../../utilities/DrawManager.h"
-#include "../../scenes/Scene.h"
+#include "../../scenes/IScene.h"
 
 class MeshRenderer : public IComponent, public IDrawable {
 public:
-    MeshRenderer(std::string path, ShaderType type);
+    MeshRenderer(std::string path, ShaderTypes type);
     ~MeshRenderer();
     
-    void Draw(const ShaderProgram &shader) override;
+    void Initialize() override;
+    void Destroy() override;
+    
+    void Draw(const ShaderProgram &shader) const override;
     
     const std::vector<Mesh>& Meshes() const { return m_Meshes; }
     const std::vector<Texture>& TexturesLoaded() const { return m_TexturesLoaded; }

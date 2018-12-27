@@ -1,9 +1,10 @@
 #include "Object.h"
 #include "IComponent.h"
-#include "../scenes/Scene.h"
+#include "../scenes/IScene.h"
 
-Object::Object(std::string name)
+Object::Object(class IScene& scene, std::string name)
     : m_Name(name)
+    , m_Scene(scene)
     , m_Position(glm::vec3(0.0f))
     , m_Rotation(glm::vec3(0.0f))
     , m_Scale(glm::vec3(1.0f)) {

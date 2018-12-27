@@ -10,13 +10,13 @@
 #include <algorithm>
 
 class IComponent;
-class Scene;
+class IScene;
 
 class Object {
     typedef void (IComponent::*UpdateCall)(void);
     
 public:
-    Object(std::string name = "object");
+    Object(IScene& scene, std::string name = "object");
     ~Object();
     
     void Initialize();
@@ -58,6 +58,8 @@ public:
     const std::string& Name() const { return m_Name; }
     void Name(const std::string& name) { m_Name = name; }
     
+    IScene& Scene() const { return m_Scene; }
+    
     const glm::mat4& Model() const { return m_Model; }
     
     const glm::vec3& Position() const { return m_Position; }
@@ -73,6 +75,8 @@ public:
     
 private:
     std::string m_Name;
+    
+    class IScene& m_Scene;
     
     std::vector<std::shared_ptr<IComponent>> m_Components;
     

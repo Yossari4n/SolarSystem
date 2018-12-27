@@ -5,6 +5,7 @@
 
 #include "../components/Object.h"
 
+class IScene;
 class Object;
 
 class ObjectManager {
@@ -13,11 +14,9 @@ public:
     void UpdateObjects();
     void DestroyObjects();
     
-    void RegisterObject(Object* object);
-    void UnregisterObject(Object* object);
-    
+    std::shared_ptr<Object> CreateObject(IScene& scene, std::string name = "");
 private:
-    std::vector<Object*> m_Objects;
+    std::vector<std::shared_ptr<Object>> m_Objects;
 };
 
 #endif

@@ -13,7 +13,7 @@
 #include "components/Camera.h"
 #include "utilities/Time.h"
 #include "utilities/Input.h"
-#include "scenes/Scene.h"
+#include "scenes/MainScene.h"
 
 // Screen setting
 const int SCR_WIDTH = 2880;
@@ -58,7 +58,7 @@ int main() {
     g_Input.m_Window = window;
     
     // Capture the mouse
-    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -67,13 +67,15 @@ int main() {
     }
     
     // Main scene
-    Scene MainScene;
-    MainScene.Initialize();
+    MainScene MainScene;
+    MainScene.CreateScene();
     
     // Render settings
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PRIMITIVE_RESTART_INDEX);
+    
+    MainScene.PreRun();
     
     // Render loop
     while (!glfwWindowShouldClose(window)) {
@@ -100,10 +102,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 void process_input(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    }
-    
     // Exit application
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);

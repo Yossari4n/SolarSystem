@@ -4,20 +4,21 @@
 #include "ShaderProgram.h"
 
 class IDrawable {
-    friend class DrawManager;
-    
 public:
-    enum ShaderType {
+    // Enum used as indicies, don't change numeration or order
+    enum ShaderTypes {
         LIGHT_SOURCE = 0,
         LIGHT_RECEIVER,
         
         COUNT
     };
     
-    virtual void Draw(const ShaderProgram &shader) = 0;
-
+    virtual void Draw(const ShaderProgram &shader) const = 0;
+    
+    ShaderTypes ShaderType() const { return m_ShaderType; }
+    
 protected:
-    ShaderType m_ShaderType;
+    ShaderTypes m_ShaderType;
 };
 
 #endif

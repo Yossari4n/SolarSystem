@@ -11,13 +11,13 @@ class IComponent {
     friend class Object;
 
 public:
-    virtual ~IComponent() {};
+    virtual ~IComponent() {}
     
     virtual void Initialize() {};
     virtual void Update() {};
     virtual void Destroy() {};
     
-    Object& Object();
+    Object& Object() const { return *m_Object; };
     
 private:
     class Object *m_Object;
