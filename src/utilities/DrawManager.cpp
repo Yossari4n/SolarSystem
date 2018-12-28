@@ -17,6 +17,10 @@ void DrawManager::Initialize() {
                                                                           "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/LightReceiver.fs");
 }
 
+void DrawManager::RegisterCamera(Camera *camera) {
+    m_Camera = camera;
+}
+
 void DrawManager::RegsiterDrawCall(IDrawable* component) {
     if (std::find(m_Drawables.begin(), m_Drawables.end(), component) == m_Drawables.end()) {
         m_Drawables.push_back(component);
@@ -54,11 +58,11 @@ void DrawManager::CallDraws() const {
         curr_shader.Use();
         
         // pv = projection * view
-        glm::mat4 pv = g_Camera.Projection() * g_Camera.ViewMatrix();
+        glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
         curr_shader.SetMat4("pv", pv);
         
         if (shader_type == IDrawable::ShaderTypes::LIGHT_RECEIVER) {
-            curr_shader.SetVec3("viewPos", g_Camera.Position());
+            curr_shader.SetVec3("viewPos", m_Camera->Position());
             curr_shader.SetFloat("material.shininess", 32.0f);
             
             // for all ILightSources SetLightProperties
