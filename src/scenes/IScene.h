@@ -12,18 +12,14 @@ public:
     void Run();
     void PostRun();
     
-    void RegisterDrawable(IDrawable* component);
-    void UnregisterDrawable(IDrawable* component);
-    
-    void RegisterLightSource(ILightSource* light_source);
-    void UnregisterLightSource(ILightSource* light_source);
+    DrawManager& DrawManger() { return m_DrawManager; }
     
 protected:
     std::shared_ptr<Object> CreateObject(std::string name = "");
     
 private:
     ObjectManager m_ObjectManager;
-    DrawManager m_DrawManager;
+    class DrawManager m_DrawManager;
 };
 
 #endif
