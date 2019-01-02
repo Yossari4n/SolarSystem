@@ -1,14 +1,21 @@
-//
-//  Manager.hpp
-//  SolarSystem
-//
-//  Created by Jakub Stokowski on 31/12/2018.
-//  Copyright © 2018 Jakub Stokowski. All rights reserved.
-//
+#ifndef Manager_h
+#define Manager_h
 
-#ifndef Manager_hpp
-#define Manager_hpp
+#include "IComponent.h"
+#include "../utilities/Time.h"
+#include "../utilities/Input.h"
 
-#include <stdio.h>
+class Manager : public IComponent {
+public:
+    Manager();
+    
+    void Initialize() override;
+    void Update() override;
+    
+private:
+    bool m_Paused;
+    int m_TimeMultiplayersIndex;
+    std::array<int, 5> m_TimeMultiplayers;
+};
 
-#endif /* Manager_hpp */
+#endif
