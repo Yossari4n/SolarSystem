@@ -1,6 +1,5 @@
 #include "Object.h"
 
-// Forward declarations
 #include "IComponent.h"
 
 
@@ -9,7 +8,7 @@ Object::Object(class IScene& scene, std::string name)
     , m_Scene(scene)
     , m_Position(glm::vec3(0.0f))
     , m_Rotation(glm::vec3(0.0f))
-    , m_Scale(glm::vec3(1.0f)) {
+    , m_Scale(glm::vec3(1.0f)){
 }
 
 Object::~Object() {
@@ -36,26 +35,31 @@ void Object::Destroy() {
     }
 }
 
+const glm::mat4& Object::Model() {
+    return m_Model;
+}
+
 void Object::Position(const glm::vec3& position) {
     m_Position = position;
     
     UpdateModel();
 }
 
-void Object::Move(const glm::vec3 &vector) {
+void Object::Move(const glm::vec3& vector) {
     m_Position = m_Position + vector;
     
     UpdateModel();
 }
 
 void Object::Rotation(const glm::vec3& rotation) {
-    m_Rotation = rotation;
+    m_Rotation = glm::quat(rotation);
     
     UpdateModel();
 }
 
-void Object::Rotate(const glm::vec3 &rotation) {
-    m_Rotation = m_Rotation + rotation;
+void Object::Rotate(const glm::vec3& rotation) {
+    glm::quat rotation2 = glm::quat(rotation);
+    m_Rotation = rotation2 * m_Rotation;
     
     UpdateModel();
 }
@@ -67,9 +71,9 @@ void Object::Scale(const glm::vec3& scale) {
 }
 
 void Object::UpdateModel() {
-    m_Model = glm::translate(glm::mat4(), m_Position);
-    m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-    m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-    m_Model = glm::scale(m_Model, m_Scale);
+    glm::mat4 translate_matrix = glm::translate(glm::mat4(1.0f), m_Position);
+    glm::mat4 rotation_matrix = glm::toMat4(m_Rotation);
+    glm::mat4 scale_matrix = glm::scale(glm::mat4(1.0f), m_Scale);
+    
+    m_Model = translate_matrix * rotation_matrix * scale_matrix;
 }

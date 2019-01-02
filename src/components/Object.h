@@ -5,6 +5,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <glm/gtx/quaternion.hpp>
+
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -59,13 +61,13 @@ public:
     
     IScene& Scene() const { return m_Scene; }
     
-    const glm::mat4& Model() const { return m_Model; }
+    const glm::mat4& Model();
     
     const glm::vec3& Position() const { return m_Position; }
     void Position(const glm::vec3& position);
     void Move(const glm::vec3& vector);
     
-    const glm::vec3& Rotation() const { return m_Rotation; }
+    const glm::quat& Rotation() const { return m_Rotation; }
     void Rotation(const glm::vec3& rotation);
     void Rotate(const glm::vec3& rotation);
     
@@ -81,7 +83,7 @@ private:
     
     glm::mat4 m_Model;
     glm::vec3 m_Position;
-    glm::vec3 m_Rotation;
+    glm::quat m_Rotation;
     glm::vec3 m_Scale;
     
     void UpdateModel();
