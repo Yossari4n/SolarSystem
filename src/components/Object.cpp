@@ -52,15 +52,14 @@ void Object::Move(const glm::vec3& vector) {
     UpdateModel();
 }
 
-void Object::Rotation(const glm::vec3& rotation) {
-    m_Rotation = glm::quat(rotation);
+void Object::Rotation(const glm::quat &rotation) {
+    m_Rotation = rotation;
     
     UpdateModel();
 }
 
-void Object::Rotate(const glm::vec3& rotation) {
-    glm::quat rotation2 = glm::quat(rotation);
-    m_Rotation = rotation2 * m_Rotation;
+void Object::Rotate(const glm::quat &rotation) {
+    m_Rotation = rotation * m_Rotation;
     
     UpdateModel();
 }

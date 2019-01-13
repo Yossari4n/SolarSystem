@@ -68,8 +68,8 @@ public:
     void Move(const glm::vec3& vector);
     
     const glm::quat& Rotation() const { return m_Rotation; }
-    void Rotation(const glm::vec3& rotation);
-    void Rotate(const glm::vec3& rotation);
+    void Rotation(const glm::quat& rotation);
+    void Rotate(const glm::quat& rotation);
     
     const glm::vec3& Scale() const { return m_Scale; }
     void Scale(const glm::vec3& scale);
