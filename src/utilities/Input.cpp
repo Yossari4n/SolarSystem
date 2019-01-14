@@ -7,6 +7,8 @@ Input::Input() {
 }
 
 void Input::KeyUpdate(GLFWwindow *window) {
+    m_AnyKeyPressed = false;
+    
     for (int i = GLFW_KEY_SPACE; i < GLFW_KEY_MENU + 1; ++i) {
         if (glfwGetKey(window, i) == GLFW_PRESS) {
             if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
@@ -14,13 +16,14 @@ void Input::KeyUpdate(GLFWwindow *window) {
             } else if (m_Keys[i] == KeyState::PRESSED) {
                 m_Keys[i] = KeyState::HOLD;
             }
+            
+            m_AnyKeyPressed = true;
         } else {
             if (m_Keys[i] == KeyState::PRESSED || m_Keys[i] == KeyState::HOLD) {
                 m_Keys[i] = KeyState::RELEASED;
             } else {
                 m_Keys[i] = KeyState::NONE;
             }
-            
         }
     }
 }

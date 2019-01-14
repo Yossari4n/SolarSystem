@@ -22,10 +22,12 @@ public:
     void KeyUpdate(GLFWwindow *window);
     void MouseUpdate(GLFWwindow *window);
     
+    bool AnyKeyPressed() { return m_AnyKeyPressed; }
     Input::KeyState GetKeyState(int glfw_key_enum);
     glm::vec2 MousePosition() const { return glm::vec2(m_MouseX, m_MouseY); }
     
 private:
+    bool m_AnyKeyPressed;
     Input::KeyState m_Keys[GLFW_KEY_MENU + 1];
     
     float m_MouseX;
