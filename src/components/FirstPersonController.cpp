@@ -1,7 +1,8 @@
 #include "FirstPersonController.h"
 
-FirstPersonController::FirstPersonController(float movement_speed, float mouse_sensivity, float yaw, float pitch, glm::vec3 world_up)
-    : m_MovementSpeed(movement_speed)
+FirstPersonController::FirstPersonController(float movement_speed_fast, float movement_speed_slow, float mouse_sensivity, float yaw, float pitch, glm::vec3 world_up)
+    : m_MovementSpeedFast(movement_speed_fast)
+    , m_MovementSpeedSlow(movement_speed_slow)
     , m_MouseSensivity(mouse_sensivity)
     , m_Yaw(yaw)
     , m_Pitch(pitch)
@@ -17,22 +18,22 @@ void FirstPersonController::Update() {
     
     // Keyboard
     if (g_Input.GetKeyState(GLFW_KEY_LEFT_SHIFT)) {
-        //m_MovementSpeed = m_MovementSpeedFast;
+        m_CurrentMovementSpeed = m_MovementSpeedFast;
     } else {
-        //m_MovementSpeed = m_MovementSpeedSlow;
+        m_CurrentMovementSpeed = m_MovementSpeedSlow;
     }
     
     if (g_Input.GetKeyState(GLFW_KEY_W) || g_Input.GetKeyState(GLFW_KEY_UP)) {
-        Object().Move(m_Front * m_MovementSpeed * dt);
+        Object().Move(m_Front * m_CurrentMovementSpeed * dt);
     }
     if (g_Input.GetKeyState(GLFW_KEY_S) || g_Input.GetKeyState(GLFW_KEY_DOWN)) {
-        Object().Move(-m_Front * m_MovementSpeed * dt);
+        Object().Move(-m_Front * m_CurrentMovementSpeed * dt);
     }
     if (g_Input.GetKeyState(GLFW_KEY_A) || g_Input.GetKeyState(GLFW_KEY_LEFT)) {
-        Object().Move(-m_Right * m_MovementSpeed * dt);
+        Object().Move(-m_Right * m_CurrentMovementSpeed * dt);
     }
     if (g_Input.GetKeyState(GLFW_KEY_D) || g_Input.GetKeyState(GLFW_KEY_RIGHT)) {
-        Object().Move(m_Right * m_MovementSpeed * dt);
+        Object().Move(m_Right * m_CurrentMovementSpeed * dt);
     }
     
     // Mouse
