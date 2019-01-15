@@ -8,7 +8,7 @@ AstronomicalObject::~AstronomicalObject() {}
 void AstronomicalObject::Update() {
     // Spinning
     float dt = g_Time.FixedDeltaTime();
-    glm::quat rotation(glm::vec3(0.0f, glm::radians(m_RotationSpeed * dt), 0.0f));
+    glm::quat rotation(glm::vec3(0.0f, 0.0f, glm::radians(m_RotationSpeed * dt)));
     Object().Rotate(rotation);
     
     // Orbit calculations
