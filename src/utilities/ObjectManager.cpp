@@ -1,6 +1,6 @@
 #include "ObjectManager.h"
 
-#include "../components/Object.h"
+#include "../cbs/Object.h"
 #include "../scenes/IScene.h"
 
 void ObjectManager::InitializeObjects() {

@@ -1,6 +1,8 @@
 #ifndef Mesh_h
 #define Mesh_h
 
+#include "../../../rendering/ShaderProgram.h"
+
 #include <glad/glad.h>
 
 #include <glm/glm.hpp>
@@ -10,8 +12,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include "../../rendering/ShaderProgram.h"
 
 // TODO to new files
 struct Vertex {

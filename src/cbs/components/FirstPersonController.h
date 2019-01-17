@@ -3,8 +3,8 @@
 
 #include "IComponent.h"
 #include "Camera.h"
-#include "../utilities/Time.h"
-#include "../utilities/Input.h"
+#include "../../utilities/Time.h"
+#include "../../utilities/Input.h"
 
 #include <iostream>
 

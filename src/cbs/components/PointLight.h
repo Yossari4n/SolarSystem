@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "../rendering/ILightSource.h"
+#include "../../rendering/ILightSource.h"
 #include "IComponent.h"
 
 class PointLight : public IComponent, public ILightSource {

@@ -59,7 +59,7 @@ void Object::Rotation(const glm::quat &rotation) {
 }
 
 void Object::Rotate(const glm::quat &rotation) {
-    m_Rotation = rotation * m_Rotation;
+    m_Rotation =  m_Rotation * rotation;
     
     UpdateModel();
 }

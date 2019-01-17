@@ -2,8 +2,8 @@
 #define Manager_h
 
 #include "IComponent.h"
-#include "../utilities/Time.h"
-#include "../utilities/Input.h"
+#include "../../utilities/Time.h"
+#include "../../utilities/Input.h"
 
 class Manager : public IComponent {
 public:

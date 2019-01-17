@@ -1,11 +1,11 @@
 #include "MainScene.h"
 
-#include "../components/MeshRenderer/MeshRenderer.h"
-#include "../components/AstronomicalObject.h"
-#include "../components/PointLight.h"
-#include "../components/FirstPersonController.h"
-#include "../components/Camera.h"
-#include "../components/Manager.h"
+#include "../cbs/components/MeshRenderer/MeshRenderer.h"
+#include "../cbs/components/AstronomicalObject.h"
+#include "../cbs/components/PointLight.h"
+#include "../cbs/components/FirstPersonController.h"
+#include "../cbs/components/Camera.h"
+#include "../cbs/components/Manager.h"
 
 #define PI 3.14159265358979323846f
 #define DOUBLE_PI (PI * 2.0f)
@@ -14,7 +14,7 @@
 // where T := time in seconds for planet to make full cycle
 #define EARTH_RADIUS 0.5f
 #define EARTH_ROTATION_SPEED (360.f / 5.0f) // full rotation takes 5 second
-#define EARTH_ORBIT_RADIUS (150.0f / 4.0f) // all distances are divided by 2
+#define EARTH_ORBIT_RADIUS (150.0f / 2.0f) // all distances are divided by 2
 #define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / (360.0f * 5.0f)) // full orbit takes 5 minutes
 
 void MainScene::CreateScene() {
@@ -53,7 +53,7 @@ void MainScene::CreateScene() {
     auto earth = CreateObject("Earth");
     earth->Scale(EARTH_RADIUS * model_scale);
     earth->Rotation(model_rotation);
-    earth->Rotate(glm::vec3(glm::radians(30.0f), 0.0f, 0.0f));
+    earth->Rotate(glm::quat(glm::vec3(glm::radians(23.0f), 0.0f, 0.0f)));
     auto earth_mr = earth->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/earth/13902_Earth_v1_l3.obj", IDrawable::ShaderTypes::LIGHT_RECEIVER);
     auto earth_ao = earth->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
     earth_ao->Orbit(Orbit(&sun->Position(), EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY));
@@ -82,14 +82,14 @@ void MainScene::CreateScene() {
     auto uranus = CreateObject("Uranus");
     uranus->Scale(4.0f * EARTH_RADIUS * model_scale);
     uranus->Rotation(model_rotation);
-    auto uranus_mr = uranus->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/uranus/13902_Earth_v1_l3.obj", IDrawable::ShaderTypes::LIGHT_SOURCE);
+    auto uranus_mr = uranus->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/uranus/13902_Earth_v1_l3.obj", IDrawable::ShaderTypes::LIGHT_RECEIVER);
     auto uranus_ao = uranus->CreateComponent<AstronomicalObject>(0.7f * EARTH_ROTATION_SPEED);
     uranus_ao->Orbit(Orbit(&sun->Position(), 19.19f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 84.07f));
     
     auto neptun = CreateObject("Neptun");
     neptun->Scale(3.88f * EARTH_RADIUS * model_scale);
     neptun->Rotation(model_rotation);
-    auto neptun_mr = neptun->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/neptun/13902_Earth_v1_l3.obj", IDrawable::ShaderTypes::LIGHT_SOURCE);
+    auto neptun_mr = neptun->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/models/neptun/13902_Earth_v1_l3.obj", IDrawable::ShaderTypes::LIGHT_RECEIVER);
     auto neptun_ao = neptun->CreateComponent<AstronomicalObject>(0.67f * EARTH_ROTATION_SPEED);
     neptun_ao->Orbit(Orbit(&sun->Position(), 30.06f * EARTH_ORBIT_RADIUS, -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f));
 }

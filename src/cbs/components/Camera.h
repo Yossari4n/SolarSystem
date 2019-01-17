@@ -7,8 +7,8 @@
 #include <glm/gtx/rotate_vector.hpp>
 
 #include "IComponent.h"
-#include "../utilities/Time.h"
-#include "../utilities/Input.h"
+#include "../../utilities/Time.h"
+#include "../../utilities/Input.h"
 
 #include <iostream>
 #include <string>
@@ -20,6 +20,7 @@ public:
     
     void Initialize() override;
     void Update() override;
+    void Destroy() override;
     
     glm::mat4 ViewMatrix() const;
     

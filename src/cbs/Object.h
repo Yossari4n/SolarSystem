@@ -1,17 +1,16 @@
 #ifndef Object_h
 #define Object_h
 
+#include "../scenes/IScene.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 #include <glm/gtx/quaternion.hpp>
 
 #include <string>
 #include <vector>
 #include <algorithm>
-
-#include "../scenes/IScene.h"
 
 class IComponent;
 

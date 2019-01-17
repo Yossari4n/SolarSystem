@@ -1,6 +1,10 @@
 #ifndef Model_h
 #define Model_h
 
+#include "Mesh.h"
+#include "../IComponent.h"
+#include "../../../rendering/IDrawable.h"
+
 #include <glad/glad.h>
 
 #include <glm/glm.hpp>
@@ -14,10 +18,6 @@
 
 #include <string>
 #include <vector>
-
-#include "Mesh.h"
-#include "../IComponent.h"
-#include "../../rendering/IDrawable.h"
 
 class MeshRenderer : public IComponent, public IDrawable {
 public:

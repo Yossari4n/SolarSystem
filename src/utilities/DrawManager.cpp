@@ -1,6 +1,6 @@
 #include "DrawManager.h"
 
-#include "../components/Camera.h"
+#include "../cbs/components/Camera.h"
 #include "../rendering/ILightSource.h"
 
 DrawManager::DrawManager() {

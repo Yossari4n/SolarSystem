@@ -9,8 +9,8 @@
 #include <string>
 
 #include "IComponent.h"
-#include "../utilities/Time.h"
-#include "../utilities/Input.h"
+#include "../../utilities/Time.h"
+#include "../../utilities/Input.h"
 
 struct Orbit {
     Orbit(const glm::vec3* center = nullptr, float radius = 0, float angular_velocity = 0)
