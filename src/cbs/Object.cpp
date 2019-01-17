@@ -5,11 +5,7 @@
 
 Object::Object(class IScene& scene, std::string name)
     : m_Name(name)
-    , m_Scene(scene)
-    , m_Position(glm::vec3(0.0f))
-    , m_Rotation(glm::vec3(0.0f))
-    , m_Scale(glm::vec3(1.0f)){
-    UpdateModel();
+    , m_Scene(scene){
 }
 
 Object::~Object() {
@@ -36,7 +32,7 @@ void Object::Destroy() {
     }
 }
 
-const glm::mat4& Object::Model() {
+/*const glm::mat4& Object::Model() {
     return m_Model;
 }
 
@@ -58,8 +54,16 @@ void Object::Rotation(const glm::quat &rotation) {
     UpdateModel();
 }
 
+// local
 void Object::Rotate(const glm::quat &rotation) {
     m_Rotation =  m_Rotation * rotation;
+    
+    UpdateModel();
+}
+
+// world
+void Object::Rotate2(const glm::quat &rotation) {
+    m_Rotation =  rotation * m_Rotation;
     
     UpdateModel();
 }
@@ -76,4 +80,4 @@ void Object::UpdateModel() {
     glm::mat4 scale_matrix = glm::scale(glm::mat4(1.0f), m_Scale);
     
     m_Model = translate_matrix * rotation_matrix * scale_matrix;
-}
+}*/

@@ -43,4 +43,6 @@ private:
     glm::vec3 m_CurrentFront;
     glm::vec3 m_Up;
     glm::vec3 m_Right;
+    
+    Transform* m_Transform;
 };

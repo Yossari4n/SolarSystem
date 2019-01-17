@@ -11,6 +11,7 @@ FirstPersonController::FirstPersonController(float movement_speed_fast, float mo
 
 void FirstPersonController::Initialize() {
     m_LastMousePos = g_Input.MousePosition();
+    m_Transform = &Object().Transform();
 }
 
 void FirstPersonController::Update() {
@@ -24,16 +25,16 @@ void FirstPersonController::Update() {
     }
     
     if (g_Input.GetKeyState(GLFW_KEY_W) || g_Input.GetKeyState(GLFW_KEY_UP)) {
-        Object().Move(m_Front * m_CurrentMovementSpeed * dt);
+        m_Transform->Move(m_Front * m_CurrentMovementSpeed * dt);
     }
     if (g_Input.GetKeyState(GLFW_KEY_S) || g_Input.GetKeyState(GLFW_KEY_DOWN)) {
-        Object().Move(-m_Front * m_CurrentMovementSpeed * dt);
+        m_Transform->Move(-m_Front * m_CurrentMovementSpeed * dt);
     }
     if (g_Input.GetKeyState(GLFW_KEY_A) || g_Input.GetKeyState(GLFW_KEY_LEFT)) {
-        Object().Move(-m_Right * m_CurrentMovementSpeed * dt);
+        m_Transform->Move(-m_Right * m_CurrentMovementSpeed * dt);
     }
     if (g_Input.GetKeyState(GLFW_KEY_D) || g_Input.GetKeyState(GLFW_KEY_RIGHT)) {
-        Object().Move(m_Right * m_CurrentMovementSpeed * dt);
+        m_Transform->Move(m_Right * m_CurrentMovementSpeed * dt);
     }
     
     // Mouse
@@ -53,7 +54,7 @@ void FirstPersonController::Update() {
     float x_rotation = glm::radians(m_Pitch);
     float y_rotation = -glm::radians(m_Yaw);
     
-    Object().Rotation(glm::vec3(x_rotation, y_rotation, 0.0f));
+    m_Transform->Rotation(glm::vec3(x_rotation, y_rotation, 0.0f));
     
     m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
     m_Front = glm::rotate(m_Front, x_rotation, glm::vec3(1.0f, 0.0f, 0.0f));

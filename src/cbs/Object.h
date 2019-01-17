@@ -2,6 +2,7 @@
 #define Object_h
 
 #include "../scenes/IScene.h"
+#include "Transform.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -58,9 +59,10 @@ public:
     const std::string& Name() const { return m_Name; }
     void Name(const std::string& name) { m_Name = name; }
     
-    IScene& Scene() const { return m_Scene; }
+    IScene& Scene() { return m_Scene; }
+    Transform& Transform() { return m_Transform; }
     
-    const glm::mat4& Model();
+    /*const glm::mat4& Model();
     
     const glm::vec3& Position() const { return m_Position; }
     void Position(const glm::vec3& position);
@@ -69,23 +71,25 @@ public:
     const glm::quat& Rotation() const { return m_Rotation; }
     void Rotation(const glm::quat& rotation);
     void Rotate(const glm::quat& rotation);
+    void Rotate2(const glm::quat& rotation);
     
     const glm::vec3& Scale() const { return m_Scale; }
-    void Scale(const glm::vec3& scale);
+    void Scale(const glm::vec3& scale);*/
     
 private:
     std::string m_Name;
     
     class IScene& m_Scene;
+    class Transform m_Transform;
     
     std::vector<std::shared_ptr<IComponent>> m_Components;
     
-    glm::mat4 m_Model;
+    /*glm::mat4 m_Model;
     glm::vec3 m_Position;
     glm::quat m_Rotation;
     glm::vec3 m_Scale;
     
-    void UpdateModel();
+    void UpdateModel();*/
 };
 
 #endif

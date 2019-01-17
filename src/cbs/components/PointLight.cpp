@@ -28,7 +28,7 @@ void PointLight::Destroy() {
 void PointLight::SetLightProperties(const ShaderProgram& shader) {
     std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
     
-    shader.SetVec3(pointLight + "position", Object().Position());
+    shader.SetVec3(pointLight + "position", Object().Transform().Position());
     shader.SetVec3(pointLight + "ambient", m_Ambient);
     shader.SetVec3(pointLight + "diffuse", m_Diffuse);
     shader.SetFloat(pointLight + "constant", m_Constant);

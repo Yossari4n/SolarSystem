@@ -28,6 +28,8 @@ private:
     glm::vec3 m_Right;
     
     glm::vec2 m_LastMousePos;
+    
+    Transform* m_Transform;
 };
 
 #endif
