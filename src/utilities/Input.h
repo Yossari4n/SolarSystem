@@ -19,19 +19,19 @@ public:
         RELEASED,   // The key was pressed in previous frame and is not now
     };
     
-    void KeyUpdate(GLFWwindow *window);
-    void MouseUpdate(GLFWwindow *window);
+    void Update(GLFWwindow *window);
     
     bool AnyKeyPressed() { return m_AnyKeyPressed; }
     Input::KeyState GetKeyState(int glfw_key_enum);
-    glm::vec2 MousePosition() const { return glm::vec2(m_MouseX, m_MouseY); }
+    const glm::vec2& MouseOffset() const { return m_MouseOffset; }
+    const glm::vec2& MousePosition() const { return m_MousePosition; }
     
 private:
     bool m_AnyKeyPressed;
     Input::KeyState m_Keys[GLFW_KEY_MENU + 1];
     
-    float m_MouseX;
-    float m_MouseY;
+    glm::vec2 m_MousePosition;
+    glm::vec2 m_MouseOffset;
 };
 
 void MouseCallback(GLFWwindow* window, double xpos, double ypos);

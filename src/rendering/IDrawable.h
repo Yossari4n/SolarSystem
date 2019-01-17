@@ -5,10 +5,11 @@
 
 class IDrawable {
 public:
-    // Enum used as indicies, don't change numeration or order
     enum ShaderTypes {
-        LIGHT_SOURCE = 0,
-        LIGHT_RECEIVER,
+        COLOR_PURE = 0,
+        COLOR_LIGHT_RECEIVER,
+        TEXTURE_PURE,
+        TEXTURE_LIGHT_RECEIVER,
         
         COUNT
     };

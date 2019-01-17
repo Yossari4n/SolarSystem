@@ -10,11 +10,14 @@ DrawManager::~DrawManager() {
 }
 
 void DrawManager::Initialize() {
-    m_ShaderPrograms[IDrawable::ShaderTypes::LIGHT_SOURCE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/LightSource.vs",
-                                                                        "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/LightSource.fs");
+    m_ShaderPrograms[IDrawable::ShaderTypes::COLOR_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.vs",
+                                                                       "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.fs");
     
-    m_ShaderPrograms[IDrawable::ShaderTypes::LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/LightReceiver.vs",
-                                                                          "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/LightReceiver.fs");
+    m_ShaderPrograms[IDrawable::ShaderTypes::TEXTURE_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.vs",
+                                                                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.fs");
+    
+    m_ShaderPrograms[IDrawable::ShaderTypes::TEXTURE_LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
+                                                                                   "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
 }
 
 void DrawManager::RegisterCamera(Camera *camera) {
@@ -61,7 +64,7 @@ void DrawManager::CallDraws() const {
         glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
         curr_shader.SetMat4("pv", pv);
         
-        if (shader_type == IDrawable::ShaderTypes::LIGHT_RECEIVER) {
+        if (shader_type == IDrawable::ShaderTypes::TEXTURE_LIGHT_RECEIVER) {
             curr_shader.SetVec3("viewPos", m_Camera->Position());
             curr_shader.SetFloat("material.shininess", 32.0f);
             

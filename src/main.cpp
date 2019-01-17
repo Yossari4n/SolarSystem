@@ -71,7 +71,7 @@ int main() {
     // Render loop
     while (!glfwWindowShouldClose(window)) {
         g_Time.Update();
-        g_Input.KeyUpdate(window);
+        g_Input.Update(window);
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         

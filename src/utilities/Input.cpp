@@ -1,14 +1,14 @@
 #include "Input.h"
 
-Input::Input()
-    : m_MouseX(2880.0f / 2.0f)
-    , m_MouseY(1800.0f / 2.0f) {
+Input::Input() {
+    m_MousePosition.x = 2880.0f / 2.0f;
+    m_MousePosition.y = 1800.0f / 2.0f;
     for (int i = 0; i < GLFW_KEY_MENU + 1; ++i) {
         m_Keys[i] = KeyState::NONE;
     }
 }
 
-void Input::KeyUpdate(GLFWwindow *window) {
+void Input::Update(GLFWwindow *window) {
     m_AnyKeyPressed = false;
     
     for (int i = GLFW_KEY_SPACE; i < GLFW_KEY_MENU + 1; ++i) {
@@ -35,6 +35,6 @@ Input::KeyState Input::GetKeyState(int glfw_key_enum) {
 }
 
 void MouseCallback(GLFWwindow* window, double xpos, double ypos) {
-    g_Input.m_MouseX = xpos;
-    g_Input.m_MouseY = ypos;
+    g_Input.m_MousePosition.x = xpos;
+    g_Input.m_MousePosition.y = ypos;
 }
