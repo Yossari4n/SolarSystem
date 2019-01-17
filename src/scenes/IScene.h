@@ -1,8 +1,8 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 
-#include "../utilities/ObjectManager.h"
-#include "../utilities/DrawManager.h"
+#include "../cbs/ObjectManager.h"
+#include "../rendering/DrawManager.h"
 
 class IScene {
 public:

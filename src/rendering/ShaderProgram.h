@@ -11,6 +11,15 @@
 
 class ShaderProgram {
 public:
+    enum TYPE {
+        COLOR_PURE = 0,
+        COLOR_LIGHT_RECEIVER,
+        TEXTURE_PURE,
+        TEXTURE_LIGHT_RECEIVER,
+        
+        COUNT
+    };
+    
     ShaderProgram();
     ShaderProgram(const ShaderProgram&) = delete;
     ShaderProgram& operator=(const ShaderProgram&) = delete;
