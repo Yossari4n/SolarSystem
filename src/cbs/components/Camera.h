@@ -28,6 +28,9 @@ public:
     const glm::vec3& Front() const { return m_CurrentFront; }
     const glm::vec3& WorldUp() const { return m_WorldUp; }
     
+    const glm::vec3& Background() const { return m_Background; }
+    void Background(const glm::vec3& background ) { m_Background = background; }
+    
     const glm::vec3& Position() const { return m_Position; }
     const glm::vec3& Up() const { return m_Up; }
     const glm::vec3& Right() const { return m_Right; }
@@ -38,6 +41,7 @@ private:
     glm::mat4 m_Projection;
     glm::vec3 m_Front;
     glm::vec3 m_WorldUp;
+    glm::vec3 m_Background;
     
     glm::vec3 m_Position;
     glm::vec3 m_CurrentFront;
