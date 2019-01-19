@@ -30,7 +30,9 @@ private:
     bool m_AnyKeyPressed;
     Input::KeyState m_Keys[GLFW_KEY_MENU + 1];
     
+    bool m_MouseFirstMove;
     glm::vec2 m_MousePosition;
+    glm::vec2 m_MouseLastPosition;
     glm::vec2 m_MouseOffset;
 };
 

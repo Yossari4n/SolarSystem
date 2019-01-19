@@ -38,9 +38,8 @@ void FirstPersonController::Update() {
     }
     
     // Mouse
-    float x_offset = (g_Input.MousePosition().x - m_LastMousePos.x) * m_MouseSensivity;
-    float y_offset = (m_LastMousePos.y - g_Input.MousePosition().y) * m_MouseSensivity;
-    m_LastMousePos = g_Input.MousePosition();
+    float x_offset = g_Input.MouseOffset().x * m_MouseSensivity;
+    float y_offset = g_Input.MouseOffset().y * m_MouseSensivity;
     
     m_Yaw = m_Yaw + x_offset;
     m_Pitch = m_Pitch + y_offset;
