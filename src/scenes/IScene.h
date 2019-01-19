@@ -12,6 +12,8 @@ public:
     void Run();
     void PostRun();
     
+    void Exit();
+    
     DrawManager& DrawManger() { return m_DrawManager; }
     
 protected:
@@ -20,6 +22,8 @@ protected:
 private:
     ObjectManager m_ObjectManager;
     class DrawManager m_DrawManager;
+    
+    bool m_Running;
 };
 
 #endif

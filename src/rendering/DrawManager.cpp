@@ -1,7 +1,8 @@
 #include "DrawManager.h"
 
+#include "ILightSource.h"
+#include "../utilities/Window.h"
 #include "../cbs/components/Camera.h"
-#include "../rendering/ILightSource.h"
 
 DrawManager::DrawManager() {
 }
@@ -18,6 +19,9 @@ void DrawManager::Initialize() {
     
     m_ShaderPrograms[ShaderProgram::TYPE::TEXTURE_LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
                                                                                    "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 }
 
 void DrawManager::RegisterCamera(Camera *camera) {
@@ -55,6 +59,10 @@ void DrawManager::UnregisterLightSource(ILightSource* light_source) {
 }
 
 void DrawManager::CallDraws() const {
+    glm::vec3 background = m_Camera->Background();
+    glClearColor(background.x, background.y, background.z, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     for (auto it = m_Drawables.begin(); it != m_Drawables.end(); it++) {
         int shader_type = (*it)->ShaderType();
         const ShaderProgram& curr_shader = m_ShaderPrograms[shader_type];
@@ -76,4 +84,6 @@ void DrawManager::CallDraws() const {
         
         (*it)->Draw(curr_shader);
     }
+    
+    glfwSwapBuffers(g_Window());
 }

@@ -7,21 +7,15 @@
 #define GLM_ENABLE_EXPERIMENTAL
 
 #include "cbs/components/MeshRenderer/MeshRenderer.h"
-#include "cbs/components/Camera.h"
 #include "utilities/Time.h"
 #include "utilities/Input.h"
+#include "utilities/Window.h"
 #include "scenes/MainScene.h"
-
-// Screen setting
-const int SCR_WIDTH = 2880;
-const int SCR_HEIGHT = 1800;
-
-// Callbacks
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 // Global objects
 Time g_Time;
 Input g_Input;
+Window g_Window;
 
 int main() {
     // Initialize OpenGL
@@ -32,13 +26,13 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     // Create window
-    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "SolarSystem", nullptr, nullptr);
-    if (!window) {
+    g_Window.Initialize(glfwCreateWindow(2880, 1800, "SolarSystem", nullptr, nullptr), 2880, 1800);
+    if (!g_Window()) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
     }
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(g_Window());
     
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -47,42 +41,22 @@ int main() {
     }
     
     // Set callbacks
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, MouseCallback);
+    glfwSetFramebufferSizeCallback(g_Window(), framebuffer_size_callback);
+    glfwSetCursorPosCallback(g_Window(), mouse_callback);
     
     // Capture the mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(g_Window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     // Main scene
     MainScene MainScene;
     MainScene.CreateScene();
     
-    // Render settings
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    
     MainScene.PreRun();
-    
-    // Render loop
-    while (!glfwWindowShouldClose(window)) {
-        g_Time.Update();
-        g_Input.Update(window);
-        
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        MainScene.Run();
-        
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    MainScene.Run();
+    MainScene.PostRun();
     
     // End of application
-    MainScene.PostRun();
+    glfwSetWindowShouldClose(g_Window(), true);
     glfwTerminate();
     return EXIT_SUCCESS;
-}
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
 }

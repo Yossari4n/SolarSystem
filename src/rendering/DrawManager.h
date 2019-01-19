@@ -1,11 +1,14 @@
 #ifndef DrawManager_h
 #define DrawManager_h
 
+#include "ShaderProgram.h"
+#include "IDrawable.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <vector>
 #include <array>
-
-#include "../rendering/ShaderProgram.h"
-#include "../rendering/IDrawable.h"
 
 class Camera;
 class ILightSource;

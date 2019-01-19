@@ -46,7 +46,7 @@ Input::KeyState Input::GetKeyState(int glfw_key_enum) {
     return m_Keys[glfw_key_enum];
 }
 
-void MouseCallback(GLFWwindow* window, double xpos, double ypos) {
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     g_Input.m_MousePosition.x = xpos;
     g_Input.m_MousePosition.y = ypos;
     

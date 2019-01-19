@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 
 class Input {
-    friend void MouseCallback(GLFWwindow* window, double xpos, double ypos);
+    friend void mouse_callback(GLFWwindow* window, double xpos, double ypos);
     
 public:
     Input();
@@ -36,7 +36,7 @@ private:
     glm::vec2 m_MouseOffset;
 };
 
-void MouseCallback(GLFWwindow* window, double xpos, double ypos);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 extern Input g_Input;
 

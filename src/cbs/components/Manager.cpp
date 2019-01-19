@@ -11,6 +11,10 @@ void Manager::Initialize() {
 }
 
 void Manager::Update() {
+    if (g_Input.GetKeyState(GLFW_KEY_ESCAPE) == Input::KeyState::PRESSED) {
+        Object().Scene().Exit();
+    }
+    
     // Pause time
     if (g_Input.GetKeyState(GLFW_KEY_SPACE) == Input::KeyState::RELEASED) {
         if (m_Paused) {

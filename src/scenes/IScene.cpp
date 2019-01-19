@@ -2,20 +2,35 @@
 
 #include "../rendering/IDrawable.h"
 #include "../rendering/ILightSource.h"
+#include "../utilities/Time.h"
+#include "../utilities/Input.h"
+#include "../utilities/Window.h"
 
 void IScene::PreRun() {
-    m_DrawManager.Initialize();
+    m_Running = true;
     
+    m_DrawManager.Initialize();
     m_ObjectManager.InitializeObjects();
 }
 
 void IScene::Run() {
-    m_ObjectManager.UpdateObjects();
-    m_DrawManager.CallDraws();
+    while (m_Running) {
+        g_Time.Update();
+        g_Input.Update(g_Window());
+    
+        m_ObjectManager.UpdateObjects();
+        m_DrawManager.CallDraws();
+    
+        glfwPollEvents();
+    }
 }
 
 void IScene::PostRun() {
     m_ObjectManager.DestroyObjects();
+}
+
+void IScene::Exit() {
+    m_Running = false;
 }
 
 std::shared_ptr<Object> IScene::CreateObject(std::string name) {
