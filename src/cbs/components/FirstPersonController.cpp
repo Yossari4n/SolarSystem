@@ -38,25 +38,12 @@ void FirstPersonController::Update() {
     }
     
     // Mouse
-    float x_offset = g_Input.MouseOffset().x * m_MouseSensivity;
-    float y_offset = g_Input.MouseOffset().y * m_MouseSensivity;
+    float x_rotation = glm::radians(g_Input.MouseOffset().y * m_MouseSensivity);
+    float y_rotation = glm::radians(-g_Input.MouseOffset().x * m_MouseSensivity);
     
-    m_Yaw = m_Yaw + x_offset;
-    m_Pitch = m_Pitch + y_offset;
-    
-    if (m_Pitch > 89.0f) {
-        m_Pitch = 89.0f;
-    } else if (m_Pitch < -89.0f) {
-        m_Pitch = -89.0f;
-    }
-    
-    float x_rotation = glm::radians(m_Pitch);
-    float y_rotation = -glm::radians(m_Yaw);
-    
-    m_Transform->Rotation(glm::vec3(x_rotation, y_rotation, 0.0f));
+    m_Transform->Rotate(glm::vec3(x_rotation, y_rotation, 0.0f));
     
     m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
-    m_Front = glm::rotate(m_Front, x_rotation, glm::vec3(1.0f, 0.0f, 0.0f));
-    m_Front = glm::rotate(m_Front, y_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
+    m_Front = Object().Transform().Rotation() * m_Front;
     m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
 }
