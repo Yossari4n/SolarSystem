@@ -12,6 +12,7 @@ class Time {
 public:
     Time();
     
+    void Initialize();
     void Update();
     
     float CurrentTime() const { return m_CurrentTime; }

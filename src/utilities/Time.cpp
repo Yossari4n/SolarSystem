@@ -5,8 +5,11 @@ Time::Time()
     , m_FixedDeltaTime(0.0f)
     , m_LastFrame(0.0f)
     , m_TimeMultiplier(1.0f) {
+}
+
+void Time::Initialize() {
     m_CurrentTime = glfwGetTime();
-    m_FixedCurrentTime = m_CurrentTime;
+    m_LastFrame = m_FixedCurrentTime = m_CurrentTime;
 }
 
 void Time::Update() {

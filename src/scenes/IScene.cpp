@@ -14,7 +14,9 @@ void IScene::PreRun() {
 }
 
 void IScene::Run() {
-    while (m_Running) {
+    g_Time.Initialize();
+    
+    while (m_Running && !glfwWindowShouldClose(g_Window())) {
         g_Time.Update();
         g_Input.Update(g_Window());
     
