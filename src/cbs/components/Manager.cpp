@@ -16,7 +16,7 @@ void Manager::Update() {
     }
     
     // Pause time
-    if (g_Input.GetKeyState(GLFW_KEY_SPACE) == Input::KeyState::RELEASED) {
+    if (g_Input.GetKeyState(GLFW_KEY_SPACE) == Input::KeyState::PRESSED) {
         if (m_Paused) {
             g_Time.TimeMultiplayer(m_TimeMultiplayers[m_TimeMultiplayersIndex]);
             m_Paused = false;
@@ -27,19 +27,19 @@ void Manager::Update() {
     }
     
     // Time flow
-    if (g_Input.GetKeyState(GLFW_KEY_Z) == Input::KeyState::RELEASED) {
+    if (g_Input.GetKeyState(GLFW_KEY_Z) == Input::KeyState::PRESSED) {
         g_Time.TimeMultiplayer(m_TimeMultiplayers[0]);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_X) == Input::KeyState::RELEASED) {
+    if (g_Input.GetKeyState(GLFW_KEY_X) == Input::KeyState::PRESSED) {
         g_Time.TimeMultiplayer(m_TimeMultiplayers[1]);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_C) == Input::KeyState::RELEASED) {
+    if (g_Input.GetKeyState(GLFW_KEY_C) == Input::KeyState::PRESSED) {
         g_Time.TimeMultiplayer(m_TimeMultiplayers[2]);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_V) == Input::KeyState::RELEASED) {
+    if (g_Input.GetKeyState(GLFW_KEY_V) == Input::KeyState::PRESSED) {
         g_Time.TimeMultiplayer(m_TimeMultiplayers[3]);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_B) == Input::KeyState::RELEASED) {
+    if (g_Input.GetKeyState(GLFW_KEY_B) == Input::KeyState::PRESSED) {
         g_Time.TimeMultiplayer(m_TimeMultiplayers[4]);
     }
 }

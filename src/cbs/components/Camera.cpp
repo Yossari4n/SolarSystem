@@ -3,15 +3,15 @@
 Camera::Camera(glm::mat4 projection, glm::vec3 front, glm::vec3 world_up)
     : m_Projection(projection)
     , m_Front(front)
-    , m_WorldUp(world_up)
-    , m_Background(glm::vec3(0.0f, 0.0f, 0.0f)) {
+    , m_WorldUp(world_up) {
     
 }
 
-Camera::~Camera() {}
+Camera::~Camera() {
+}
 
 void Camera::Initialize() {
-    Object().Scene().DrawManger().RegisterCamera(this);
+    Object().Scene().DrawManager().RegisterCamera(this);
     m_Transform = &Object().Transform();
 }
 

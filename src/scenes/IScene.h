@@ -14,7 +14,7 @@ public:
     
     void Exit();
     
-    DrawManager& DrawManger() { return m_DrawManager; }
+    DrawManager& DrawManager() { return m_DrawManager; }
     
 protected:
     std::shared_ptr<Object> CreateObject(std::string name = "");

@@ -18,11 +18,11 @@ PointLight::PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
 }
 
 void PointLight::Initialize() {
-    Object().Scene().DrawManger().RegisterLightSource(this);
+    Object().Scene().DrawManager().RegisterLightSource(this);
 }
 
 void PointLight::Destroy() {
-    Object().Scene().DrawManger().UnregisterLightSource(this);
+    Object().Scene().DrawManager().UnregisterLightSource(this);
 }
 
 void PointLight::SetLightProperties(const ShaderProgram& shader) {

@@ -16,6 +16,7 @@ public:
         COLOR_LIGHT_RECEIVER,
         TEXTURE_PURE,
         TEXTURE_LIGHT_RECEIVER,
+        SKYBOX,
         
         COUNT
     };

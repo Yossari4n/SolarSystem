@@ -44,6 +44,6 @@ void FirstPersonController::Update() {
     m_Transform->Rotate(glm::vec3(x_rotation, y_rotation, 0.0f));
     
     m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
-    m_Front = Object().Transform().Rotation() * m_Front;
+    m_Front = m_Transform->Rotation() * m_Front;
     m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
 }

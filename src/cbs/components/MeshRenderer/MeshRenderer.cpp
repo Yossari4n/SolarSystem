@@ -11,11 +11,11 @@ MeshRenderer::~MeshRenderer() {
 }
 
 void MeshRenderer::Initialize() {
-    Object().Scene().DrawManger().RegsiterDrawCall(this);
+    Object().Scene().DrawManager().RegsiterDrawCall(this);
 }
 
 void MeshRenderer::Destroy() {
-    Object().Scene().DrawManger().UnregisterDrawCall(this);
+    Object().Scene().DrawManager().UnregisterDrawCall(this);
 }
 
 void MeshRenderer::Draw(const ShaderProgram &shader) const {

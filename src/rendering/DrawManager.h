@@ -2,7 +2,6 @@
 #define DrawManager_h
 
 #include "ShaderProgram.h"
-#include "IDrawable.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -11,7 +10,9 @@
 #include <array>
 
 class Camera;
+class IDrawable;
 class ILightSource;
+class Cubemap;
 
 class DrawManager {
 public:
@@ -21,6 +22,9 @@ public:
     void Initialize();
     
     void RegisterCamera(Camera* camera);
+    
+    void Skybox(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front);
+    void Background(const glm::vec3& background);
     
     void RegsiterDrawCall(IDrawable* component);
     void UnregisterDrawCall(IDrawable* component);
@@ -32,6 +36,9 @@ public:
     
 private:
     Camera* m_Camera;
+    
+    glm::vec3 m_Background;
+    Cubemap* m_Skybox;
     
     std::vector<IDrawable*> m_Drawables;
     std::vector<IDrawable*> m_PostProcessing;

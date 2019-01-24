@@ -1,31 +1,54 @@
 #include "DrawManager.h"
 
+#include "IDrawable.h"
 #include "ILightSource.h"
 #include "../utilities/Window.h"
+#include "../utilities/Cubemap.h"
 #include "../cbs/components/Camera.h"
 
-DrawManager::DrawManager() {
+DrawManager::DrawManager()
+    : m_Skybox(nullptr)
+    , m_Background(0.0f, 0.0f, 0.0f) {
+        
 }
 
 DrawManager::~DrawManager() {
+    if (m_Skybox != nullptr) {
+        delete m_Skybox;
+    }
 }
 
 void DrawManager::Initialize() {
     m_ShaderPrograms[ShaderProgram::TYPE::COLOR_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.vs",
-                                                                       "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.fs");
+                                                                    "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.fs");
     
     m_ShaderPrograms[ShaderProgram::TYPE::TEXTURE_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.vs",
-                                                                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.fs");
+                                                                      "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.fs");
     
     m_ShaderPrograms[ShaderProgram::TYPE::TEXTURE_LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
-                                                                                   "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
+                                                                                "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
 
+    m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.vs",
+                                                                "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.fs");
+    
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 }
 
 void DrawManager::RegisterCamera(Camera *camera) {
     m_Camera = camera;
+}
+
+void DrawManager::Skybox(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front) {
+    if (m_Skybox != nullptr) {
+        delete m_Skybox;
+    }
+    
+    m_Skybox = new Cubemap(right, left, top, bottom, back, front, ShaderProgram::TYPE::SKYBOX);
+}
+
+void DrawManager::Background(const glm::vec3& background) {
+    m_Background = background;
 }
 
 void DrawManager::RegsiterDrawCall(IDrawable* component) {
@@ -59,10 +82,10 @@ void DrawManager::UnregisterLightSource(ILightSource* light_source) {
 }
 
 void DrawManager::CallDraws() const {
-    glm::vec3 background = m_Camera->Background();
-    glClearColor(background.x, background.y, background.z, 1.0f);
+    glClearColor(m_Background.x, m_Background.y, m_Background.z, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    // Draw objects
     for (auto it = m_Drawables.begin(); it != m_Drawables.end(); it++) {
         int shader_type = (*it)->ShaderType();
         const ShaderProgram& curr_shader = m_ShaderPrograms[shader_type];
@@ -83,6 +106,19 @@ void DrawManager::CallDraws() const {
         }
         
         (*it)->Draw(curr_shader);
+    }
+    
+    // Draw skybox
+    if (m_Skybox != nullptr) {
+        glDepthFunc(GL_LEQUAL);
+        
+        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].Use();
+        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].SetMat4("view", glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
+        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].SetMat4("projection", m_Camera->Projection());
+        
+        m_Skybox->Draw(m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX]);
+        
+        glDepthFunc(GL_LESS);
     }
     
     glfwSwapBuffers(g_Window());
