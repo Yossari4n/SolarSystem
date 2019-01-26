@@ -1,7 +1,7 @@
 #ifndef IComponent_h
 #define IComponent_h
 
-#include "Object.h"
+class Object;
 
 class IComponent {
     friend class Object;
@@ -21,5 +21,7 @@ public:
 private:
     class Object* m_Object;
 };
+
+#include "Object.h"
 
 #endif

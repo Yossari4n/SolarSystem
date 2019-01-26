@@ -9,7 +9,7 @@
 DrawManager::DrawManager()
     : m_Skybox(nullptr)
     , m_Background(0.0f, 0.0f, 0.0f) {
-        
+    
 }
 
 DrawManager::~DrawManager() {

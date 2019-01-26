@@ -1,8 +1,9 @@
 #ifndef Object_h
 #define Object_h
 
-#include "../scenes/IScene.h"
 #include "Transform.h"
+#include "components/IComponent.h"
+#include "../scenes/IScene.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,8 +13,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-
-class IComponent;
 
 class Object {
 public:
@@ -25,7 +24,7 @@ public:
     void Destroy();
     
     template <class T, typename ...Args>
-    std::shared_ptr<T> CreateComponent(Args&&... params) {
+    T* CreateComponent(Args&&... params) {
         // Create new IComponent
         auto comp = std::make_shared<T>(std::forward<Args>(params)...);
         comp->m_Object = this;
@@ -33,15 +32,22 @@ public:
         // Register IComponent in a pool
         m_Components.push_back(comp);
 
-        // Return shared pointer of T type
-        return std::dynamic_pointer_cast<T>(comp);
+        // Return pointer of T type
+        return comp.get();
     }
     
     template <class T>
     void RemoveComponent() {
         m_Components.erase(std::remove_if(m_Components.begin(),
                                           m_Components.end(),
-                                          [](std::shared_ptr<IComponent> &comp) { return dynamic_cast<T*>(comp.get()) != nullptr; }),
+                                          [](std::shared_ptr<IComponent> &comp) {
+                                              if (dynamic_cast<T*>(comp.get()) != nullptr) {
+                                                  comp->Destroy();
+                                                  return true;
+                                              }
+                                              
+                                              return false;
+                                          }),
                            m_Components.end());
     }
     

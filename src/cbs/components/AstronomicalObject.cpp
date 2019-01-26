@@ -1,5 +1,7 @@
 #include "AstronomicalObject.h"
 
+#include "MeshRenderer/MeshRenderer.h"
+
 AstronomicalObject::AstronomicalObject(float rotation_speed)
     : m_RotationSpeed(rotation_speed) {}
 
