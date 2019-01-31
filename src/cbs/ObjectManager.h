@@ -13,7 +13,7 @@ public:
     void UpdateObjects();
     void DestroyObjects();
     
-    std::shared_ptr<Object> CreateObject(IScene& scene, std::string name = "");
+    Object* CreateObject(IScene& scene, std::string name = "");
 private:
     std::vector<std::shared_ptr<Object>> m_Objects;
 };

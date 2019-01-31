@@ -35,6 +35,6 @@ void IScene::Exit() {
     m_Running = false;
 }
 
-std::shared_ptr<Object> IScene::CreateObject(std::string name) {
+Object* IScene::CreateObject(std::string name) {
     return m_ObjectManager.CreateObject(*this, name);
 }

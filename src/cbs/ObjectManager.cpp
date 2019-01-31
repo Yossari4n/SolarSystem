@@ -21,8 +21,8 @@ void ObjectManager::DestroyObjects() {
     }
 }
 
-std::shared_ptr<Object> ObjectManager::CreateObject(IScene& scene, std::string name) {
+Object* ObjectManager::CreateObject(IScene& scene, std::string name) {
     m_Objects.push_back(std::make_shared<Object>(scene, name));
     
-    return m_Objects.at(m_Objects.size() - 1);
+    return m_Objects.at(m_Objects.size() - 1).get();
 }
