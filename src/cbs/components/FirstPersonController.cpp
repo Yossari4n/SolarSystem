@@ -15,17 +15,18 @@ void FirstPersonController::Initialize() {
 }
 
 void FirstPersonController::Update() {
-    float dt = g_Time.DeltaTime();
+    if (!m_Active) {
+        return;
+    }
     
     // Mouse
     float x_rotation = glm::radians(g_Input.MouseOffset().y * m_MouseSensitivity);
     float y_rotation = glm::radians(-g_Input.MouseOffset().x * m_MouseSensitivity);
-    
     m_Transform->Rotate(glm::vec3(x_rotation, y_rotation, 0.0f));
     
-    glm::vec3 curr_front = m_Front;
-    curr_front = m_Transform->Rotation() * curr_front;
-    m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
+    // Update vectors
+    glm::vec3 curr_front = m_Transform->Rotation() * m_Front;
+    m_Right = glm::normalize(glm::cross(curr_front, m_WorldUp));
     
     // Keyboard
     if (g_Input.GetKeyState(GLFW_KEY_LEFT_SHIFT)) {
@@ -34,16 +35,17 @@ void FirstPersonController::Update() {
         m_CurrentMovementSpeed = m_MovementSpeedSlow;
     }
     
-    if (g_Input.GetKeyState(GLFW_KEY_W) || g_Input.GetKeyState(GLFW_KEY_UP)) {
+    float dt = g_Time.DeltaTime();
+    if (g_Input.GetKeyState(GLFW_KEY_W)) {
         m_Transform->Move(curr_front * m_CurrentMovementSpeed * dt);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_S) || g_Input.GetKeyState(GLFW_KEY_DOWN)) {
+    if (g_Input.GetKeyState(GLFW_KEY_S)) {
         m_Transform->Move(-curr_front * m_CurrentMovementSpeed * dt);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_A) || g_Input.GetKeyState(GLFW_KEY_LEFT)) {
+    if (g_Input.GetKeyState(GLFW_KEY_A)) {
         m_Transform->Move(-m_Right * m_CurrentMovementSpeed * dt);
     }
-    if (g_Input.GetKeyState(GLFW_KEY_D) || g_Input.GetKeyState(GLFW_KEY_RIGHT)) {
+    if (g_Input.GetKeyState(GLFW_KEY_D)) {
         m_Transform->Move(m_Right * m_CurrentMovementSpeed * dt);
     }
 }

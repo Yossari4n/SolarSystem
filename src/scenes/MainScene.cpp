@@ -4,6 +4,7 @@
 #include "../cbs/components/AstronomicalObject.h"
 #include "../cbs/components/PointLight.h"
 #include "../cbs/components/FirstPersonController.h"
+#include "../cbs/components/ThirdPersonController.h"
 #include "../cbs/components/Camera.h"
 #include "../cbs/components/Manager.h"
 #include "../cbs/components/BezierCurve.h"
@@ -15,7 +16,7 @@
 // where T := time in seconds for planet to make full cycle
 #define EARTH_RADIUS 0.5f
 #define EARTH_ROTATION_SPEED (360.f / 5.0f) // full rotation takes 5 second
-#define EARTH_ORBIT_RADIUS (150.0f / 2.0f) // all distances are divided by 2
+#define EARTH_ORBIT_RADIUS (150.0f / 4.0f) // all distances are divided by 2
 #define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / (360.0f * 5.0f)) // full orbit takes 5 minutes
 
 void MainScene::CreateScene() {
@@ -26,18 +27,9 @@ void MainScene::CreateScene() {
                          "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/back.jpg",
                          "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/front.jpg");
     
+    
     glm::vec3 model_scale(1.0f / (976.032f * 2.0f), 1.0f / (976.032f * 2.0f), 1.0f / (986.312f * 2.0f));
     glm::quat model_rotation(glm::vec3(glm::radians(-90.0f), 0.0f, 0.0f));
-    
-    
-    auto manager = CreateObject("Manager");
-    manager->CreateComponent<Manager>();
-    
-    
-    auto camera = CreateObject("Camera");
-    camera->Transform().Move(glm::vec3(0.0f, 0.0f, 100.0f));
-    camera->CreateComponent<Camera>(glm::perspective(glm::radians(45.0f), 2880.0f / 1800.0f, 0.1f, 3000.0f));
-    camera->CreateComponent<FirstPersonController>();
     
     
     auto sun = CreateObject("Sun");
@@ -141,4 +133,17 @@ void MainScene::CreateScene() {
     neptun_ao->Orbit(Orbit(&sun->Transform().Position(),
                            30.06f * EARTH_ORBIT_RADIUS,
                            -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f));
+    
+    
+    auto camera = CreateObject("Camera");
+    camera->Transform().Move(glm::vec3(0.0f, 0.0f, 80.0f));
+    camera->CreateComponent<Camera>(glm::perspective(glm::radians(45.0f), 2880.0f / 1800.0f, 0.1f, 3000.0f));
+    auto camera_tpc = camera->CreateComponent<ThirdPersonController>();
+    auto camera_fpc = camera->CreateComponent<FirstPersonController>();
+    std::array<class Object*, 9> planets{{sun, merkury, wenus, earth, mars, jupiter, saturn, uranus, neptun}};
+    std::array<float, 9> radiuses{{100.0f, 1.0f, 1.0f, 1.0f, 1.0f, 10.0f, 10.0f, 10.0f, 10.0f}};
+    camera->CreateComponent<Manager>(planets,
+                                     radiuses,
+                                     camera_fpc,
+                                     camera_tpc);
 }

@@ -1,16 +1,20 @@
 #include "ThirdPersonController.h"
 
 ThirdPersonController::ThirdPersonController(class Object* target, float radius, glm::vec3 front, float mouse_sensitivity)
-    : m_Target(target)
+    : m_Target(&target->Transform())
     , m_Radius(radius)
     , m_Front(front)
     , m_MouseSensitivity(mouse_sensitivity) {
     m_XRotation = 0.0f;
     m_YRotation = 0.0f;
-    m_RotationAxis = glm::vec3(-1.0f, 0.0f, 0.0f);
+    m_RotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
 void ThirdPersonController::Update() {
+    if (!m_Active) {
+        return;
+    }
+    
     // Get mouse input and accumulate it as rotations
     m_XRotation += glm::radians(g_Input.MouseOffset().y * m_MouseSensitivity);
     m_YRotation += glm::radians(g_Input.MouseOffset().x * m_MouseSensitivity);
@@ -24,10 +28,10 @@ void ThirdPersonController::Update() {
     // Rotate camera around world origin and then move it to m_Target
     glm::vec3 new_pos = glm::vec3(0.0f, 0.0f, m_Radius) * rot_y;
     new_pos = glm::rotate(new_pos, m_XRotation, curr_rotation_axis);
-    new_pos = new_pos + m_Target->Transform().Position();
+    new_pos = new_pos + m_Target->Position();
     
     // Calculate rotation from old front to new front
-    glm::vec3 diff = m_Target->Transform().Position() - new_pos;
+    glm::vec3 diff = m_Target->Position() - new_pos;
     glm::quat front_rot = m_RotationBeetwen(m_Front, diff);
     
     // Apply
