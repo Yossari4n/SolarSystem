@@ -7,13 +7,15 @@ Simple visualisation of solar system programmed with C++ and OpenGL
 
 ================CONTROLLERS================
 
-WSAD and ARROWS to move
+WSAD to move
 
 MOUSE to rotate
 
 LEFT SHIFT to move faster
 
-1, 2, 3, 4 to change time flow
+0, 1, 2, 3, 4, 5, 6, 7, 8 to focus camera on planet
+
+ARROWS to control time flow
 
 SPACE to puase time
 
@@ -37,4 +39,6 @@ Assimp
 
 3D planet model: https://free3d.com/user/printable_models
 
-Textures: https://www.solarsystemscope.com/textures/
+Planet textures: https://www.solarsystemscope.com/textures/
+
+Skybox texture: http://www.custommapmakers.org/skyboxes.php
