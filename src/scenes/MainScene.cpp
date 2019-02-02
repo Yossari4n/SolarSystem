@@ -7,7 +7,6 @@
 #include "../cbs/components/ThirdPersonController.h"
 #include "../cbs/components/Camera.h"
 #include "../cbs/components/Manager.h"
-#include "../cbs/components/BezierCurve.h"
 
 #define PI 3.14159265358979323846f
 #define DOUBLE_PI (PI * 2.0f)
@@ -16,7 +15,7 @@
 // where T := time in seconds for planet to make full cycle
 #define EARTH_RADIUS 0.5f
 #define EARTH_ROTATION_SPEED (360.f / 5.0f) // full rotation takes 5 second
-#define EARTH_ORBIT_RADIUS (150.0f / 4.0f) // all distances are divided by 2
+#define EARTH_ORBIT_RADIUS (150.0f / 4.0f) // all distances are divided by 4
 #define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / (360.0f * 5.0f)) // full orbit takes 5 minutes
 
 void MainScene::CreateScene() {
