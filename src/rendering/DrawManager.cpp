@@ -7,7 +7,8 @@
 #include "../cbs/components/Camera.h"
 
 DrawManager::DrawManager()
-    : m_Skybox(nullptr)
+    : line(glm::vec3(-2.0f, 0.0f, 78.0f), glm::vec3(4.0f, 0.0f, 78.0f), glm::vec3(1.0f), 100.0f)
+    , m_Skybox(nullptr)
     , m_Background(0.0f, 0.0f, 0.0f) {
     
 }
@@ -85,14 +86,14 @@ void DrawManager::CallDraws() const {
     glClearColor(m_Background.x, m_Background.y, m_Background.z, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
+    
     // Draw objects
     for (auto it = m_Drawables.begin(); it != m_Drawables.end(); it++) {
         int shader_type = (*it)->ShaderType();
         const ShaderProgram& curr_shader = m_ShaderPrograms[shader_type];
-        curr_shader.Use();
         
-        // pv = projection * view
-        glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
+        curr_shader.Use();
         curr_shader.SetMat4("pv", pv);
         
         if (shader_type == ShaderProgram::TYPE::TEXTURE_LIGHT_RECEIVER) {
