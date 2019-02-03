@@ -19,15 +19,19 @@ public:
     
     void Activate() {
         m_Active = true;
+        OnActivate();
     }
     
     void Deactivate() {
         m_Active = false;
+        OnDeactivate();
     }
 
 protected:
     virtual void Initialize() {};
+    virtual void OnActivate() {};
     virtual void Update() {};
+    virtual void OnDeactivate() {};
     virtual void Destroy() {};
     
     bool m_Active;
