@@ -7,8 +7,7 @@
 #include "../cbs/components/Camera.h"
 
 DrawManager::DrawManager()
-    : line(glm::vec3(-2.0f, 0.0f, 78.0f), glm::vec3(4.0f, 0.0f, 78.0f), glm::vec3(1.0f), 100.0f)
-    , m_Skybox(nullptr)
+    : m_Skybox(nullptr)
     , m_Background(0.0f, 0.0f, 0.0f) {
     
 }
@@ -114,8 +113,7 @@ void DrawManager::CallDraws() const {
         glDepthFunc(GL_LEQUAL);
         
         m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].Use();
-        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].SetMat4("view", glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
-        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].SetMat4("projection", m_Camera->Projection());
+        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].SetMat4("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
         
         m_Skybox->Draw(m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX]);
         
