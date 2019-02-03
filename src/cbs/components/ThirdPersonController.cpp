@@ -10,6 +10,16 @@ ThirdPersonController::ThirdPersonController(class Object* target, float radius,
     m_RotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
+void ThirdPersonController::OnActivate() {
+    m_XRotation = 0.0f;
+    m_YRotation = 0.0f;
+    m_RotationAxis = glm::vec3(-1.0f, 0.0f, 0.0f);
+}
+
+void ThirdPersonController::Initialize() {
+
+}
+
 void ThirdPersonController::Update() {
     if (!m_Active) {
         return;
@@ -18,6 +28,13 @@ void ThirdPersonController::Update() {
     // Get mouse input and accumulate it as rotations
     m_XRotation += glm::radians(g_Input.MouseOffset().y * m_MouseSensitivity);
     m_YRotation += glm::radians(g_Input.MouseOffset().x * m_MouseSensitivity);
+
+    // Prevent object flip by keeping m_XRotation beetwen <-60, 60> degrees
+    if (m_XRotation > DEGREES_60) {
+        m_XRotation = DEGREES_60;
+    } else if (m_XRotation < -DEGREES_60) {
+        m_XRotation = -DEGREES_60;
+    }
     
     // Get whole rotation around Y
     glm::quat rot_y(glm::vec3(0.0f, m_YRotation, 0.0f));

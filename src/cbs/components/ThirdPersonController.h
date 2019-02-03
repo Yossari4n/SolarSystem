@@ -1,6 +1,8 @@
 #ifndef ThirdPersonController_h
 #define ThirdPersonController_h
 
+#define DEGREES_60 (60.0f * 3.14f / 180.0f)
+
 #include "IComponent.h"
 
 #include "../../utilities/Time.h"
@@ -12,6 +14,8 @@ class ThirdPersonController : public IComponent {
 public:
     ThirdPersonController(class Object* target = nullptr, float radius = 0.0f, glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), float mouse_sensitivity = 0.1f);
     
+    void Initialize() override;
+    void OnActivate() override;
     void Update() override;
     
     void Target(class Object* target) { m_Target = &target->Transform(); }
