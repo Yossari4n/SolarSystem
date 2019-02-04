@@ -1,14 +1,14 @@
 #ifndef ThirdPersonController_h
 #define ThirdPersonController_h
 
-#define DEGREES_60 (60.0f * 3.14f / 180.0f)
-
 #include "IComponent.h"
 
 #include "../../utilities/Time.h"
 #include "../../utilities/Input.h"
 
 #include <glm/gtx/rotate_vector.hpp>
+
+#define DEGREES_60 (60.0f * 3.14f / 180.0f)
 
 class ThirdPersonController : public IComponent {
 public:

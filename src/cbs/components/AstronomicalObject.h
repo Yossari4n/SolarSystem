@@ -27,8 +27,8 @@ struct Orbit {
 class AstronomicalObject : public IComponent {
 public:
     AstronomicalObject(float rotation_speed = 0);
-    ~AstronomicalObject();
     
+    void Initialize() override;
     void Update() override;
     
     const Orbit& Orbit() const { return m_Orbit; }
