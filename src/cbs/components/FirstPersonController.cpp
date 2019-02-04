@@ -6,12 +6,24 @@ FirstPersonController::FirstPersonController(float movement_speed_fast, float mo
     , m_MouseSensitivity(mouse_sensivity)
     , m_Front(front)
     , m_WorldUp(world_up) {
-    
+    m_XRotation = 0.0f;
 }
 
 void FirstPersonController::Initialize() {
     m_LastMousePos = g_Input.MousePosition();
     m_Transform = &Object().Transform();
+}
+
+void FirstPersonController::OnActivate() {
+    glm::vec3 curr_front = m_Front * Object().Transform().Rotation();
+    glm::vec3 projected_front(curr_front.x, 0.0f, curr_front.z); // curr_front vector projected onto XY plane
+    
+    m_XRotation = glm::angle(glm::normalize(curr_front), glm::normalize(projected_front));
+    
+    // Becouse glm::angle always returns positive value angle needs to be negated manually
+    if (curr_front.y > 0.0f) {
+        m_XRotation = -m_XRotation;
+    }
 }
 
 void FirstPersonController::Update() {
@@ -22,10 +34,20 @@ void FirstPersonController::Update() {
     // Mouse
     float x_rotation = glm::radians(g_Input.MouseOffset().y * m_MouseSensitivity);
     float y_rotation = glm::radians(-g_Input.MouseOffset().x * m_MouseSensitivity);
-    m_Transform->Rotate(glm::vec3(x_rotation, y_rotation, 0.0f));
+    m_XRotation += x_rotation;
+    
+    // Prevent object flip
+    if (m_XRotation > DEGREES_60) {
+        m_XRotation = DEGREES_60;
+        x_rotation = 0.0f;
+    } else if (m_XRotation < -DEGREES_60) {
+        m_XRotation = -DEGREES_60;
+        x_rotation = 0.0f;
+    }
     
     // Update vectors
     glm::vec3 curr_front = m_Transform->Rotation() * m_Front;
+    m_Transform->Rotate(glm::vec3(x_rotation, y_rotation, 0.0f));
     m_Right = glm::normalize(glm::cross(curr_front, m_WorldUp));
     
     // Keyboard
