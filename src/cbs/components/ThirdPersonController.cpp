@@ -10,14 +10,18 @@ ThirdPersonController::ThirdPersonController(class Object* target, float radius,
     m_RotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
+void ThirdPersonController::Radius(float radius) {
+    if (radius < 0.0f) {
+        radius = 0.0f;
+    }
+    
+    m_Radius = radius;
+}
+
 void ThirdPersonController::OnActivate() {
     m_XRotation = 0.0f;
     m_YRotation = 0.0f;
     m_RotationAxis = glm::vec3(-1.0f, 0.0f, 0.0f);
-}
-
-void ThirdPersonController::Initialize() {
-
 }
 
 void ThirdPersonController::Update() {

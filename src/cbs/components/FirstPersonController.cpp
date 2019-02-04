@@ -1,5 +1,7 @@
 #include "FirstPersonController.h"
 
+#include "../../utilities/Line.h"
+
 FirstPersonController::FirstPersonController(float movement_speed_fast, float movement_speed_slow, float mouse_sensivity, glm::vec3 front, glm::vec3 world_up)
     : m_MovementSpeedFast(movement_speed_fast)
     , m_MovementSpeedSlow(movement_speed_slow)
@@ -47,7 +49,8 @@ void FirstPersonController::Update() {
     
     // Update vectors
     glm::vec3 curr_front = m_Transform->Rotation() * m_Front;
-    m_Transform->Rotate(glm::vec3(x_rotation, y_rotation, 0.0f));
+    m_Transform->Rotate(glm::vec3(x_rotation, 0.0f, 0.0f), Transform::LOCAL);
+    m_Transform->Rotate(glm::vec3(0.0f, y_rotation, 0.0f), Transform::WORLD);
     m_Right = glm::normalize(glm::cross(curr_front, m_WorldUp));
     
     // Keyboard

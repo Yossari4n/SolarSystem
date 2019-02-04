@@ -14,12 +14,12 @@ class ThirdPersonController : public IComponent {
 public:
     ThirdPersonController(class Object* target = nullptr, float radius = 0.0f, glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), float mouse_sensitivity = 0.1f);
     
-    void Initialize() override;
     void OnActivate() override;
     void Update() override;
     
     void Target(class Object* target) { m_Target = &target->Transform(); }
-    void Radius(float radius) { m_Radius = radius; }
+    void Radius(float radius);
+    float Radius() const  { return m_Radius; }
     
     class Object* line;
     
