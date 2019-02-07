@@ -7,6 +7,7 @@
 #include "../cbs/components/ThirdPersonController.h"
 #include "../cbs/components/Camera.h"
 #include "../cbs/components/Manager.h"
+#include "../cbs/components/Tail.h"
 
 #define PI 3.14159265358979323846f
 #define DOUBLE_PI (PI * 2.0f)
@@ -54,6 +55,7 @@ void MainScene::CreateScene() {
     merkury_ao->Orbit(Orbit(&sun->Transform().Position(),
                             0.39f * EARTH_ORBIT_RADIUS,
                             -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f));
+    merkury->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto wenus = CreateObject("Wenus");
@@ -65,6 +67,7 @@ void MainScene::CreateScene() {
     wenus_ao->Orbit(Orbit(&sun->Transform().Position(),
                           0.72f * EARTH_ORBIT_RADIUS,
                           -EARTH_ORBIT_ANGULAR_VELOCITY / 0.61f));
+    wenus->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto earth = CreateObject("Earth");
@@ -77,6 +80,7 @@ void MainScene::CreateScene() {
     earth_ao->Orbit(Orbit(&sun->Transform().Position(),
                           EARTH_ORBIT_RADIUS,
                           -EARTH_ORBIT_ANGULAR_VELOCITY));
+    earth->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto mars = CreateObject("Mars");
@@ -88,6 +92,7 @@ void MainScene::CreateScene() {
     mars_ao->Orbit(Orbit(&sun->Transform().Position(),
                          1.52f * EARTH_ORBIT_RADIUS,
                          -EARTH_ORBIT_ANGULAR_VELOCITY / 1.88f));
+    mars->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto jupiter = CreateObject("Jupiter");
@@ -99,6 +104,7 @@ void MainScene::CreateScene() {
     jupiter_ao->Orbit(Orbit(&sun->Transform().Position(),
                             5.2f * EARTH_ORBIT_RADIUS,
                             -EARTH_ORBIT_ANGULAR_VELOCITY / 11.86f));
+    jupiter->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto saturn = CreateObject("Saturn");
@@ -110,6 +116,7 @@ void MainScene::CreateScene() {
     saturn_ao->Orbit(Orbit(&sun->Transform().Position(),
                            9.54f * EARTH_ORBIT_RADIUS,
                            -EARTH_ORBIT_ANGULAR_VELOCITY / 29.44f));
+    saturn->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto uranus = CreateObject("Uranus");
@@ -121,6 +128,7 @@ void MainScene::CreateScene() {
     uranus_ao->Orbit(Orbit(&sun->Transform().Position(),
                            19.19f * EARTH_ORBIT_RADIUS,
                            -EARTH_ORBIT_ANGULAR_VELOCITY / 84.07f));
+    uranus->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto neptun = CreateObject("Neptun");
@@ -132,6 +140,7 @@ void MainScene::CreateScene() {
     neptun_ao->Orbit(Orbit(&sun->Transform().Position(),
                            30.06f * EARTH_ORBIT_RADIUS,
                            -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f));
+    neptun->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
     
     
     auto camera = CreateObject("Camera");

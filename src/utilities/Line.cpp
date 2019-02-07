@@ -25,6 +25,11 @@ Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color, float width)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+Line::~Line() {
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteVertexArrays(1, &m_VAO);
+}
+
 void Line::Draw(const ShaderProgram &shader) const {
     glm::mat4 model(1.0f);
     shader.SetMat4("model", model);

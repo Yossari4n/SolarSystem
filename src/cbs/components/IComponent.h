@@ -17,6 +17,8 @@ public:
         return *m_Object;
     }
     
+    bool Active() const { return m_Active; }
+    
     void Activate() {
         m_Active = true;
         OnActivate();

@@ -43,6 +43,7 @@ int main() {
     // Set callbacks
     glfwSetFramebufferSizeCallback(g_Window(), framebuffer_size_callback);
     glfwSetCursorPosCallback(g_Window(), mouse_callback);
+    glfwSetScrollCallback(g_Window(), scroll_callback);
     
     // Capture the mouse
     glfwSetInputMode(g_Window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);

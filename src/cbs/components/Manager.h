@@ -18,6 +18,9 @@ public:
     void Update() override;
     
 private:
+    // Drawing mode
+    bool m_Realistic;
+    
     // Controllers
     FirstPersonController* m_FPC;
     ThirdPersonController* m_TPC;
@@ -27,6 +30,8 @@ private:
     unsigned int m_TimeMultiplayersIndex;
     std::array<int, 5> m_TimeMultiplayers;
     
+    // Planets
+    int m_CurrentPlanetIndex;
     std::array<class Object*, 9> m_Planets;
     std::array<float, 9> m_Radiuses;
 };

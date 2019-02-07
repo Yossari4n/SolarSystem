@@ -1,5 +1,8 @@
 #include "Manager.h"
 
+#include "MeshRenderer/MeshRenderer.h"
+#include "Tail.h"
+
 Manager::Manager(std::array<class Object *, 9> planets, std::array<float, 9> radiuses, FirstPersonController* fpc, ThirdPersonController* tpc)
     : m_Planets(planets)
     , m_Radiuses(radiuses)
@@ -7,16 +10,26 @@ Manager::Manager(std::array<class Object *, 9> planets, std::array<float, 9> rad
     , m_TPC(tpc) {
     
     m_Paused = false;
-    m_TimeMultiplayersIndex = 0;
+    m_CurrentPlanetIndex = -1;
     m_TimeMultiplayers = { 1, 2, 4, 10, 50 };
+    
+    m_TimeMultiplayersIndex = 0;
+        
+    m_Realistic = true;
 }
 
 void Manager::Initialize() {
     g_Time.TimeMultiplayer(m_TimeMultiplayers[0]);
     m_TPC->Deactivate();
+    
+    for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
+        (*it)->GetComponent<Tail>()->Deactivate();
+    }
 }
 
 void Manager::Update() {
+    std::cout << g_Time.DeltaTime() << '\n';
+    
     // Exit scene
     if (g_Input.GetKeyState(GLFW_KEY_ESCAPE) == Input::KeyState::PRESSED) {
         Object().Scene().Exit();
@@ -45,6 +58,27 @@ void Manager::Update() {
         g_Time.TimeMultiplayer(m_TimeMultiplayers[m_TimeMultiplayersIndex]);
     }
     
+    // Drawin mode
+    if (g_Input.GetKeyState(GLFW_KEY_TAB) == Input::KeyState::PRESSED) {
+        if (m_Realistic) {
+            m_Realistic = false;
+            
+            for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
+                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::TEXTURE_PURE);
+                (*it)->GetComponent<Tail>()->Activate();
+            }
+            std::cout << " Activate \n";
+        } else {
+            m_Realistic = true;
+            
+            for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
+                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::TEXTURE_LIGHT_RECEIVER);
+                (*it)->GetComponent<Tail>()->Deactivate();
+            }
+            std::cout << " Deactivate \n";
+        }
+    }
+    
     // First person controller
     if (g_Input.GetKeyState(GLFW_KEY_W)
         || g_Input.GetKeyState(GLFW_KEY_S)
@@ -52,6 +86,7 @@ void Manager::Update() {
         || g_Input.GetKeyState(GLFW_KEY_D)) {
         m_TPC->Deactivate();
         m_FPC->Activate();
+        m_CurrentPlanetIndex = -1;
     }
     
     // Third person controller
@@ -59,6 +94,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 0;
         m_TPC->Target(m_Planets[0]);
         m_TPC->Radius(m_Radiuses[0]);
     }
@@ -66,6 +102,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 1;
         m_TPC->Target(m_Planets[1]);
         m_TPC->Radius(m_Radiuses[1]);
     }
@@ -73,6 +110,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 2;
         m_TPC->Target(m_Planets[2]);
         m_TPC->Radius(m_Radiuses[2]);
     }
@@ -80,6 +118,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 3;
         m_TPC->Target(m_Planets[3]);
         m_TPC->Radius(m_Radiuses[3]);
     }
@@ -87,6 +126,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 4;
         m_TPC->Target(m_Planets[4]);
         m_TPC->Radius(m_Radiuses[4]);
     }
@@ -94,6 +134,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 5;
         m_TPC->Target(m_Planets[5]);
         m_TPC->Radius(m_Radiuses[5]);
     }
@@ -101,6 +142,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 6;
         m_TPC->Target(m_Planets[6]);
         m_TPC->Radius(m_Radiuses[6]);
     }
@@ -108,6 +150,7 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 7;
         m_TPC->Target(m_Planets[7]);
         m_TPC->Radius(m_Radiuses[7]);
     }
@@ -115,7 +158,17 @@ void Manager::Update() {
         m_FPC->Deactivate();
         m_TPC->Activate();
         
+        m_CurrentPlanetIndex = 8;
         m_TPC->Target(m_Planets[8]);
         m_TPC->Radius(m_Radiuses[8]);
+    }
+    
+    if (m_TPC->Active()) {
+        float new_radius = m_TPC->Radius() + g_Input.ScrollOffset();
+        if (new_radius < m_Radiuses[m_CurrentPlanetIndex]) {
+            new_radius = m_Radiuses[m_CurrentPlanetIndex];
+        }
+        
+        m_TPC->Radius(new_radius);
     }
 }
