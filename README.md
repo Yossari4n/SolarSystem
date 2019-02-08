@@ -1,44 +1,24 @@
-================SOLAR SYSTEM================
+# SOLAR SYSTEM
+Simple visualisation of solar system programmed with C++ and modern OpenGL, made with Entity-Component-System in mind.
 
-Simple visualisation of solar system programmed with C++ and OpenGL 
+## CONTROLS
+* WSAD to move
+* MOUSE to rotate
+* LEFT SHIFT to move camera faster
+* 0 - 8 to focus camera on object
+* SCROLL to change camera's distance from observed object
+* ARROWS to control time flow
+* SPACE to puase/unpasue time
+* TAB to change rendering mode
 
+## DEPENDENCIES
+* GLFW
+* GLAD
+* GLM
+* Assimp
+* STB
 
-
-
-================CONTROLLERS================
-
-WSAD to move
-
-MOUSE to rotate
-
-LEFT SHIFT to move faster
-
-0, 1, 2, 3, 4, 5, 6, 7, 8 to focus camera on planet
-
-ARROWS to control time flow
-
-SPACE to puase time
-
-
-
-
-================DEPENDENCIES================
-
-OpenGL 3.3 core
-
-GLAD
-
-GLM
-
-Assimp
-
-
-
-
-================SPECIAL THANKS================
-
-3D planet model: https://free3d.com/user/printable_models
-
-Planet textures: https://www.solarsystemscope.com/textures/
-
-Skybox texture: http://www.custommapmakers.org/skyboxes.php
+## SPECIAL THANKS
+* 3D planet model: https://free3d.com/user/printable_models
+* Planet textures: https://www.solarsystemscope.com/textures/
+* Skybox texture: http://www.custommapmakers.org/skyboxes.php
