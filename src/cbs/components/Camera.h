@@ -37,13 +37,16 @@ private:
     glm::mat4 m_ViewMatrix;
     
     glm::mat4 m_Projection;
+    
     glm::vec3 m_Front;
     glm::vec3 m_WorldUp;
+    glm::vec3 m_Right;
     
     glm::vec3 m_Position;
     glm::vec3 m_CurrentFront;
+    glm::vec3 m_CurrentRight;
     glm::vec3 m_Up;
-    glm::vec3 m_Right;
+    
     
     Transform* m_Transform;
 };

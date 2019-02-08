@@ -28,8 +28,6 @@ void Manager::Initialize() {
 }
 
 void Manager::Update() {
-    std::cout << g_Time.DeltaTime() << '\n';
-    
     // Exit scene
     if (g_Input.GetKeyState(GLFW_KEY_ESCAPE) == Input::KeyState::PRESSED) {
         Object().Scene().Exit();
@@ -67,7 +65,6 @@ void Manager::Update() {
                 (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::TEXTURE_PURE);
                 (*it)->GetComponent<Tail>()->Activate();
             }
-            std::cout << " Activate \n";
         } else {
             m_Realistic = true;
             
@@ -75,15 +72,15 @@ void Manager::Update() {
                 (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::TEXTURE_LIGHT_RECEIVER);
                 (*it)->GetComponent<Tail>()->Deactivate();
             }
-            std::cout << " Deactivate \n";
         }
     }
     
     // First person controller
-    if (g_Input.GetKeyState(GLFW_KEY_W)
-        || g_Input.GetKeyState(GLFW_KEY_S)
-        || g_Input.GetKeyState(GLFW_KEY_A)
-        || g_Input.GetKeyState(GLFW_KEY_D)) {
+    if (!m_FPC->Active()
+        && (g_Input.GetKeyState(GLFW_KEY_W)
+            || g_Input.GetKeyState(GLFW_KEY_S)
+            || g_Input.GetKeyState(GLFW_KEY_A)
+            || g_Input.GetKeyState(GLFW_KEY_D))) {
         m_TPC->Deactivate();
         m_FPC->Activate();
         m_CurrentPlanetIndex = -1;

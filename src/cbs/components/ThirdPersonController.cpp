@@ -1,5 +1,7 @@
 #include "ThirdPersonController.h"
 
+#include "../../utilities/Line.h"
+
 ThirdPersonController::ThirdPersonController(class Object* target, float radius, glm::vec3 front, float mouse_sensitivity)
     : m_Target(&target->Transform())
     , m_Radius(radius)
@@ -21,7 +23,7 @@ void ThirdPersonController::Radius(float radius) {
 void ThirdPersonController::OnActivate() {
     m_XRotation = 0.0f;
     m_YRotation = 0.0f;
-    m_RotationAxis = glm::vec3(-1.0f, 0.0f, 0.0f);
+    m_RotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
 void ThirdPersonController::Update() {
@@ -44,10 +46,10 @@ void ThirdPersonController::Update() {
     glm::quat rot_y(glm::vec3(0.0f, m_YRotation, 0.0f));
     
     // Create new arbitrary X axis
-    glm::vec3 curr_rotation_axis = m_RotationAxis * rot_y;
+    glm::vec3 curr_rotation_axis = rot_y * m_RotationAxis;
     
     // Rotate camera around world origin and then move it to m_Target
-    glm::vec3 new_pos = glm::vec3(0.0f, 0.0f, m_Radius) * rot_y;
+    glm::vec3 new_pos = rot_y * glm::vec3(0.0f, 0.0f, m_Radius);
     new_pos = glm::rotate(new_pos, m_XRotation, curr_rotation_axis);
     new_pos = new_pos + m_Target->Position();
     
@@ -68,9 +70,9 @@ glm::quat ThirdPersonController::m_RotationBeetwen(const glm::vec3 &start, const
     glm::vec3 rotation_axis;
     
     if (cos_theta < -1 + 0.001f) {
-        rotation_axis = cross(glm::vec3(0.0f, 0.0f, 1.0f), n_start);
+        rotation_axis = cross(glm::vec3(1.0f, 0.0f, 0.0f), n_start);
         if (length2(rotation_axis) < 0.01) {
-            rotation_axis = cross(glm::vec3(1.0f, 0.0f, 0.0f), n_start);
+            rotation_axis = cross(glm::vec3(0.0f, 0.0f, 1.0f), n_start);
         }
         
         rotation_axis = normalize(rotation_axis);
