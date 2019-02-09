@@ -17,11 +17,9 @@
 class Camera : public IComponent {
 public:
     Camera(glm::mat4 projection, glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f));
-    ~Camera();
     
     void Initialize() override;
     void Update() override;
-    void Destroy() override;
     
     glm::mat4 ViewMatrix() const;
     
@@ -31,7 +29,6 @@ public:
     
     const glm::vec3& Position() const { return m_Position; }
     const glm::vec3& Up() const { return m_Up; }
-    const glm::vec3& Right() const { return m_Right; }
     
 private:
     glm::mat4 m_ViewMatrix;
@@ -40,13 +37,10 @@ private:
     
     glm::vec3 m_Front;
     glm::vec3 m_WorldUp;
-    glm::vec3 m_Right;
-    
     glm::vec3 m_Position;
-    glm::vec3 m_CurrentFront;
-    glm::vec3 m_CurrentRight;
-    glm::vec3 m_Up;
     
+    glm::vec3 m_CurrentFront;
+    glm::vec3 m_Up;
     
     Transform* m_Transform;
 };

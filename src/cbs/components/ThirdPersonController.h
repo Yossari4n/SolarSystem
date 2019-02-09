@@ -9,6 +9,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 
 #define DEGREES_60 (60.0f * 3.14f / 180.0f)
+#define DEGREES_170 (170.0f * 3.14f / 180.0f)
 
 class ThirdPersonController : public IComponent {
 public:
