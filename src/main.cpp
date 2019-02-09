@@ -4,7 +4,6 @@
 #include <GLFW/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#define GLM_ENABLE_EXPERIMENTAL
 
 #include "cbs/components/MeshRenderer/MeshRenderer.h"
 #include "utilities/Time.h"

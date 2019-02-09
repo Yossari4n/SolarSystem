@@ -22,8 +22,8 @@ void Camera::Update() {
     
     const glm::quat& rotation = m_Transform->Rotation();
     m_CurrentFront = rotation * m_Front;
-    m_Right = rotation * m_CurrentRight; //glm::normalize(glm::cross(m_CurrentFront, m_WorldUp));
-    m_Up = rotation * m_WorldUp; //glm::normalize(glm::cross(m_Right, m_CurrentFront));
+    m_Right = rotation * m_CurrentRight;
+    m_Up = rotation * m_WorldUp;
 }
 
 void Camera::Destroy() {
