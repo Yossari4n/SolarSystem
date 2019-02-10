@@ -15,7 +15,7 @@
 
 class FirstPersonController : public IComponent {
 public:
-    FirstPersonController(float movement_speed_fast = 50.0f, float movement_speed_slow = 1.0f, float mouse_sensitivity = 0.1f, glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f));
+    FirstPersonController(float movement_speed_fast = 50.0f, float movement_speed_slow = 1.0f, float mouse_sensitivity = 0.1f);
     
     void Initialize() override;
     void OnActivate() override;
@@ -26,13 +26,9 @@ private:
     float m_MovementSpeedFast;
     float m_MovementSpeedSlow;
     float m_MouseSensitivity;
-    float m_XRotation;
+    float m_VerticalRotation;
     
     glm::vec2 m_LastMousePos;
-    
-    glm::vec3 m_WorldUp;
-    glm::vec3 m_Front;
-    glm::vec3 m_Right;
     
     Transform* m_Transform;
 };

@@ -1,15 +1,14 @@
 #include "ThirdPersonController.h"
 
-#include "../../utilities/Line.h"
-
-ThirdPersonController::ThirdPersonController(class Object* target, float radius, glm::vec3 front, float mouse_sensitivity)
+ThirdPersonController::ThirdPersonController(class Object* target, float radius, float mouse_sensitivity)
     : m_Target(&target->Transform())
     , m_Radius(radius)
-    , m_Front(front)
-    , m_MouseSensitivity(mouse_sensitivity) {
+    , m_MouseSensitivity(mouse_sensitivity)
+    , m_Front(1.0f, 0.0f, 0.0f)
+    , m_RotationAxis(1.0f, 0.0f, 0.0f) {
     m_XRotation = 0.0f;
     m_YRotation = 0.0f;
-    m_RotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
+    m_RotationAxis = glm::vec3(0.0f, 0.0f, 1.0f);
 }
 
 void ThirdPersonController::Radius(float radius) {
@@ -23,6 +22,7 @@ void ThirdPersonController::Radius(float radius) {
 void ThirdPersonController::OnActivate() {
     m_XRotation = 0.0f;
     m_YRotation = 0.0f;
+    m_Front = glm::vec3(1.0f, 0.0f, 0.0f);
     m_RotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 }
 

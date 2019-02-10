@@ -17,8 +17,12 @@ void Transform::Position(const glm::vec3& position) {
     UpdateModel();
 }
 
-void Transform::Move(const glm::vec3& vector) {
-    m_Position = m_Position + vector;
+void Transform::Move(const glm::vec3& vector, Transform::SPACE space) {
+    if (space == Transform::SPACE::LOCAL) {
+        m_Position = m_Position + m_Rotation * vector;
+    } else {
+        m_Position = m_Position + vector;
+    }
     
     UpdateModel();
 }
@@ -29,8 +33,8 @@ void Transform::Rotation(const glm::quat &rotation) {
     UpdateModel();
 }
 
-void Transform::Rotate(const glm::quat &rotation, Transform::Space space) {
-    if (space == Transform::Space::LOCAL) {
+void Transform::Rotate(const glm::quat &rotation, Transform::SPACE space) {
+    if (space == Transform::SPACE::LOCAL) {
         m_Rotation =  m_Rotation * rotation;
     } else {
         m_Rotation =  rotation * m_Rotation;

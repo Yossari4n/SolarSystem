@@ -13,7 +13,7 @@
 
 class ThirdPersonController : public IComponent {
 public:
-    ThirdPersonController(class Object* target = nullptr, float radius = 0.0f, glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), float mouse_sensitivity = 0.1f);
+    ThirdPersonController(class Object* target = nullptr, float radius = 0.0f, float mouse_sensitivity = 0.1f);
     
     void OnActivate() override;
     void Update() override;

@@ -11,14 +11,8 @@ void Camera::Initialize() {
     m_Transform = &Object().Transform();
 }
 
-void Camera::Update() {
-    m_Position = m_Transform->Position();
-    
-    const glm::quat& rotation = m_Transform->Rotation();
-    m_CurrentFront = rotation * m_Front;
-    m_Up = rotation * m_WorldUp;
-}
-
 glm::mat4 Camera::ViewMatrix() const {
-    return glm::lookAt(m_Position, m_Position + m_CurrentFront, m_Up);
+    return glm::lookAt(m_Transform->Position(),
+                       m_Transform->Position() + m_Transform->Front(),
+                       m_Transform->Up());
 }

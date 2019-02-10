@@ -144,7 +144,8 @@ void MainScene::CreateScene() {
     
     
     auto camera = CreateObject("Camera");
-    camera->Transform().Move(glm::vec3(0.0f, 0.0f, 80.0f));
+    camera->Transform().Position(glm::vec3(0.0f, 0.0f, 80.0f));
+    camera->Transform().Rotate(glm::vec3(0.0f, glm::radians(90.0f), 0.0f));
     camera->CreateComponent<Camera>(glm::perspective(glm::radians(45.0f), 2880.0f / 1800.0f, 0.1f, 3000.0f));
     auto camera_tpc = camera->CreateComponent<ThirdPersonController>();
     auto camera_fpc = camera->CreateComponent<FirstPersonController>();

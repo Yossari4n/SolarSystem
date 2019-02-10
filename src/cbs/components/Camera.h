@@ -16,10 +16,9 @@
 
 class Camera : public IComponent {
 public:
-    Camera(glm::mat4 projection, glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f));
+    Camera(glm::mat4 projection, glm::vec3 front = glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f));
     
     void Initialize() override;
-    void Update() override;
     
     glm::mat4 ViewMatrix() const;
     
