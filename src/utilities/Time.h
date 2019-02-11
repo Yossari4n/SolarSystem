@@ -13,6 +13,8 @@ public:
     Time();
     
     void Initialize();
+    void NewFrame();
+    void Hold();
     void Update();
     
     float CurrentTime() const { return m_CurrentTime; }

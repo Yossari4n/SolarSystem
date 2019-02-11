@@ -12,6 +12,10 @@ void Time::Initialize() {
     m_LastFrame = m_FixedCurrentTime = m_CurrentTime;
 }
 
+void Time::Hold() {
+    m_DeltaTime = glfwGetTime() - m_LastFrame;
+}
+
 void Time::Update() {
     m_CurrentTime = glfwGetTime();
     

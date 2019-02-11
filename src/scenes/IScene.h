@@ -6,6 +6,8 @@
 
 class IScene {
 public:
+    IScene();
+    
     virtual void CreateScene() = 0;
     
     void PreRun();
@@ -19,11 +21,15 @@ public:
 protected:
     Object* CreateObject(std::string name = "");
     
+    float FrameRateLimit() const;
+    void FrameRateLimit(unsigned int frame_rate);
+    
 private:
     ObjectManager m_ObjectManager;
     class DrawManager m_DrawManager;
     
     bool m_Running;
+    float m_FrameRateLimit;
 };
 
 #endif
