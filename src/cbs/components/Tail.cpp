@@ -20,7 +20,7 @@ void Tail::OnActivate() {
 }
 
 void Tail::Update() {
-    if (!m_Active) {
+    if (!m_Active || g_Time.TimeMultiplayer() == 0.0f) {
         return;
     }
     
@@ -58,7 +58,13 @@ void Tail::Destroy() {
 }
 
 void Tail::Draw(const ShaderProgram &shader) const {
+    float intensity = 1.0f / (float)m_Lines.size();
+    glm::vec3 color(intensity);
+    
     for (auto it = m_Lines.begin(); it != m_Lines.end(); ++it) {
+        (*it)->Color(color);
         (*it)->Draw(shader);
+        
+        color = color + intensity;
     }
 }
