@@ -81,7 +81,7 @@ void DrawManager::CallDraws() const {
     glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
     
     // Draw objects
-    for (auto it = m_Drawables.begin(); it != m_Drawables.end(); it++) {
+    for (auto it = m_Drawables.cbegin(); it != m_Drawables.cend(); it++) {
         int shader_type = (*it)->ShaderType();
         const ShaderProgram& curr_shader = m_ShaderPrograms[shader_type];
         
