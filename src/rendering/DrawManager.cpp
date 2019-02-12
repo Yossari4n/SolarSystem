@@ -13,9 +13,6 @@ DrawManager::DrawManager()
 }
 
 DrawManager::~DrawManager() {
-    if (m_Skybox != nullptr) {
-        delete m_Skybox;
-    }
 }
 
 void DrawManager::Initialize() {
@@ -40,11 +37,7 @@ void DrawManager::RegisterCamera(Camera *camera) {
 }
 
 void DrawManager::Skybox(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front) {
-    if (m_Skybox != nullptr) {
-        delete m_Skybox;
-    }
-    
-    m_Skybox = new Cubemap(right, left, top, bottom, back, front, ShaderProgram::TYPE::SKYBOX);
+    m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front, ShaderProgram::TYPE::SKYBOX);
 }
 
 void DrawManager::Background(const glm::vec3& background) {

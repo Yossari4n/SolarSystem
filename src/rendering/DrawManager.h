@@ -38,7 +38,7 @@ private:
     Camera* m_Camera;
     
     glm::vec3 m_Background;
-    Cubemap* m_Skybox;
+    std::unique_ptr<Cubemap> m_Skybox;
     
     std::vector<IDrawable*> m_Drawables;
     std::vector<IDrawable*> m_PostProcessing;
