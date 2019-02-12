@@ -32,7 +32,7 @@ void ThirdPersonController::Update() {
     }
     
     // Accumulate mouse movement as rotations
-    m_XRotation += glm::radians(g_Input.MouseOffset().y * m_MouseSensitivity);
+    m_XRotation += -glm::radians(g_Input.MouseOffset().y * m_MouseSensitivity);
     m_YRotation += glm::radians(g_Input.MouseOffset().x * m_MouseSensitivity);
     
     // Prevent object flip by keeping m_XRotation beetwen <-60, 60> degrees
