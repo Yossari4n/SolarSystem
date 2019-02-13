@@ -7,11 +7,11 @@ class IDrawable {
 public:
     virtual void Draw(const ShaderProgram &shader) const = 0;
     
-    ShaderProgram::TYPE ShaderType() const { return m_ShaderType; }
-    void ShaderType(ShaderProgram::TYPE type) { m_ShaderType = type; }
+    ShaderProgram::Type ShaderType() const { return m_ShaderType; }
+    void ShaderType(ShaderProgram::Type type) { m_ShaderType = type; }
     
 protected:
-    ShaderProgram::TYPE m_ShaderType;
+    ShaderProgram::Type m_ShaderType;
 };
 
 #endif

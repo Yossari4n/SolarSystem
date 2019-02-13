@@ -4,7 +4,7 @@
 Tail::Tail(float length, glm::vec3 color)
     : m_MaxLength(length)
     , m_Color(color) {
-    m_ShaderType = ShaderProgram::TYPE::COLOR_PURE;
+    m_ShaderType = ShaderProgram::Type::COLOR_PURE;
         
     m_CurrentLength = 0.0f;
 }

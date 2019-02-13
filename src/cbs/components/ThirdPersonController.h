@@ -22,8 +22,6 @@ public:
     void Radius(float radius);
     float Radius() const  { return m_Radius; }
     
-    class Object* line;
-    
 private:
     Transform* m_Target;
     float m_Radius;

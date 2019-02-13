@@ -16,16 +16,16 @@ DrawManager::~DrawManager() {
 }
 
 void DrawManager::Initialize() {
-    m_ShaderPrograms[ShaderProgram::TYPE::COLOR_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.vs",
+    m_ShaderPrograms[ShaderProgram::Type::COLOR_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.vs",
                                                                     "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.fs");
     
-    m_ShaderPrograms[ShaderProgram::TYPE::TEXTURE_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.vs",
+    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.vs",
                                                                       "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.fs");
     
-    m_ShaderPrograms[ShaderProgram::TYPE::TEXTURE_LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
+    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
                                                                                 "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
 
-    m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.vs",
+    m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.vs",
                                                                 "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.fs");
     
     glEnable(GL_DEPTH_TEST);
@@ -37,7 +37,7 @@ void DrawManager::RegisterCamera(Camera *camera) {
 }
 
 void DrawManager::Skybox(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front) {
-    m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front, ShaderProgram::TYPE::SKYBOX);
+    m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front, ShaderProgram::Type::SKYBOX);
 }
 
 void DrawManager::Background(const glm::vec3& background) {
@@ -88,8 +88,8 @@ void DrawManager::CallDraws() const {
         curr_shader.Use();
         curr_shader.SetMat4("pv", pv);
         
-        if (shader_type == ShaderProgram::TYPE::TEXTURE_LIGHT_RECEIVER) {
-            curr_shader.SetVec3("viewPos", m_Camera->Position());
+        if (shader_type == ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER) {
+            curr_shader.SetVec3("viewPos", m_Camera->Object().Transform().Position());
             curr_shader.SetFloat("material.shininess", 32.0f);
             
             // for all ILightSources SetLightProperties
@@ -105,10 +105,10 @@ void DrawManager::CallDraws() const {
     if (m_Skybox != nullptr) {
         glDepthFunc(GL_LEQUAL);
         
-        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].Use();
-        m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX].SetMat4("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
+        m_ShaderPrograms[ShaderProgram::Type::SKYBOX].Use();
+        m_ShaderPrograms[ShaderProgram::Type::SKYBOX].SetMat4("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
         
-        m_Skybox->Draw(m_ShaderPrograms[ShaderProgram::TYPE::SKYBOX]);
+        m_Skybox->Draw(m_ShaderPrograms[ShaderProgram::Type::SKYBOX]);
         
         glDepthFunc(GL_LESS);
     }

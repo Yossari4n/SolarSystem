@@ -9,7 +9,7 @@
 
 class Transform {
 public:
-    enum SPACE {
+    enum Space {
         LOCAL,
         WORLD
     };
@@ -20,11 +20,11 @@ public:
     
     const glm::vec3& Position() const { return m_Position; }
     void Position(const glm::vec3& position);
-    void Move(const glm::vec3& vector, Transform::SPACE space);
+    void Move(const glm::vec3& vector, Transform::Space space);
     
     const glm::quat& Rotation() const { return m_Rotation; }
     void Rotation(const glm::quat& rotation);
-    void Rotate(const glm::quat& rotation, Transform::SPACE space = Transform::SPACE::LOCAL);
+    void Rotate(const glm::quat& rotation, Transform::Space space = Transform::Space::LOCAL);
     
     const glm::vec3& Scale() const { return m_Scale; }
     void Scale(const glm::vec3& scale);

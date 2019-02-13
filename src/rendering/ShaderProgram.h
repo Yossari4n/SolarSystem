@@ -11,7 +11,7 @@
 
 class ShaderProgram {
 public:
-    enum TYPE {
+    enum Type {
         COLOR_PURE = 0,
         COLOR_LIGHT_RECEIVER,
         TEXTURE_PURE,

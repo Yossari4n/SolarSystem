@@ -12,7 +12,7 @@
 
 class Manager : public IComponent {
 public:
-    Manager(std::array<class Object *, 9> planets, std::array<float, 9> radiuses, FirstPersonController* fpc, ThirdPersonController* tpc);
+    Manager(std::array<class Object *, 9> planets, FirstPersonController* fpc, ThirdPersonController* tpc);
     
     void Initialize() override;
     void Update() override;

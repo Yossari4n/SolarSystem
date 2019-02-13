@@ -1,6 +1,6 @@
 #include "MeshRenderer.h"
 
-MeshRenderer::MeshRenderer(std::string path, ShaderProgram::TYPE type) {
+MeshRenderer::MeshRenderer(std::string path, ShaderProgram::Type type) {
     m_ShaderType = type;
     
     LoadModel(path);

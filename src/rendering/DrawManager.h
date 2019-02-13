@@ -45,7 +45,7 @@ private:
     
     std::vector<ILightSource*> m_LightSources;
     
-    std::array<ShaderProgram, ShaderProgram::TYPE::COUNT> m_ShaderPrograms;
+    std::array<ShaderProgram, ShaderProgram::Type::COUNT> m_ShaderPrograms;
 };
 
 #endif

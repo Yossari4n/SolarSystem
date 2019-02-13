@@ -14,6 +14,7 @@ public:
     void DestroyObjects();
     
     Object* CreateObject(IScene& scene, std::string name = "");
+    
 private:
     std::vector<std::shared_ptr<Object>> m_Objects;
 };

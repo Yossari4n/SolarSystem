@@ -1,9 +1,7 @@
 #include "Camera.h"
 
-Camera::Camera(glm::mat4 projection, glm::vec3 front, glm::vec3 world_up)
-    : m_Projection(projection)
-    , m_Front(front)
-    , m_WorldUp(world_up) {
+Camera::Camera(glm::mat4 projection)
+    : m_Projection(projection)  {
 }
 
 void Camera::Initialize() {

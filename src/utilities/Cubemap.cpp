@@ -1,6 +1,6 @@
 #include "Cubemap.h"
 
-Cubemap::Cubemap(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front, ShaderProgram::TYPE type) {
+Cubemap::Cubemap(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front, ShaderProgram::Type type) {
     IDrawable::m_ShaderType = type;
     m_Load(right, left, top, bottom, back, front);
     m_Initialize();

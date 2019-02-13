@@ -5,7 +5,7 @@ Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color, float width)
     , m_End(end)
     , m_Color(color)
     , m_Width(width) {
-    m_ShaderType = ShaderProgram::TYPE::COLOR_PURE;
+    m_ShaderType = ShaderProgram::Type::COLOR_PURE;
     
     float vertices[] = { start.x, start.y, start.z, end.x, end.y, end.z };
     

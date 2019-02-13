@@ -3,16 +3,16 @@
 #include "MeshRenderer/MeshRenderer.h"
 #include "Tail.h"
 
-Manager::Manager(std::array<class Object *, 9> planets, std::array<float, 9> radiuses, FirstPersonController* fpc, ThirdPersonController* tpc)
+Manager::Manager(std::array<class Object*, 9> planets, FirstPersonController* fpc, ThirdPersonController* tpc)
     : m_Planets(planets)
-    , m_Radiuses(radiuses)
     , m_FPC(fpc)
-    , m_TPC(tpc) {
+    , m_TPC(tpc)
+    , m_TimeMultiplayers({ 1, 2, 4, 10, 50 })
+    , m_Radiuses({100.0f, 1.0f, 1.0f, 1.0f, 1.0f, 10.0f, 10.0f, 10.0f, 10.0f}) {
     
-    m_Paused = false;
     m_CurrentPlanetIndex = -1;
-    m_TimeMultiplayers = { 1, 2, 4, 10, 50 };
-    
+        
+    m_Paused = false;
     m_TimeMultiplayersIndex = 0;
         
     m_Realistic = true;
@@ -28,6 +28,10 @@ void Manager::Initialize() {
 }
 
 void Manager::Update() {
+    if (g_Input.GetKeyState(GLFW_KEY_Z) == Input::PRESSED) {
+        std::cout << Object().Transform().Position().x << ' ' << Object().Transform().Position().y << ' ' << Object().Transform().Position().z << '\n';
+    }
+    
     // Exit scene
     if (g_Input.GetKeyState(GLFW_KEY_ESCAPE) == Input::KeyState::PRESSED) {
         Object().Scene().Exit();
