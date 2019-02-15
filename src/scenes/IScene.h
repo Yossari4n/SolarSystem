@@ -21,15 +21,15 @@ public:
 protected:
     Object* CreateObject(std::string name = "");
     
-    float FrameRateLimit() const;
-    void FrameRateLimit(unsigned int frame_rate);
+    float FrameRate() const;
+    void FrameRate(unsigned int frame_rate);
     
 private:
     ObjectManager m_ObjectManager;
     class DrawManager m_DrawManager;
     
     bool m_Running;
-    float m_FrameRateLimit;
+    float m_FrameRate;
 };
 
 #endif

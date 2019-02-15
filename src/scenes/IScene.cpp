@@ -8,7 +8,7 @@
 
 IScene::IScene() {
     m_Running = true;
-    m_FrameRateLimit = 0.0f;
+    m_FrameRate = 0.0f;
 }
 
 void IScene::PreRun() {
@@ -24,15 +24,14 @@ void IScene::Run() {
     while (m_Running && !glfwWindowShouldClose(g_Window())) {
         do {
             g_Time.Hold();
-        } while (g_Time.DeltaTime() < m_FrameRateLimit);
+            glfwPollEvents();
+        } while (g_Time.DeltaTime() < m_FrameRate);
         
         g_Time.Update();
         g_Input.Update(g_Window());
         
         m_ObjectManager.UpdateObjects();
         m_DrawManager.CallDraws();
-    
-        glfwPollEvents();
     }
 }
 
@@ -48,10 +47,10 @@ Object* IScene::CreateObject(std::string name) {
     return m_ObjectManager.CreateObject(*this, name);
 }
 
-float IScene::FrameRateLimit() const {
-    return 1.0f / m_FrameRateLimit;
+float IScene::FrameRate() const {
+    return 1.0f / m_FrameRate;
 }
 
-void IScene::FrameRateLimit(unsigned int frame_rate) {
-    m_FrameRateLimit = frame_rate != 0 ? 1.0f / (float)frame_rate : 0.0f;
+void IScene::FrameRate(unsigned int frame_rate) {
+    m_FrameRate = frame_rate != 0 ? 1.0f / (float)frame_rate : 0.0f;
 }

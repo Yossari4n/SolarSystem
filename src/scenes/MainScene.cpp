@@ -20,7 +20,7 @@
 #define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / (360.0f * 5.0f)) // full orbit takes 5 minutes
 
 void MainScene::CreateScene() {
-    FrameRateLimit(60);
+    FrameRate(60);
     
     DrawManager().Skybox("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/right.jpg",
                          "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/left.jpg",
