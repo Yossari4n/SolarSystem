@@ -4,8 +4,8 @@
 #include <GLFW/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 
-#include "cbs/components/MeshRenderer/MeshRenderer.h"
 #include "utilities/Time.h"
 #include "utilities/Input.h"
 #include "utilities/Window.h"
@@ -26,7 +26,7 @@ int main() {
     
     // Create window
     g_Window.Initialize(glfwCreateWindow(2880, 1800, "SolarSystem", nullptr, nullptr), 2880, 1800);
-    if (!g_Window()) {
+    if (!g_Window) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
@@ -45,7 +45,7 @@ int main() {
     glfwSetScrollCallback(g_Window(), scroll_callback);
     
     // Capture the mouse
-    glfwSetInputMode(g_Window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(g_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     // Main scene
     MainScene MainScene;
@@ -56,7 +56,7 @@ int main() {
     MainScene.PostRun();
     
     // End of application
-    glfwSetWindowShouldClose(g_Window(), true);
+    glfwSetWindowShouldClose(g_Window, true);
     glfwTerminate();
     return EXIT_SUCCESS;
 }

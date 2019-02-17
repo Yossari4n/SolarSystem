@@ -11,7 +11,7 @@ public:
     unsigned int Width() const { return m_Width; }
     unsigned int Height() const {return m_Height; }
     
-    GLFWwindow* operator()() { return m_Pointer; }
+    operator GLFWwindow*() { return m_Pointer; }
     
 private:
     GLFWwindow* m_Pointer;
