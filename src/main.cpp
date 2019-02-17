@@ -31,7 +31,7 @@ int main() {
         std::cout << "Failed to create GLFW window\n";
         return EXIT_FAILURE;
     }
-    glfwMakeContextCurrent(g_Window());
+    glfwMakeContextCurrent(g_Window);
     
     // Load glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -40,9 +40,9 @@ int main() {
     }
     
     // Set callbacks
-    glfwSetFramebufferSizeCallback(g_Window(), framebuffer_size_callback);
-    glfwSetCursorPosCallback(g_Window(), mouse_callback);
-    glfwSetScrollCallback(g_Window(), scroll_callback);
+    glfwSetFramebufferSizeCallback(g_Window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(g_Window, mouse_callback);
+    glfwSetScrollCallback(g_Window, scroll_callback);
     
     // Capture the mouse
     glfwSetInputMode(g_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);

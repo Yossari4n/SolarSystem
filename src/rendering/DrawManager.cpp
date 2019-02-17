@@ -113,5 +113,5 @@ void DrawManager::CallDraws() const {
         glDepthFunc(GL_LESS);
     }
     
-    glfwSwapBuffers(g_Window());
+    glfwSwapBuffers(g_Window);
 }

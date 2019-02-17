@@ -21,14 +21,14 @@ void IScene::PreRun() {
 void IScene::Run() {
     g_Time.Initialize();
     
-    while (m_Running && !glfwWindowShouldClose(g_Window())) {
+    while (m_Running && !glfwWindowShouldClose(g_Window)) {
         do {
             g_Time.Hold();
             glfwPollEvents();
         } while (g_Time.DeltaTime() < m_FrameRate);
         
         g_Time.Update();
-        g_Input.Update(g_Window());
+        g_Input.Update(g_Window);
         
         m_ObjectManager.UpdateObjects();
         m_DrawManager.CallDraws();
