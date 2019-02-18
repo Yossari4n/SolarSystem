@@ -26,35 +26,35 @@ public:
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {
         // Create new IComponent
-        auto comp = std::make_shared<T>(params...);
+        auto comp = new T(params...);
         comp->m_Object = this;
         
         // Register IComponent in a pool
         m_Components.push_back(comp);
 
         // Return pointer of T type
-        return comp.get();
+        return comp;
     }
     
     template <class T>
     T* CreateComponent(T* other) {
         // Create new IComponent by invoking copy constructor
-        auto comp = std::make_shared<T>(*other);
+        auto comp = new T(*other);
         comp->m_Object = this;
         
         // Register IComponent in a pool
         m_Components.push_back(comp);
         
         // Return pointer of T type
-        return comp.get();
+        return comp;
     }
     
     template <class T>
     void RemoveComponent() {
         m_Components.erase(std::remove_if(m_Components.begin(),
                                           m_Components.end(),
-                                          [](std::shared_ptr<IComponent> &comp) {
-                                              if (dynamic_cast<T*>(comp.get()) != nullptr) {
+                                          [](IComponent* comp) {
+                                              if (dynamic_cast<T*>(comp) != nullptr) {
                                                   comp->Destroy();
                                                   return true;
                                               }
@@ -66,16 +66,16 @@ public:
     
     template <class T>
     T* GetComponent() {
-        T* component = nullptr;
+        T* comp = nullptr;
         
         auto it = m_Components.begin();
-        while (it != m_Components.end() && component == nullptr ) {
-            component = dynamic_cast<T*>((*it).get());
+        while (it != m_Components.end() && comp == nullptr ) {
+            comp = dynamic_cast<T*>(*it);
             
             it++;
         }
         
-        return component;
+        return comp;
     }
     
     const std::string& Name() const { return m_Name; }
@@ -90,7 +90,7 @@ private:
     class IScene& m_Scene;
     class Transform m_Transform;
     
-    std::vector<std::shared_ptr<IComponent>> m_Components;
+    std::vector<IComponent*> m_Components;
 };
 
 #endif

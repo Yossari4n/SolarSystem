@@ -1,6 +1,8 @@
 #ifndef IComponent_h
 #define IComponent_h
 
+#include <iostream>
+
 class Object;
 
 class IComponent {
@@ -12,7 +14,8 @@ public:
         , m_Active(true) {
     }
     
-    virtual ~IComponent() {}
+    virtual ~IComponent() {
+    }
     
     virtual IComponent* Clone() const {
         return new IComponent(*this);
