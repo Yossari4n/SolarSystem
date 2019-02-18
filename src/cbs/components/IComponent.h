@@ -2,6 +2,8 @@
 #define IComponent_h
 
 #include <iostream>
+#include <cassert>
+#include <exception>
 
 class Object;
 
@@ -18,7 +20,7 @@ public:
     }
     
     virtual IComponent* Clone() const {
-        return new IComponent(*this);
+        return nullptr;
     }
     
     Object& Object() const {

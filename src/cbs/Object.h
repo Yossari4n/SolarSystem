@@ -17,6 +17,7 @@
 class Object {
 public:
     Object(IScene& scene, std::string name = "object");
+    Object(const Object& other, std::string name = "");
     ~Object();
     
     void Initialize();

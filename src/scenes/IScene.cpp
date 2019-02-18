@@ -47,6 +47,10 @@ Object* IScene::CreateObject(std::string name) {
     return m_ObjectManager.CreateObject(*this, name);
 }
 
+Object* IScene::CreateObject(const Object *other, std::string name) {
+    return m_ObjectManager.CreateObject(other, name);
+}
+
 float IScene::FrameRate() const {
     return 1.0f / m_FrameRate;
 }

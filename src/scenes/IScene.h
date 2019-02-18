@@ -20,6 +20,7 @@ public:
     
 protected:
     Object* CreateObject(std::string name = "");
+    Object* CreateObject(const Object* other, std::string name = "");
     
     float FrameRate() const;
     void FrameRate(unsigned int frame_rate);
