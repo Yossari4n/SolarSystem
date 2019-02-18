@@ -9,15 +9,22 @@ class IComponent {
 public:
     IComponent()
         : m_Object(nullptr)
-        , m_Active(true) {}
+        , m_Active(true) {
+    }
     
     virtual ~IComponent() {}
+    
+    virtual IComponent* Clone() const {
+        return new IComponent(*this);
+    }
     
     Object& Object() const {
         return *m_Object;
     }
     
-    bool Active() const { return m_Active; }
+    bool Active() const {
+        return m_Active;
+    }
     
     void Activate() {
         m_Active = true;

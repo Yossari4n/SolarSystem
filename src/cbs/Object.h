@@ -26,12 +26,25 @@ public:
     template <class T, typename ...Args>
     T* CreateComponent(Args&&... params) {
         // Create new IComponent
-        auto comp = std::make_shared<T>(std::forward<Args>(params)...);
+        auto comp = std::make_shared<T>(params...);
         comp->m_Object = this;
         
         // Register IComponent in a pool
         m_Components.push_back(comp);
 
+        // Return pointer of T type
+        return comp.get();
+    }
+    
+    template <class T>
+    T* CreateComponent(T* other) {
+        // Create new IComponent by invoking copy constructor
+        auto comp = std::make_shared<T>(*other);
+        comp->m_Object = this;
+        
+        // Register IComponent in a pool
+        m_Components.push_back(comp);
+        
         // Return pointer of T type
         return comp.get();
     }
@@ -52,14 +65,14 @@ public:
     }
     
     template <class T>
-    std::shared_ptr<T> GetComponent() {
+    T* GetComponent() {
         auto it = m_Components.begin();
         
         while (it != m_Components.end() && dynamic_cast<T*>((*it).get()) == nullptr ) {
             it++;
         }
         
-        return std::dynamic_pointer_cast<T>(*it);
+        return dynamic_cast<T*>((*it).get());
     }
     
     const std::string& Name() const { return m_Name; }

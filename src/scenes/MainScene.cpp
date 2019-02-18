@@ -53,19 +53,18 @@ void MainScene::CreateScene() {
     merkury->Transform().Rotation(model_rotation);
     merkury->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/models/merkury/13902_Earth_v1_l3.obj",
                                            ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
-    auto merkury_ao = merkury->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 58.0f);
+    AstronomicalObject* merkury_ao = merkury->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 58.0f);
     merkury_ao->Orbit(Orbit(&sun->Transform().Position(),
                             0.39f * EARTH_ORBIT_RADIUS,
                             -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f));
     merkury->CreateComponent<Tail>(3.0f, glm::vec3(1.0f));
-    
     
     auto wenus = CreateObject("Wenus");
     wenus->Transform().Scale(0.94f * EARTH_RADIUS * model_scale);
     wenus->Transform().Rotation(model_rotation);
     wenus->CreateComponent<MeshRenderer>("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/models/wenus/13902_Earth_v1_l3.obj",
                                          ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
-    auto wenus_ao = wenus->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 243.0f);
+    auto wenus_ao = wenus->CreateComponent<AstronomicalObject>(merkury_ao);
     wenus_ao->Orbit(Orbit(&sun->Transform().Position(),
                           0.72f * EARTH_ORBIT_RADIUS,
                           -EARTH_ORBIT_ANGULAR_VELOCITY / 0.61f));
