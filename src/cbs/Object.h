@@ -66,13 +66,16 @@ public:
     
     template <class T>
     T* GetComponent() {
-        auto it = m_Components.begin();
+        T* component = nullptr;
         
-        while (it != m_Components.end() && dynamic_cast<T*>((*it).get()) == nullptr ) {
+        auto it = m_Components.begin();
+        while (it != m_Components.end() && component == nullptr ) {
+            component = dynamic_cast<T*>((*it).get());
+            
             it++;
         }
         
-        return dynamic_cast<T*>((*it).get());
+        return component;
     }
     
     const std::string& Name() const { return m_Name; }
