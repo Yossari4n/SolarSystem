@@ -58,13 +58,13 @@ void Tail::Destroy() {
 }
 
 void Tail::Draw(const ShaderProgram &shader) const {
-    float intensity = 1.0f / (float)m_Lines.size();
-    glm::vec3 color(intensity);
+    glm::vec3 color_step = m_Color / (float)m_Lines.size();
+    glm::vec3 current_color = color_step;
     
     for (auto it = m_Lines.begin(); it != m_Lines.end(); ++it) {
-        (*it)->Color(color);
+        (*it)->Color(current_color);
         (*it)->Draw(shader);
         
-        color = color + intensity;
+        current_color = current_color + color_step;
     }
 }
