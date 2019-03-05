@@ -43,6 +43,38 @@ void IScene::Exit() {
     m_Running = false;
 }
 
+void IScene::RegisterDrawCall(IDrawable* drawable) {
+    m_DrawManager.RegisterDrawCall(drawable);
+}
+
+void IScene::UnregisterDrawCall(IDrawable* drawable) {
+    m_DrawManager.UnregisterDrawCall(drawable);
+}
+
+void IScene::RegisterLightSource(ILightSource* light_source) {
+    m_DrawManager.RegisterLightSource(light_source);
+}
+
+void IScene::UnregisterLightSource(ILightSource* light_source) {
+    m_DrawManager.UnregisterLightSource(light_source);
+}
+
+void IScene::RegisterCamera(Camera* camera) {
+    m_DrawManager.RegisterCamera(camera);
+}
+
+Camera* IScene::MainCamera() const {
+    return m_DrawManager.MainCamera();
+}
+
+void IScene::Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
+    m_DrawManager.Skybox(right, left, top, bottom, back, front);
+}
+
+void IScene::Background(const glm::vec3& background) {
+    m_DrawManager.Background(background);
+}
+
 Object* IScene::CreateObject(std::string name) {
     return m_ObjectManager.CreateObject(*this, name);
 }

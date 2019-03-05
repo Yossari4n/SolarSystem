@@ -3,8 +3,8 @@
 #include "MeshRenderer/MeshRenderer.h"
 
 AstronomicalObject::AstronomicalObject(float rotation_speed)
-    : m_RotationSpeed(rotation_speed) {
-        
+: m_RotationSpeed(rotation_speed) {
+    
 }
 
 void AstronomicalObject::Initialize() {

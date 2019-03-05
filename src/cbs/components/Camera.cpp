@@ -5,7 +5,7 @@ Camera::Camera(glm::mat4 projection)
 }
 
 void Camera::Initialize() {
-    Object().Scene().DrawManager().RegisterCamera(this);
+    Object().Scene().RegisterCamera(this);
     m_Transform = &Object().Transform();
 }
 

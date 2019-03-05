@@ -16,7 +16,16 @@ public:
     
     void Exit();
     
-    DrawManager& DrawManager() { return m_DrawManager; }
+    // DrawManager functions
+    void RegisterDrawCall(IDrawable* drawable);
+    void UnregisterDrawCall(IDrawable* drawable);
+    void RegisterLightSource(ILightSource* light_source);
+    void UnregisterLightSource(ILightSource* light_source);
+    void RegisterCamera(Camera* camera);
+    void UnregisterCamera();
+    Camera* MainCamera() const;
+    void Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
+    void Background(const glm::vec3& background);
     
 protected:
     Object* CreateObject(std::string name = "");
@@ -27,7 +36,7 @@ protected:
     
 private:
     ObjectManager m_ObjectManager;
-    class DrawManager m_DrawManager;
+    DrawManager m_DrawManager;
     
     bool m_Running;
     float m_FrameRate;

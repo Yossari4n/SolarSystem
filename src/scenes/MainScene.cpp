@@ -21,13 +21,12 @@
 
 void MainScene::CreateScene() {
     FrameRate(60);
-    
-    DrawManager().Skybox("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/right.jpg",
-                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/left.jpg",
-                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/top.jpg",
-                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/bottom.jpg",
-                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/back.jpg",
-                         "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/front.jpg");
+    Skybox("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/right.jpg",
+           "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/left.jpg",
+           "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/top.jpg",
+           "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/bottom.jpg",
+           "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/back.jpg",
+           "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/data/skybox/front.jpg");
     
     
     glm::vec3 model_scale(1.0f / (976.032f * 2.0f), 1.0f / (976.032f * 2.0f), 1.0f / (986.312f * 2.0f));
@@ -150,7 +149,6 @@ void MainScene::CreateScene() {
     camera->CreateComponent<Camera>(glm::perspective(glm::radians(45.0f), 2880.0f / 1800.0f, 0.1f, 3000.0f));
     auto camera_tpc = camera->CreateComponent<ThirdPersonController>();
     auto camera_fpc = camera->CreateComponent<FirstPersonController>();
-    
     camera->CreateComponent<Manager>(std::array<class Object*, 9>({sun, merkury, wenus, earth, mars, jupiter, saturn, uranus, neptun}),
                                      camera_fpc,
                                      camera_tpc);

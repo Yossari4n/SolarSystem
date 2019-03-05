@@ -36,7 +36,11 @@ void DrawManager::RegisterCamera(Camera *camera) {
     m_Camera = camera;
 }
 
-void DrawManager::Skybox(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front) {
+Camera* DrawManager::MainCamera() const {
+    return m_Camera;
+}
+
+void DrawManager::Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
     m_Skybox = std::make_unique<Cubemap>(right, left, top, bottom, back, front, ShaderProgram::Type::SKYBOX);
 }
 
@@ -44,7 +48,7 @@ void DrawManager::Background(const glm::vec3& background) {
     m_Background = background;
 }
 
-void DrawManager::RegsiterDrawCall(IDrawable* component) {
+void DrawManager::RegisterDrawCall(IDrawable* component) {
     if (std::find(m_Drawables.begin(), m_Drawables.end(), component) == m_Drawables.end()) {
         m_Drawables.push_back(component);
     }

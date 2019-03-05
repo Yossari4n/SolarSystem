@@ -1,6 +1,6 @@
 #include "Cubemap.h"
 
-Cubemap::Cubemap(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front, ShaderProgram::Type type) {
+Cubemap::Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front, ShaderProgram::Type type) {
     IDrawable::m_ShaderType = type;
     m_Load(right, left, top, bottom, back, front);
     m_Initialize();
@@ -16,7 +16,7 @@ void Cubemap::Draw(const ShaderProgram& shader) const {
     glBindVertexArray(0);
 }
 
-void Cubemap::m_Load(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front) {
+void Cubemap::m_Load(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front) {
     glGenTextures(1, &m_ID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
     

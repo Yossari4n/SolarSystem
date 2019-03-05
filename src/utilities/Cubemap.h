@@ -9,7 +9,7 @@
 
 class Cubemap : public IDrawable {
 public:
-    Cubemap(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back, ShaderProgram::Type type);
+    Cubemap(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front, ShaderProgram::Type type);
     
     void Draw(const ShaderProgram& shader) const override;
     
@@ -18,7 +18,7 @@ private:
     unsigned int m_VAO;
     unsigned int m_VBO;
     
-    void m_Load(std::string right, std::string left, std::string top, std::string bottom, std::string back, std::string front);
+    void m_Load(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
     void m_Initialize();
 };
 

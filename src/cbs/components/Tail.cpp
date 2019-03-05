@@ -10,12 +10,12 @@ Tail::Tail(float length, glm::vec3 color)
 }
 
 void Tail::Initialize() {
-    Object().Scene().DrawManager().RegsiterDrawCall(this);
+    Object().Scene().RegisterDrawCall(this);
     m_LastPosition = Object().Transform().Position();
 }
 
 void Tail::OnActivate() {
-    Object().Scene().DrawManager().RegsiterDrawCall(this);
+    Object().Scene().RegisterDrawCall(this);
     m_LastPosition = Object().Transform().Position();
 }
 
@@ -38,7 +38,7 @@ void Tail::Update() {
 }
 
 void Tail::OnDeactivate() {
-    Object().Scene().DrawManager().UnregisterDrawCall(this);
+    Object().Scene().UnregisterDrawCall(this);
     
     for (auto it = m_Lines.begin(); it != m_Lines.end(); ++it) {
         delete (*it);
@@ -48,7 +48,7 @@ void Tail::OnDeactivate() {
 }
 
 void Tail::Destroy() {
-    Object().Scene().DrawManager().UnregisterDrawCall(this);
+    Object().Scene().UnregisterDrawCall(this);
     
     for (auto it = m_Lines.begin(); it != m_Lines.end(); ++it) {
         delete (*it);
