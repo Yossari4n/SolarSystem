@@ -15,6 +15,8 @@ public:
     void PostRun();
     
     void Exit();
+    void FrameRate(unsigned int frame_rate);
+    float FrameRate() const;
     
     // DrawManager functions
     void RegisterDrawCall(IDrawable* drawable);
@@ -27,12 +29,9 @@ public:
     void Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
     void Background(const glm::vec3& background);
     
-protected:
+    // ObjectManger functions
     Object* CreateObject(std::string name = "");
     Object* CreateObject(const Object* other, std::string name = "");
-    
-    float FrameRate() const;
-    void FrameRate(unsigned int frame_rate);
     
 private:
     ObjectManager m_ObjectManager;

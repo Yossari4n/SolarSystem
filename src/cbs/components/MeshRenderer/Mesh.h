@@ -27,17 +27,18 @@ struct Texture {
 };
 
 class Mesh {
-    friend class MeshRenderer;
-    
 public:
     Mesh(const std::vector<Vertex> &verticies, const std::vector<unsigned int> &indicies, const std::vector<Texture> &textures);
-    //Mesh(Mesh &other) = delete; 
+    Mesh(const Mesh &other);
+    Mesh& operator=(const Mesh& other);
     ~Mesh();
     
     void Draw(const ShaderProgram &shader) const;
     
     const std::vector<Vertex>& Vertices() const { return m_Vertices; }
+    
     const std::vector<unsigned int>& Indicies() const { return m_Indices; }
+    
     const std::vector<Texture>& Textures() const { return m_Textures; }
     
 private:

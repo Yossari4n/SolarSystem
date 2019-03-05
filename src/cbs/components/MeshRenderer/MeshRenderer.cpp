@@ -36,13 +36,14 @@ void MeshRenderer::LoadModel(std::string path) {
     }
     
     m_Directory = path.substr(0, path.find_last_of('/'));
+    m_Meshes.reserve(scene->mRootNode->mNumMeshes);
     ProcessNode(scene->mRootNode, scene);
 }
 
 void MeshRenderer::ProcessNode(aiNode *node, const aiScene *scene) {
     for (unsigned int i = 0; i < node->mNumMeshes; ++i) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        m_Meshes.push_back(ProcessMesh(mesh, scene));
+        ProcessMesh(mesh, scene);
     }
     
     for (unsigned int i = 0; i < node->mNumChildren; ++i) {
@@ -50,7 +51,7 @@ void MeshRenderer::ProcessNode(aiNode *node, const aiScene *scene) {
     }
 }
 
-Mesh MeshRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
+void MeshRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture> textures;
@@ -89,7 +90,7 @@ Mesh MeshRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
             indices.push_back(face.mIndices[j]);
     }
     
-    // does mesh contains material
+    // Does mesh contains material
     if (mesh->mMaterialIndex >= 0) {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         
@@ -100,7 +101,7 @@ Mesh MeshRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
     
-    return Mesh(vertices, indices, textures);
+    m_Meshes.emplace_back(vertices, indices, textures);
 }
 
 std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string typeName) {

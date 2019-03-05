@@ -7,8 +7,30 @@ Mesh::Mesh(const std::vector<Vertex> &verticies, const std::vector<unsigned int>
     SetupMesh();
 }
 
+Mesh::Mesh(const Mesh& other)
+    : m_Vertices(other.m_Vertices)
+    , m_Indices(other.m_Indices)
+    , m_Textures(other.m_Textures) {
+    SetupMesh();
+}
+
+Mesh& Mesh::operator=(const Mesh& other) {
+    if (this == &other) {
+        return *this;
+    }
+    
+    m_Vertices = other.m_Vertices;
+    m_Indices = other.m_Indices;
+    m_Textures = other.m_Textures;
+    SetupMesh();
+    
+    return *this;
+}
+
 Mesh::~Mesh() {
-    // delete objects
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_EBO);
 }
 
 void Mesh::Draw(const ShaderProgram &shader) const {

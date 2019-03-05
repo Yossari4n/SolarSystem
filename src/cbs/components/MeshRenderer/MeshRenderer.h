@@ -30,7 +30,9 @@ public:
     void Draw(const ShaderProgram &shader) const override;
     
     const std::vector<Mesh>& Meshes() const { return m_Meshes; }
+    
     const std::vector<Texture>& TexturesLoaded() const { return m_TexturesLoaded; }
+    
     const std::string& Directory() const { return m_Directory; }
     
 private:
@@ -40,7 +42,7 @@ private:
     
     void LoadModel(std::string path);
     void ProcessNode(aiNode *node, const aiScene *scene);
-    Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
+    void ProcessMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
     unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 };
