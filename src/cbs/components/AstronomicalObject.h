@@ -32,7 +32,7 @@ public:
     void Update() override;
     
     const Orbit& Orbit() const { return m_Orbit; }
-    void Orbit(struct Orbit orbit) { m_Orbit = orbit; }
+    void Orbit(const glm::vec3* center, float radius, float angular_velocity);
     
 private:
     float m_RotationSpeed;

@@ -4,7 +4,12 @@
 
 AstronomicalObject::AstronomicalObject(float rotation_speed)
 : m_RotationSpeed(rotation_speed) {
-    
+}
+
+void AstronomicalObject::Orbit(const glm::vec3 *center, float radius, float angular_velocity) {
+    m_Orbit.Center = center;
+    m_Orbit.Radius = radius;
+    m_Orbit.AngularVelocity = angular_velocity;
 }
 
 void AstronomicalObject::Initialize() {

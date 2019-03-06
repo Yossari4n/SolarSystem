@@ -53,9 +53,9 @@ void MainScene::CreateScene() {
     merkury->CreateComponent<MeshRenderer>("data/models/merkury/13902_Earth_v1_l3.obj",
                                            ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     AstronomicalObject* merkury_ao = merkury->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 58.0f);
-    merkury_ao->Orbit(Orbit(&sun->Transform().Position(),
-                            0.39f * EARTH_ORBIT_RADIUS,
-                            -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f));
+    merkury_ao->Orbit(&sun->Transform().Position(),
+                      0.39f * EARTH_ORBIT_RADIUS,
+                      -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f);
     merkury->CreateComponent<Tail>(3.0f, glm::vec3(0.5f));
     
     auto wenus = CreateObject("Wenus");
@@ -64,9 +64,9 @@ void MainScene::CreateScene() {
     wenus->CreateComponent<MeshRenderer>("data/models/wenus/13902_Earth_v1_l3.obj",
                                          ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto wenus_ao = wenus->CreateComponent<AstronomicalObject>(merkury_ao);
-    wenus_ao->Orbit(Orbit(&sun->Transform().Position(),
-                          0.72f * EARTH_ORBIT_RADIUS,
-                          -EARTH_ORBIT_ANGULAR_VELOCITY / 0.61f));
+    wenus_ao->Orbit(&sun->Transform().Position(),
+                    0.72f * EARTH_ORBIT_RADIUS,
+                    -EARTH_ORBIT_ANGULAR_VELOCITY / 0.61f);
     wenus->CreateComponent<Tail>(3.0f, glm::vec3(245.0f/ 255.0f, 245.0f / 255.0f, 235.0f / 255.0f));
     
     
@@ -77,9 +77,9 @@ void MainScene::CreateScene() {
     earth->CreateComponent<MeshRenderer>("data/models/earth/13902_Earth_v1_l3.obj",
                                          ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto earth_ao = earth->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
-    earth_ao->Orbit(Orbit(&sun->Transform().Position(),
-                          EARTH_ORBIT_RADIUS,
-                          -EARTH_ORBIT_ANGULAR_VELOCITY));
+    earth_ao->Orbit(&sun->Transform().Position(),
+                    EARTH_ORBIT_RADIUS,
+                    -EARTH_ORBIT_ANGULAR_VELOCITY);
     earth->CreateComponent<Tail>(3.0f, glm::vec3(0.0f, 0.0f, 1.0f));
     
     
@@ -89,9 +89,9 @@ void MainScene::CreateScene() {
     mars->CreateComponent<MeshRenderer>("data/models/mars/13902_Earth_v1_l3.obj",
                                         ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto mars_ao = mars->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
-    mars_ao->Orbit(Orbit(&sun->Transform().Position(),
-                         1.52f * EARTH_ORBIT_RADIUS,
-                         -EARTH_ORBIT_ANGULAR_VELOCITY / 1.88f));
+    mars_ao->Orbit(&sun->Transform().Position(),
+                   1.52f * EARTH_ORBIT_RADIUS,
+                   -EARTH_ORBIT_ANGULAR_VELOCITY / 1.88f);
     mars->CreateComponent<Tail>(3.0f, glm::vec3(1.0f, 0.0f, 0.0f));
     
     
@@ -101,9 +101,9 @@ void MainScene::CreateScene() {
     jupiter->CreateComponent<MeshRenderer>("data/models/jupiter/13902_Earth_v1_l3.obj",
                                            ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto jupiter_ao = jupiter->CreateComponent<AstronomicalObject>(0.37f * EARTH_ROTATION_SPEED);
-    jupiter_ao->Orbit(Orbit(&sun->Transform().Position(),
-                            5.2f * EARTH_ORBIT_RADIUS,
-                            -EARTH_ORBIT_ANGULAR_VELOCITY / 11.86f));
+    jupiter_ao->Orbit(&sun->Transform().Position(),
+                      5.2f * EARTH_ORBIT_RADIUS,
+                      -EARTH_ORBIT_ANGULAR_VELOCITY / 11.86f);
     jupiter->CreateComponent<Tail>(3.0f, glm::vec3(137.0f / 255.0f, 105.0f / 255.0f, 70.0f / 255.0f));
     
     
@@ -113,9 +113,9 @@ void MainScene::CreateScene() {
     saturn->CreateComponent<MeshRenderer>("data/models/saturn/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto saturn_ao = saturn->CreateComponent<AstronomicalObject>(0.42f * EARTH_ROTATION_SPEED);
-    saturn_ao->Orbit(Orbit(&sun->Transform().Position(),
-                           9.54f * EARTH_ORBIT_RADIUS,
-                           -EARTH_ORBIT_ANGULAR_VELOCITY / 29.44f));
+    saturn_ao->Orbit(&sun->Transform().Position(),
+                     9.54f * EARTH_ORBIT_RADIUS,
+                     -EARTH_ORBIT_ANGULAR_VELOCITY / 29.44f);
     saturn->CreateComponent<Tail>(3.0f, glm::vec3(185.0f / 255.0f, 175.0f / 255.0f, 135.0f / 255.0f));
     
     
@@ -125,9 +125,9 @@ void MainScene::CreateScene() {
     uranus->CreateComponent<MeshRenderer>("data/models/uranus/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto uranus_ao = uranus->CreateComponent<AstronomicalObject>(0.7f * EARTH_ROTATION_SPEED);
-    uranus_ao->Orbit(Orbit(&sun->Transform().Position(),
-                           19.19f * EARTH_ORBIT_RADIUS,
-                           -EARTH_ORBIT_ANGULAR_VELOCITY / 84.07f));
+    uranus_ao->Orbit(&sun->Transform().Position(),
+                     19.19f * EARTH_ORBIT_RADIUS,
+                     -EARTH_ORBIT_ANGULAR_VELOCITY / 84.07f);
     uranus->CreateComponent<Tail>(3.0f, glm::vec3(195.0f / 255.0f, 215.0f / 255.0f, 240.0f / 255.0f));
     
     
@@ -137,9 +137,9 @@ void MainScene::CreateScene() {
     neptun->CreateComponent<MeshRenderer>("data/models/neptun/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
     auto neptun_ao = neptun->CreateComponent<AstronomicalObject>(0.67f * EARTH_ROTATION_SPEED);
-    neptun_ao->Orbit(Orbit(&sun->Transform().Position(),
-                           30.06f * EARTH_ORBIT_RADIUS,
-                           -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f));
+    neptun_ao->Orbit(&sun->Transform().Position(),
+                     30.06f * EARTH_ORBIT_RADIUS,
+                     -EARTH_ORBIT_ANGULAR_VELOCITY / 164.88f);
     neptun->CreateComponent<Tail>(3.0f, glm::vec3(110.0f / 255.0f, 120.0f / 255.0f, 140.0f / 255.0f));
     
     
