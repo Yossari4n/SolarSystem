@@ -1,5 +1,8 @@
 #include <iostream>
 
+#include <fstream>
+
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -16,7 +19,7 @@ Time g_Time;
 Input g_Input;
 Window g_Window;
 
-int main() {
+int main(int argc, char* argv[]) {
     // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

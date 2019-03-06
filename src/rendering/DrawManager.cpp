@@ -16,17 +16,17 @@ DrawManager::~DrawManager() {
 }
 
 void DrawManager::Initialize() {
-    m_ShaderPrograms[ShaderProgram::Type::COLOR_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.vs",
-                                                                    "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/COLOR_PURE.fs");
+    m_ShaderPrograms[ShaderProgram::Type::COLOR_PURE].AttachShaders("src/shaders/COLOR_PURE.vs",
+                                                                    "src/shaders/COLOR_PURE.fs");
     
-    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_PURE].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.vs",
-                                                                      "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_PURE.fs");
+    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_PURE].AttachShaders("src/shaders/TEXTURE_PURE.vs",
+                                                                      "src/shaders/TEXTURE_PURE.fs");
     
-    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
-                                                                                "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
+    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER].AttachShaders("src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
+                                                                                "src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
 
-    m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.vs",
-                                                                "/Users/jakubstokowski/Desktop/OpenGL/SolarSystem/src/shaders/SKYBOX.fs");
+    m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("src/shaders/SKYBOX.vs",
+                                                                "src/shaders/SKYBOX.fs");
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
