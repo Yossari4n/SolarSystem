@@ -16,7 +16,7 @@
 
 class Object {
 public:
-    Object(IScene& scene, std::string name = "object");
+    Object(ObjectManager& scene, std::string name = "object");
     Object(const Object& other, std::string name = "");
     ~Object();
     
@@ -82,13 +82,13 @@ public:
     const std::string& Name() const { return m_Name; }
     void Name(const std::string& name) { m_Name = name; }
     
-    IScene& Scene() { return m_Scene; }
+    IScene& Scene() const { return m_Owner.Scene(); }
     Transform& Transform() { return m_Transform; }
 
 private:
     std::string m_Name;
     
-    class IScene& m_Scene;
+    ObjectManager& m_Owner;
     class Transform m_Transform;
     
     std::vector<IComponent*> m_Components;

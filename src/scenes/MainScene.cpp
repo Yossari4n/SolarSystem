@@ -58,6 +58,7 @@ void MainScene::CreateScene() {
                       -EARTH_ORBIT_ANGULAR_VELOCITY / 0.24f);
     merkury->CreateComponent<Tail>(3.0f, glm::vec3(0.5f));
     
+    
     auto wenus = CreateObject("Wenus");
     wenus->Transform().Scale(0.94f * EARTH_RADIUS * model_scale);
     wenus->Transform().Rotation(model_rotation);

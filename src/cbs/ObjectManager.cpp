@@ -3,6 +3,11 @@
 #include "Object.h"
 #include "../scenes/IScene.h"
 
+ObjectManager::ObjectManager(IScene& owner)
+    : m_Scene(owner) {
+    
+}
+
 ObjectManager::~ObjectManager() {
     for (auto it = m_Objects.begin(); it != m_Objects.end(); ++it) {
         delete (*it);
@@ -27,8 +32,8 @@ void ObjectManager::DestroyObjects() {
     }
 }
 
-Object* ObjectManager::CreateObject(IScene& scene, std::string name) {
-    m_Objects.push_back(new Object(scene, name));
+Object* ObjectManager::CreateObject(std::string name) {
+    m_Objects.push_back(new Object(*this, name));
     
     return m_Objects.at(m_Objects.size() - 1);
 }

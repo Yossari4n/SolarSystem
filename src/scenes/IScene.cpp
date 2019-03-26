@@ -6,7 +6,8 @@
 #include "../utilities/Input.h"
 #include "../utilities/Window.h"
 
-IScene::IScene() {
+IScene::IScene():
+    m_ObjectManager(*this) {
     m_Running = true;
     m_FrameRate = 0.0f;
 }
@@ -76,7 +77,7 @@ void IScene::Background(const glm::vec3& background) {
 }
 
 Object* IScene::CreateObject(std::string name) {
-    return m_ObjectManager.CreateObject(*this, name);
+    return m_ObjectManager.CreateObject(name);
 }
 
 Object* IScene::CreateObject(const Object *other, std::string name) {
