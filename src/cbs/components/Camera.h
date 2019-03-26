@@ -17,6 +17,11 @@
 class Camera : public IComponent {
 public:
     Camera(glm::mat4 perspective);
+    Camera(float fovy, float aspect, float near, float far);
+    Camera(float left, float right, float bottom, float top, float near, float far);
+    
+    void Perspective(float fovy, float aspect, float near, float far);
+    void Orthographic(float left, float right, float bottom, float top, float near, float far);
     
     void Initialize() override;
     
@@ -26,7 +31,6 @@ public:
 private:
     glm::mat4 m_ViewMatrix;
     glm::mat4 m_Projection;
-    
     
     Transform* m_Transform;
 };
