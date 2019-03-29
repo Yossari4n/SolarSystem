@@ -7,7 +7,7 @@ Cubemap::Cubemap(const std::string& right, const std::string& left, const std::s
 }
 
 void Cubemap::Draw(const ShaderProgram& shader) const {
-    shader.SetInt("skybox", 0);
+    shader.Uniform("skybox", 0);
     
     glBindVertexArray(m_VAO);
     glActiveTexture(GL_TEXTURE0);

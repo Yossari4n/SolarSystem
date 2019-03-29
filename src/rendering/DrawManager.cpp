@@ -19,12 +19,15 @@ void DrawManager::Initialize() {
     m_ShaderPrograms[ShaderProgram::Type::PURE_COLOR].AttachShaders("src/shaders/PURE_COLOR.vs",
                                                                     "src/shaders/PURE_COLOR.fs");
     
+    
     m_ShaderPrograms[ShaderProgram::Type::PURE_TEXTURE].AttachShaders("src/shaders/PURE_TEXTURE.vs",
                                                                       "src/shaders/PURE_TEXTURE.fs");
     
-    m_ShaderPrograms[ShaderProgram::Type::PHONG_TEXTURE].AttachShaders("src/shaders/PHONG_TEXTURE.vs",
-                                                                       "src/shaders/PHONG_TEXTURE.fs");
-    m_ShaderPrograms[ShaderProgram::Type::PHONG_TEXTURE].Traits(ShaderProgram::Trait::LIGHT_RECEIVER);
+    
+    m_ShaderPrograms[ShaderProgram::Type::PHONG].AttachShaders("src/shaders/PHONG.vs",
+                                                               "src/shaders/PHONG.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PHONG].Traits(ShaderProgram::Trait::LIGHT_RECEIVER);
+    
 
     m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("src/shaders/SKYBOX.vs",
                                                                 "src/shaders/SKYBOX.fs");
@@ -91,12 +94,12 @@ void DrawManager::CallDraws() const {
         const ShaderProgram& curr_shader = m_ShaderPrograms[shader_type];
         
         curr_shader.Use();
-        curr_shader.SetMat4("pv", pv);
+        curr_shader.Uniform("pv", pv);
         
         // Set light properties
         if (curr_shader.Traits() & ShaderProgram::Trait::LIGHT_RECEIVER) {
-            curr_shader.SetVec3("view_pos", m_Camera->Object().Transform().Position());
-            curr_shader.SetFloat("material.shininess", 32.0f);
+            curr_shader.Uniform("view_pos", m_Camera->Object().Transform().Position());
+            curr_shader.Uniform("material.shininess", 32.0f);
             
             for (auto it = m_LightSources.begin(); it != m_LightSources.end(); ++it) {
                 (*it)->SetLightProperties(curr_shader);
@@ -111,7 +114,7 @@ void DrawManager::CallDraws() const {
         glDepthFunc(GL_LEQUAL);
         
         m_ShaderPrograms[ShaderProgram::Type::SKYBOX].Use();
-        m_ShaderPrograms[ShaderProgram::Type::SKYBOX].SetMat4("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
+        m_ShaderPrograms[ShaderProgram::Type::SKYBOX].Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
         
         m_Skybox->Draw(m_ShaderPrograms[ShaderProgram::Type::SKYBOX]);
         

@@ -19,7 +19,7 @@ void MeshRenderer::Destroy() {
 }
 
 void MeshRenderer::Draw(const ShaderProgram &shader) const {
-    shader.SetMat4("model", Object().Transform().Model());
+    shader.Uniform("model", Object().Transform().Model());
     
     for (const Mesh &mesh: m_Meshes) {
         mesh.Draw(shader);

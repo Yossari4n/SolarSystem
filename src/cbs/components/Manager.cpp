@@ -73,7 +73,7 @@ void Manager::Update() {
             m_Realistic = true;
             
             for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
-                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::PHONG_TEXTURE);
+                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::PHONG);
                 (*it)->GetComponent<Tail>()->Deactivate();
             }
         }

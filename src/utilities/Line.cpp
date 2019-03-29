@@ -39,8 +39,8 @@ Line::~Line() {
 
 void Line::Draw(const ShaderProgram &shader) const {
     glm::mat4 model(1.0f);
-    shader.SetMat4("model", model);
-    shader.SetVec3("color", m_Color);
+    shader.Uniform("model", model);
+    shader.Uniform("color", m_Color);
     
     glBindVertexArray(m_VAO);
     glLineWidth(m_Width);

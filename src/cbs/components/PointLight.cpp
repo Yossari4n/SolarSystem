@@ -28,12 +28,12 @@ void PointLight::Destroy() {
 void PointLight::SetLightProperties(const ShaderProgram& shader) {
     std::string pointLight = "point_lights[" + std::to_string(m_Index) + "].";
     
-    shader.SetVec3(pointLight + "position", Object().Transform().Position());
-    shader.SetVec3(pointLight + "ambient", m_Ambient);
-    shader.SetVec3(pointLight + "diffuse", m_Diffuse);
-    shader.SetFloat(pointLight + "constant", m_Constant);
-    shader.SetFloat(pointLight + "linear", m_Linear);
-    shader.SetFloat(pointLight + "quadratic", m_Quadratic);
+    shader.Uniform(pointLight + "position", Object().Transform().Position());
+    shader.Uniform(pointLight + "ambient", m_Ambient);
+    shader.Uniform(pointLight + "diffuse", m_Diffuse);
+    shader.Uniform(pointLight + "constant", m_Constant);
+    shader.Uniform(pointLight + "linear", m_Linear);
+    shader.Uniform(pointLight + "quadratic", m_Quadratic);
 }
 
 void PointLight::Ambient(const glm::vec3& ambient) {
