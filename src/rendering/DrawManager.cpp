@@ -95,7 +95,7 @@ void DrawManager::CallDraws() const {
         
         // Set light properties
         if (curr_shader.Traits() & ShaderProgram::Trait::LIGHT_RECEIVER) {
-            curr_shader.SetVec3("viewPos", m_Camera->Object().Transform().Position());
+            curr_shader.SetVec3("view_pos", m_Camera->Object().Transform().Position());
             curr_shader.SetFloat("material.shininess", 32.0f);
             
             for (auto it = m_LightSources.begin(); it != m_LightSources.end(); ++it) {

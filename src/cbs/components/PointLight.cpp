@@ -13,7 +13,7 @@ PointLight::PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
     m_Linear = m_Linear <= 0 ? 0.0000001f : m_Linear;
     m_Quadratic = m_Quadratic <= 0 ? 0.0000001f : m_Quadratic;
     m_Index = QUANTITY;
-        
+    
     QUANTITY = (QUANTITY + 1) % 4;
 }
 
@@ -26,7 +26,7 @@ void PointLight::Destroy() {
 }
 
 void PointLight::SetLightProperties(const ShaderProgram& shader) {
-    std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
+    std::string pointLight = "point_lights[" + std::to_string(m_Index) + "].";
     
     shader.SetVec3(pointLight + "position", Object().Transform().Position());
     shader.SetVec3(pointLight + "ambient", m_Ambient);
