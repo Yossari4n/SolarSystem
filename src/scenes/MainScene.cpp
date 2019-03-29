@@ -37,7 +37,7 @@ void MainScene::CreateScene() {
     sun->Transform().Scale(109.0f * EARTH_RADIUS * model_scale);
     sun->Transform().Rotation(model_rotation);
     sun->CreateComponent<MeshRenderer>("data/models/sun/13902_Earth_v1_l3.obj",
-                                       ShaderProgram::Type::TEXTURE_PURE);
+                                       ShaderProgram::Type::PURE_TEXTURE);
     sun->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 1.04f);
     sun->CreateComponent<PointLight>(glm::vec3(0.1f),
                                      glm::vec3(0.8f),
@@ -51,7 +51,7 @@ void MainScene::CreateScene() {
     merkury->Transform().Scale(0.38f * EARTH_RADIUS * model_scale);
     merkury->Transform().Rotation(model_rotation);
     merkury->CreateComponent<MeshRenderer>("data/models/merkury/13902_Earth_v1_l3.obj",
-                                           ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                           ShaderProgram::Type::PHONG_TEXTURE);
     AstronomicalObject* merkury_ao = merkury->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED / 58.0f);
     merkury_ao->Orbit(&sun->Transform().Position(),
                       0.39f * EARTH_ORBIT_RADIUS,
@@ -63,7 +63,7 @@ void MainScene::CreateScene() {
     wenus->Transform().Scale(0.94f * EARTH_RADIUS * model_scale);
     wenus->Transform().Rotation(model_rotation);
     wenus->CreateComponent<MeshRenderer>("data/models/wenus/13902_Earth_v1_l3.obj",
-                                         ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                         ShaderProgram::Type::PHONG_TEXTURE);
     auto wenus_ao = wenus->CreateComponent<AstronomicalObject>(merkury_ao);
     wenus_ao->Orbit(&sun->Transform().Position(),
                     0.72f * EARTH_ORBIT_RADIUS,
@@ -76,7 +76,7 @@ void MainScene::CreateScene() {
     earth->Transform().Rotation(model_rotation);
     earth->Transform().Rotate(glm::quat(glm::vec3(glm::radians(23.0f), 0.0f, 0.0f)));
     earth->CreateComponent<MeshRenderer>("data/models/earth/13902_Earth_v1_l3.obj",
-                                         ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                         ShaderProgram::Type::PHONG_TEXTURE);
     auto earth_ao = earth->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
     earth_ao->Orbit(&sun->Transform().Position(),
                     EARTH_ORBIT_RADIUS,
@@ -88,7 +88,7 @@ void MainScene::CreateScene() {
     mars->Transform().Scale(0.53f * EARTH_RADIUS * model_scale);
     mars->Transform().Rotation(model_rotation);
     mars->CreateComponent<MeshRenderer>("data/models/mars/13902_Earth_v1_l3.obj",
-                                        ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                        ShaderProgram::Type::PHONG_TEXTURE);
     auto mars_ao = mars->CreateComponent<AstronomicalObject>(EARTH_ROTATION_SPEED);
     mars_ao->Orbit(&sun->Transform().Position(),
                    1.52f * EARTH_ORBIT_RADIUS,
@@ -100,7 +100,7 @@ void MainScene::CreateScene() {
     jupiter->Transform().Scale(11.2f * EARTH_RADIUS * model_scale);
     jupiter->Transform().Rotation(model_rotation);
     jupiter->CreateComponent<MeshRenderer>("data/models/jupiter/13902_Earth_v1_l3.obj",
-                                           ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                           ShaderProgram::Type::PHONG_TEXTURE);
     auto jupiter_ao = jupiter->CreateComponent<AstronomicalObject>(0.37f * EARTH_ROTATION_SPEED);
     jupiter_ao->Orbit(&sun->Transform().Position(),
                       5.2f * EARTH_ORBIT_RADIUS,
@@ -112,7 +112,7 @@ void MainScene::CreateScene() {
     saturn->Transform().Scale(9.45f * EARTH_RADIUS * model_scale);
     saturn->Transform().Rotation(model_rotation);
     saturn->CreateComponent<MeshRenderer>("data/models/saturn/13902_Earth_v1_l3.obj",
-                                          ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                          ShaderProgram::Type::PHONG_TEXTURE);
     auto saturn_ao = saturn->CreateComponent<AstronomicalObject>(0.42f * EARTH_ROTATION_SPEED);
     saturn_ao->Orbit(&sun->Transform().Position(),
                      9.54f * EARTH_ORBIT_RADIUS,
@@ -124,7 +124,7 @@ void MainScene::CreateScene() {
     uranus->Transform().Scale(4.0f * EARTH_RADIUS * model_scale);
     uranus->Transform().Rotation(model_rotation);
     uranus->CreateComponent<MeshRenderer>("data/models/uranus/13902_Earth_v1_l3.obj",
-                                          ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                          ShaderProgram::Type::PHONG_TEXTURE);
     auto uranus_ao = uranus->CreateComponent<AstronomicalObject>(0.7f * EARTH_ROTATION_SPEED);
     uranus_ao->Orbit(&sun->Transform().Position(),
                      19.19f * EARTH_ORBIT_RADIUS,
@@ -136,7 +136,7 @@ void MainScene::CreateScene() {
     neptun->Transform().Scale(3.88f * EARTH_RADIUS * model_scale);
     neptun->Transform().Rotation(model_rotation);
     neptun->CreateComponent<MeshRenderer>("data/models/neptun/13902_Earth_v1_l3.obj",
-                                          ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER);
+                                          ShaderProgram::Type::PHONG_TEXTURE);
     auto neptun_ao = neptun->CreateComponent<AstronomicalObject>(0.67f * EARTH_ROTATION_SPEED);
     neptun_ao->Orbit(&sun->Transform().Position(),
                      30.06f * EARTH_ORBIT_RADIUS,

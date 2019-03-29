@@ -8,17 +8,25 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <any>
+#include <map>
+#include <typeindex>
 
 class ShaderProgram {
 public:
     enum Type {
-        COLOR_PURE = 0,
-        COLOR_LIGHT_RECEIVER,
-        TEXTURE_PURE,
-        TEXTURE_LIGHT_RECEIVER,
+        PURE_COLOR = 0,
+        PURE_TEXTURE,
+        PHONG_COLOR,
+        PHONG_TEXTURE,
         SKYBOX,
         
         COUNT
+    };
+    
+    enum Trait : unsigned char {
+        NONE = 0,
+        LIGHT_RECEIVER = 1 << 0
     };
     
     ShaderProgram();
@@ -31,6 +39,10 @@ public:
     
     int ID() const;
     
+    Trait Traits() const { return m_Traits; }
+    void Traits(Trait traits) { m_Traits = traits; }
+    
+    // To remove in next commit
     void SetBool(const std::string &name, bool value) const;
     void SetInt(const std::string &name, int value) const;
     void SetFloat(const std::string &name, float value) const;
@@ -45,10 +57,11 @@ public:
     void SetMat4(const std::string &name, const glm::mat4 &mat) const;
     
 private:
-    unsigned int m_ID;
-    
     void LinkProgram();
     unsigned int AttachShader(const char *path, GLenum shader);
+    
+    unsigned int m_ID;
+    Trait m_Traits;
 };
 
 #endif

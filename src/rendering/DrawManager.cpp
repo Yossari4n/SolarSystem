@@ -9,21 +9,22 @@
 DrawManager::DrawManager()
     : m_Skybox(nullptr)
     , m_Background(0.0f, 0.0f, 0.0f) {
-    
 }
 
 DrawManager::~DrawManager() {
+    
 }
 
 void DrawManager::Initialize() {
-    m_ShaderPrograms[ShaderProgram::Type::COLOR_PURE].AttachShaders("src/shaders/COLOR_PURE.vs",
-                                                                    "src/shaders/COLOR_PURE.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PURE_COLOR].AttachShaders("src/shaders/PURE_COLOR.vs",
+                                                                    "src/shaders/PURE_COLOR.fs");
     
-    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_PURE].AttachShaders("src/shaders/TEXTURE_PURE.vs",
-                                                                      "src/shaders/TEXTURE_PURE.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PURE_TEXTURE].AttachShaders("src/shaders/PURE_TEXTURE.vs",
+                                                                      "src/shaders/PURE_TEXTURE.fs");
     
-    m_ShaderPrograms[ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER].AttachShaders("src/shaders/TEXTURE_LIGHT_RECEIVER.vs",
-                                                                                "src/shaders/TEXTURE_LIGHT_RECEIVER.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PHONG_TEXTURE].AttachShaders("src/shaders/PHONG_TEXTURE.vs",
+                                                                       "src/shaders/PHONG_TEXTURE.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PHONG_TEXTURE].Traits(ShaderProgram::Trait::LIGHT_RECEIVER);
 
     m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("src/shaders/SKYBOX.vs",
                                                                 "src/shaders/SKYBOX.fs");
@@ -92,11 +93,11 @@ void DrawManager::CallDraws() const {
         curr_shader.Use();
         curr_shader.SetMat4("pv", pv);
         
-        if (shader_type == ShaderProgram::Type::TEXTURE_LIGHT_RECEIVER) {
+        // Set light properties
+        if (curr_shader.Traits() & ShaderProgram::Trait::LIGHT_RECEIVER) {
             curr_shader.SetVec3("viewPos", m_Camera->Object().Transform().Position());
             curr_shader.SetFloat("material.shininess", 32.0f);
             
-            // for all ILightSources SetLightProperties
             for (auto it = m_LightSources.begin(); it != m_LightSources.end(); ++it) {
                 (*it)->SetLightProperties(curr_shader);
             }

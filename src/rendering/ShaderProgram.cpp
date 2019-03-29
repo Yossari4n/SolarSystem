@@ -1,6 +1,7 @@
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram() {
+ShaderProgram::ShaderProgram()
+    : m_Traits(Trait::NONE) {
     m_ID = glCreateProgram();
 }
 
@@ -25,6 +26,11 @@ void ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_
         glDeleteShader(geometry_shader);
     }
 }
+
+int ShaderProgram::ID() const {
+    return m_ID;
+}
+
 
 void ShaderProgram::SetBool(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(m_ID, name.c_str()), (int)value);
@@ -73,10 +79,6 @@ void ShaderProgram::SetMat4(const std::string &name, const glm::mat4 &mat) const
     glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-int ShaderProgram::ID() const {
-    return m_ID;
-}
-
 unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
     std::string shader_code;
     std::fstream shader_file;
@@ -116,7 +118,7 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
 void ShaderProgram::LinkProgram() {
     glLinkProgram(m_ID);
     
-    // check linking errors
+    // Check linking errors
     int success;
     char info_log[1024];
     glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
