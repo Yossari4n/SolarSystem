@@ -9,9 +9,10 @@
 #include <fstream>
 #include <sstream>
 
+
 class ShaderProgram {
 public:
-    enum Type {
+    enum Type : unsigned int {
         PURE_COLOR = 0,
         PURE_TEXTURE,
         PHONG,
@@ -57,5 +58,7 @@ private:
     unsigned int m_ID;
     Trait m_Traits;
 };
+
+ShaderProgram::Trait operator | (ShaderProgram::Trait lhs, ShaderProgram::Trait rhs);
 
 #endif

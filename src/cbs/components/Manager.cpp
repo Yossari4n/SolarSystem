@@ -66,14 +66,14 @@ void Manager::Update() {
             m_Realistic = false;
             
             for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
-                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::PURE_TEXTURE);
+                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::Type::PURE_TEXTURE);
                 (*it)->GetComponent<Tail>()->Activate();
             }
         } else {
             m_Realistic = true;
             
             for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
-                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::PHONG);
+                (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::Type::PHONG);
                 (*it)->GetComponent<Tail>()->Deactivate();
             }
         }

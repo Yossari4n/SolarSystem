@@ -43,7 +43,7 @@ private:
     std::vector<IDrawable*> m_Drawables;
     std::vector<ILightSource*> m_LightSources;
     
-    std::array<ShaderProgram, ShaderProgram::Type::COUNT> m_ShaderPrograms;
+    std::array<ShaderProgram, static_cast<size_t>(ShaderProgram::Type::COUNT)> m_ShaderPrograms;
 };
 
 #endif

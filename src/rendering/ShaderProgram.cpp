@@ -1,5 +1,9 @@
 #include "ShaderProgram.h"
 
+ShaderProgram::Trait operator | (ShaderProgram::Trait lhs, ShaderProgram::Trait rhs) {
+    return static_cast<ShaderProgram::Trait>(static_cast<unsigned int>(lhs) | static_cast<unsigned int>(rhs));
+}
+
 ShaderProgram::ShaderProgram()
     : m_Traits(Trait::NONE) {
     m_ID = glCreateProgram();
