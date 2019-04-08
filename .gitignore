@@ -1,2 +1,10 @@
-*.xcodeproj
+# Unix
 *.DS_Store
+
+# macOS
+*.xcodeproj
+
+# Microsoft
+Debug
+*.vcxproj*
+*.dll

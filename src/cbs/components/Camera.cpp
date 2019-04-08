@@ -1,5 +1,8 @@
 #include "Camera.h"
 
+#undef far
+#undef near
+
 Camera::Camera(glm::mat4 projection)
     : m_Projection(projection)  {
 }

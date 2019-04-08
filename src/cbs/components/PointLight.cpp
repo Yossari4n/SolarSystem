@@ -26,7 +26,7 @@ void PointLight::Destroy() {
 }
 
 void PointLight::SetLightProperties(const ShaderProgram& shader) {
-    std::string pointLight = "point_lights[" + std::to_string(m_Index) + "].";
+    std::string pointLight = "pointLights[" + std::to_string(m_Index) + "].";
     
     shader.Uniform(pointLight + "position", Object().Transform().Position());
     shader.Uniform(pointLight + "ambient", m_Ambient);

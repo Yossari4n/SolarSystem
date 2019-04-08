@@ -98,7 +98,7 @@ void DrawManager::CallDraws() const {
         
         // Set light properties
         if (curr_shader.Traits() & ShaderProgram::Trait::LIGHT_RECEIVER) {
-            curr_shader.Uniform("view_pos", m_Camera->Object().Transform().Position());
+            curr_shader.Uniform("viewPos", m_Camera->Object().Transform().Position());
             curr_shader.Uniform("material.shininess", 32.0f);
             
             for (auto it = m_LightSources.begin(); it != m_LightSources.end(); ++it) {
@@ -112,11 +112,12 @@ void DrawManager::CallDraws() const {
     // Draw skybox
     if (m_Skybox != nullptr) {
         glDepthFunc(GL_LEQUAL);
+		const ShaderProgram& skybox_shader = m_ShaderPrograms[ShaderProgram::Type::SKYBOX];
         
-        m_ShaderPrograms[ShaderProgram::Type::SKYBOX].Use();
-        m_ShaderPrograms[ShaderProgram::Type::SKYBOX].Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
+		skybox_shader.Use();
+		skybox_shader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
         
-        m_Skybox->Draw(m_ShaderPrograms[ShaderProgram::Type::SKYBOX]);
+        m_Skybox->Draw(skybox_shader);
         
         glDepthFunc(GL_LESS);
     }

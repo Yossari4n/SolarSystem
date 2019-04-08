@@ -55,6 +55,6 @@ private:
     class Object* m_Object;
 };
 
-#include "Object.h"
+#include "../Object.h"
 
 #endif

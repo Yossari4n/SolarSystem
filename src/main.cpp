@@ -1,18 +1,16 @@
-#include <iostream>
-
-#include <fstream>
-
+#include "utilities/Time.h"
+#include "utilities/Input.h"
+#include "utilities/Window.h"
+#include "scenes/MainScene.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
+#include <stb_image/stb_image.h>
 
-#include "utilities/Time.h"
-#include "utilities/Input.h"
-#include "utilities/Window.h"
-#include "scenes/MainScene.h"
+#include <iostream>
+#include <fstream>
 
 // Global objects
 Time g_Time;
@@ -28,7 +26,7 @@ int main(int argc, char* argv[]) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     // Create window
-    g_Window.Initialize(glfwCreateWindow(2880, 1800, "SolarSystem", nullptr, nullptr), 2880, 1800);
+    g_Window.Initialize(glfwCreateWindow(1920, 1080, "SolarSystem", nullptr, nullptr), 2880, 1800);
     if (!g_Window) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";

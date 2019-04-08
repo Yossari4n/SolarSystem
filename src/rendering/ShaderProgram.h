@@ -9,10 +9,9 @@
 #include <fstream>
 #include <sstream>
 
-
 class ShaderProgram {
 public:
-    enum Type : unsigned int {
+    enum Type : int {
         PURE_COLOR = 0,
         PURE_TEXTURE,
         PHONG,
