@@ -6,5 +6,6 @@
 
 # Microsoft
 Debug
+Release
 *.vcxproj*
 *.dll
