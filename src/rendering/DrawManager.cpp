@@ -89,8 +89,8 @@ void DrawManager::CallDraws() const {
     glm::mat4 pv = m_Camera->Projection() * m_Camera->ViewMatrix();
     
     // Draw objects
-    for (auto it = m_Drawables.cbegin(); it != m_Drawables.cend(); it++) {
-        int shader_type = (*it)->ShaderType();
+    for (auto to_draw = m_Drawables.cbegin(); to_draw != m_Drawables.cend(); to_draw++) {
+        int shader_type = (*to_draw)->ShaderType();
         const ShaderProgram& curr_shader = m_ShaderPrograms[shader_type];
         
         curr_shader.Use();
@@ -101,12 +101,12 @@ void DrawManager::CallDraws() const {
             curr_shader.Uniform("viewPos", m_Camera->Object().Transform().Position());
             curr_shader.Uniform("material.shininess", 32.0f);
             
-            for (auto it = m_LightSources.begin(); it != m_LightSources.end(); ++it) {
-                (*it)->SetLightProperties(curr_shader);
+            for (auto light_source = m_LightSources.begin(); light_source != m_LightSources.end(); ++light_source) {
+                (*light_source)->SetLightProperties(curr_shader);
             }
         }
         
-        (*it)->Draw(curr_shader);
+        (*to_draw)->Draw(curr_shader);
     }
     
     // Draw skybox

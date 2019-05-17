@@ -3,7 +3,9 @@
 
 #include "../rendering/IDrawable.h"
 
+#pragma warning(push, 0)
 #include <stb_image/stb_image.h>
+#pragma warning(pop)
 
 #include <string>
 

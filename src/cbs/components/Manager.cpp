@@ -43,7 +43,7 @@ void Manager::Update() {
             g_Time.TimeMultiplayer(m_TimeMultiplayers[m_TimeMultiplayersIndex]);
             m_Paused = false;
         } else {
-            g_Time.TimeMultiplayer(0.0f);
+            g_Time.TimeMultiplayer(0);
             m_Paused = true;
         }
     }
@@ -164,8 +164,9 @@ void Manager::Update() {
         m_TPC->Radius(m_Radiuses[8]);
     }
     
+	// Scroll
     if (m_TPC->Active()) {
-        float new_radius = m_TPC->Radius() + g_Input.ScrollOffset();
+        float new_radius = m_TPC->Radius() - g_Input.ScrollOffset();
         if (new_radius < m_Radiuses[m_CurrentPlanetIndex]) {
             new_radius = m_Radiuses[m_CurrentPlanetIndex];
         }

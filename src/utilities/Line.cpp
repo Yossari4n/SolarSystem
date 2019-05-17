@@ -1,6 +1,6 @@
 #include "Line.h"
 
-Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color, float width)
+Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
     : m_Start(start)
     , m_End(end)
     , m_Color(color) {
@@ -43,7 +43,6 @@ void Line::Draw(const ShaderProgram &shader) const {
     shader.Uniform("color", m_Color);
     
     glBindVertexArray(m_VAO);
-    glLineWidth(m_Width);
     glDrawArrays(GL_LINES, 0, 6);
     glBindVertexArray(0);
 }

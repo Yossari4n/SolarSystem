@@ -5,11 +5,13 @@
 #include "../../utilities/Input.h"
 #include "../../utilities/Cubemap.h"
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#pragma warning(pop)
 
 #include <iostream>
 #include <string>

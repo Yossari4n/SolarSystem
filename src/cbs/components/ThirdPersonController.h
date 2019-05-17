@@ -6,7 +6,9 @@
 #include "../../utilities/Time.h"
 #include "../../utilities/Input.h"
 
+#pragma warning(push, 0)
 #include <glm/gtx/rotate_vector.hpp>
+#pragma warning(pop)
 
 #define DEGREES_60 (60.0f * 3.14f / 180.0f)
 #define DEGREES_170 (170.0f * 3.14f / 180.0f)

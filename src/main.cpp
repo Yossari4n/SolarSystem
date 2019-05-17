@@ -3,11 +3,15 @@
 #include "utilities/Window.h"
 #include "scenes/MainScene.h"
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#pragma warning(pop)
 
+#pragma warning(push, 0)
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image/stb_image.h>
+#pragma warning(pop)
 
 #include <iostream>
 #include <fstream>
@@ -18,6 +22,9 @@ Input g_Input;
 Window g_Window;
 
 int main(int argc, char* argv[]) {
+	(void*)argc;
+	(void*)argv;
+
     // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

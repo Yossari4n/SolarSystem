@@ -121,7 +121,7 @@ std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial *material, ai
     return textures;
 }
 
-unsigned int MeshRenderer::TextureFromFile(const char *path, const std::string &directory, bool gamma) {
+unsigned int MeshRenderer::TextureFromFile(const char *path, const std::string &directory) {
     std::string filename = std::string(path);
     filename = directory + '/' + filename;
     

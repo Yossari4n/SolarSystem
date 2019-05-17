@@ -1,10 +1,12 @@
 #ifndef Input_hpp
 #define Input_hpp
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
+#pragma warning(pop)
 
 class Input {
     friend void mouse_callback(GLFWwindow* window, double x_pos, double y_pos);

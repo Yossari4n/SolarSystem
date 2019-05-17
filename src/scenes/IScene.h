@@ -24,7 +24,6 @@ public:
     void RegisterLightSource(ILightSource* light_source);
     void UnregisterLightSource(ILightSource* light_source);
     void RegisterCamera(Camera* camera);
-    void UnregisterCamera();
     Camera* MainCamera() const;
     void Skybox(const std::string& right, const std::string& left, const std::string& top, const std::string& bottom, const std::string& back, const std::string& front);
     void Background(const glm::vec3& background);

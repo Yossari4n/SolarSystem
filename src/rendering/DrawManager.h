@@ -3,8 +3,10 @@
 
 #include "ShaderProgram.h"
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#pragma warning(pop)
 
 #include <vector>
 #include <array>

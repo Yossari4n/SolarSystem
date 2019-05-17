@@ -3,11 +3,13 @@
 
 #include "../../../rendering/ShaderProgram.h"
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 
 #include <glm/glm.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#pragma warning(pop)
 
 #include <iostream>
 #include <string>

@@ -1,7 +1,9 @@
 #ifndef Window_h
 #define Window_h
 
+#pragma warning(push, 0)
 #include <GLFW/glfw3.h>
+#pragma warning(pop)
 
 class Window {
 public:

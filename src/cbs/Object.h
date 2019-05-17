@@ -5,10 +5,12 @@
 #include "components/IComponent.h"
 #include "../scenes/IScene.h"
 
+#pragma warning(push, 0)
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
+#pragma warning(pop)
 
 #include <string>
 #include <vector>

@@ -1,8 +1,10 @@
 #ifndef Time_h
 #define Time_h
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#pragma warning(pop)
 
 #define FPS_LIMIT30 (1.0f / 30.0f)
 #define FPS_LIMIT60 (1.0f / 60.0f)
@@ -13,7 +15,6 @@ public:
     Time();
     
     void Initialize();
-    void NewFrame();
     void Hold();
     void Update();
     
@@ -22,17 +23,16 @@ public:
     float DeltaTime() const { return m_DeltaTime; }
     float FixedDeltaTime() const { return m_FixedDeltaTime; }
     
-    float TimeMultiplayer() const { return m_TimeMultiplier; }
-    void TimeMultiplayer(float time_multiplayer);
+    unsigned int TimeMultiplayer() const { return m_TimeMultiplier; }
+    void TimeMultiplayer(unsigned int time_multiplayer);
     
 private:
     float m_CurrentTime;
     float m_FixedCurrentTime;
     float m_DeltaTime;
     float m_FixedDeltaTime;
-    float m_TimeMultiplier;
-    
     float m_LastFrame;
+	unsigned int m_TimeMultiplier;
 };
 
 extern Time g_Time;

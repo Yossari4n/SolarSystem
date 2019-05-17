@@ -7,7 +7,9 @@
 #include "../../utilities/Input.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
+#pragma warning(push, 0)
 #include <glm/gtx/vector_angle.hpp>
+#pragma warning(pop)
 
 #include <iostream>
 

@@ -21,7 +21,7 @@ private:
     // Drawing mode
     bool m_Realistic;
     
-    // Controllers
+    // Camera controllers
     FirstPersonController* m_FPC;
     ThirdPersonController* m_TPC;
     

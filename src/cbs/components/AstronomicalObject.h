@@ -1,16 +1,18 @@
 #ifndef AstronomicalObject_hpp
 #define AstronomicalObject_hpp
 
-#include <glm/glm.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <iostream>
-#include <string>
-
 #include "IComponent.h"
 #include "../../utilities/Time.h"
 #include "../../utilities/Input.h"
+
+#pragma warning(push, 0)
+#include <glm/glm.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#pragma warning(pop)
+
+#include <iostream>
+#include <string>
 
 struct Orbit {
     Orbit(const glm::vec3* center = nullptr, float radius = 0, float angular_velocity = 0)
