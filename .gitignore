@@ -1,11 +1,15 @@
-# Unix
+# OS X
 *.DS_Store
 
-# macOS
+# XCode
 *.xcodeproj
 
-# Microsoft
+# Visual Studio
 Debug
 Release
 *.vcxproj*
+
+# External Libraries
 *.dll
+*.exp
+*.lib
