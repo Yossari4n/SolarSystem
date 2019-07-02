@@ -1,20 +1,18 @@
 #include "Line.h"
 
 Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
-    : m_Start(start)
+    : IDrawable(ShaderProgram::Type::PURE_COLOR)
+	, m_Start(start)
     , m_End(end)
     , m_Color(color) {
-    m_ShaderType = ShaderProgram::Type::PURE_COLOR;
-    
     SetupLine();
 }
 
 Line::Line(const Line& other)
-    : m_Start(other.m_Start)
+    : IDrawable(ShaderProgram::Type::PURE_COLOR)
+	, m_Start(other.m_Start)
     , m_End(other.m_End)
     , m_Color(other.m_Color) {
-    m_ShaderType = ShaderProgram::Type::PURE_COLOR;
-    
     SetupLine();
 }
 

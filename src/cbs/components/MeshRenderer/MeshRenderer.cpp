@@ -1,8 +1,7 @@
 #include "MeshRenderer.h"
 
-MeshRenderer::MeshRenderer(std::string path, ShaderProgram::Type type) {
-    m_ShaderType = type;
-    
+MeshRenderer::MeshRenderer(std::string path, ShaderProgram::Type type)
+	: IDrawable(type) {
     LoadModel(path);
 }
 

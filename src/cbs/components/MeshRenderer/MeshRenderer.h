@@ -1,10 +1,13 @@
 #ifndef Model_h
 #define Model_h
 
+#pragma warning(disable: 26495)
+
 #include "Mesh.h"
 #include "../IComponent.h"
 #include "../../../rendering/IDrawable.h"
 
+#pragma warning(push, 0)
 #include <glad/glad.h>
 
 #include <glm/glm.hpp>
@@ -15,6 +18,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#pragma warning(pop)
 
 #include <string>
 #include <vector>
@@ -47,4 +51,5 @@ private:
     unsigned int TextureFromFile(const char *path, const std::string &directory);
 };
 
+#pragma warning(default: 26495)
 #endif

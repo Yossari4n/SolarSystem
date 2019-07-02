@@ -74,6 +74,7 @@ void ShaderProgram::Uniform(const std::string &name, float x, float y, float z, 
 void ShaderProgram::Uniform(const std::string &name, const glm::mat2 &mat) const {
     glUniformMatrix2fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
+
 void ShaderProgram::Uniform(const std::string &name, const glm::mat3 &mat) const {
     glUniformMatrix3fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
@@ -96,7 +97,7 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
         
         shader_code = shader_stream.str();
     } catch(const std::ifstream::failure &e) {
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ\n" << e.what() << '\n';
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ " << path << '\n' << e.what() << "\n\n";
     }
     
     unsigned int shader = glCreateShader(shader_type);
@@ -110,7 +111,7 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(shader, 1024, NULL, info_log);
-        std::cout << "ERROR::SHADER_COMPILATION_ERROR\n" << info_log << '\n';
+        std::cout << "ERROR::SHADER_COMPILATION_ERROR " << path << '\n' << info_log << "\n\n";
     }
     
     glAttachShader(m_ID, shader);
@@ -127,6 +128,6 @@ void ShaderProgram::LinkProgram() {
     glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
     if (!success) {
         glGetProgramInfoLog(m_ID, 1024, nullptr, info_log);
-        std::cout << "ERROR::LINKING_SHADERS_ERROR\n" << info_log << '\n';
+        std::cout << "ERROR::LINKING_SHADERS_ERROR\n" << info_log << "\n\n";
     }
 }

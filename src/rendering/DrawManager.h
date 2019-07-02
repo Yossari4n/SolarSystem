@@ -3,13 +3,13 @@
 
 #include "ShaderProgram.h"
 
+#include <vector>
+#include <array>
+
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #pragma warning(pop)
-
-#include <vector>
-#include <array>
 
 class Camera;
 class IDrawable;

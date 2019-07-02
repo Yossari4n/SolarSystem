@@ -6,11 +6,21 @@
 #pragma warning(push, 0)
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#pragma warning(pop)
 
-#pragma warning(push, 0)
+#pragma warning(disable: 26451)
+#pragma warning(disable: 6011)
+#pragma warning(disable: 6262)
+#pragma warning(disable: 6308)
+#pragma warning(disable: 6387)
+#pragma warning(disable: 28182)
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
+#pragma warning(default: 26451)
+#pragma warning(default: 6011)
+#pragma warning(default: 6262)
+#pragma warning(default: 6308)
+#pragma warning(default: 6387)
+#pragma warning(default: 28182)
 #pragma warning(pop)
 
 #include <iostream>
@@ -21,10 +31,7 @@ Time g_Time;
 Input g_Input;
 Window g_Window;
 
-int main(int argc, char* argv[]) {
-	(void*)argc;
-	(void*)argv;
-
+int main() {
     // Initialize OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

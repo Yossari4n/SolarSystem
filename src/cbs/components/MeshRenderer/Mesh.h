@@ -15,7 +15,6 @@
 #include <string>
 #include <vector>
 
-// TODO to new files
 struct Vertex {
     glm::vec3 Position;
     glm::vec3 Normal;
@@ -23,7 +22,7 @@ struct Vertex {
 };
 
 struct Texture {
-    unsigned int ID;
+    unsigned int ID = 0;
     std::string Type;
     std::string Path;
 };

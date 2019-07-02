@@ -8,6 +8,7 @@
 
 DrawManager::DrawManager()
     : m_Skybox(nullptr)
+	, m_Camera(nullptr)
     , m_Background(0.0f, 0.0f, 0.0f) {
 }
 
@@ -62,7 +63,7 @@ void DrawManager::UnregisterDrawCall(IDrawable* component) {
     auto it = std::find(m_Drawables.begin(), m_Drawables.end(), component);
     
     if (it != m_Drawables.end()) {
-        long index = std::distance(m_Drawables.begin(), it);
+        auto index = std::distance(m_Drawables.begin(), it);
         m_Drawables.erase(m_Drawables.begin() + index);
     }
 }
@@ -77,7 +78,7 @@ void DrawManager::UnregisterLightSource(ILightSource* light_source) {
     auto it = std::find(m_LightSources.begin(), m_LightSources.end(), light_source);
     
     if (it != m_LightSources.end()) {
-        long index = std::distance(m_LightSources.begin(), it);
+        auto index = std::distance(m_LightSources.begin(), it);
         m_LightSources.erase(m_LightSources.begin() + index);
     }
 }
