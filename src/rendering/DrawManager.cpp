@@ -17,21 +17,21 @@ DrawManager::~DrawManager() {
 }
 
 void DrawManager::Initialize() {
-    m_ShaderPrograms[ShaderProgram::Type::PURE_COLOR].AttachShaders("src/shaders/PURE_COLOR.vs",
-                                                                    "src/shaders/PURE_COLOR.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PURE_COLOR].AttachShaders("src/shaders/PURE_COLOR.vert",
+                                                                    "src/shaders/PURE_COLOR.frag");
     
     
-    m_ShaderPrograms[ShaderProgram::Type::PURE_TEXTURE].AttachShaders("src/shaders/PURE_TEXTURE.vs",
-                                                                      "src/shaders/PURE_TEXTURE.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PURE_TEXTURE].AttachShaders("src/shaders/PURE_TEXTURE.vert",
+                                                                      "src/shaders/PURE_TEXTURE.frag");
     
     
-    m_ShaderPrograms[ShaderProgram::Type::PHONG].AttachShaders("src/shaders/PHONG.vs",
-                                                               "src/shaders/PHONG.fs");
+    m_ShaderPrograms[ShaderProgram::Type::PHONG].AttachShaders("src/shaders/PHONG.vert",
+                                                               "src/shaders/PHONG.frag");
     m_ShaderPrograms[ShaderProgram::Type::PHONG].Traits(ShaderProgram::Trait::LIGHT_RECEIVER);
     
 
-    m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("src/shaders/SKYBOX.vs",
-                                                                "src/shaders/SKYBOX.fs");
+    m_ShaderPrograms[ShaderProgram::Type::SKYBOX].AttachShaders("src/shaders/SKYBOX.vert",
+                                                                "src/shaders/SKYBOX.frag");
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
