@@ -9,15 +9,16 @@
 #include "../cbs/components/Manager.h"
 #include "../cbs/components/Tail.h"
 
-#define PI 3.14159265358979323846f
-#define DOUBLE_PI (PI * 2.0f)
+/**
+ * TODO
+ * Unit scaling 
+ * 
+ * Planets' radius
+ * Planets' rotation speed
+ * Planets' orbit length (see AstronomicalObject.h ASTRONOMICAL_UNIT)
+ */
 
-// angular velocity w = 2pi / T
-// where T := time in seconds for planet to make full cycle
-#define EARTH_RADIUS 0.5f
-#define EARTH_ROTATION_SPEED (360.f / 5.0f) // full rotation takes 5 second
-#define EARTH_ORBIT_RADIUS (150.0f / 4.0f) // all distances are divided by 4
-#define EARTH_ORBIT_ANGULAR_VELOCITY (DOUBLE_PI / (360.0f * 5.0f)) // full orbit takes 5 minutes
+constexpr float EARTH_RADIUS = 0.5f;
 
 void MainScene::CreateScene() {
     FrameRate(60);
@@ -47,13 +48,13 @@ void MainScene::CreateScene() {
                                      0.000007f);
     
     
-    auto merkury = CreateObject("Merkury");
-    merkury->Transform().Scale(0.38f * EARTH_RADIUS * model_scale);
-    merkury->Transform().Rotation(model_rotation);
-    merkury->CreateComponent<MeshRenderer>("data/models/merkury/13902_Earth_v1_l3.obj",
+    auto mercury = CreateObject("Mercury");
+    mercury->Transform().Scale(0.38f * EARTH_RADIUS * model_scale);
+    mercury->Transform().Rotation(model_rotation);
+    mercury->CreateComponent<MeshRenderer>("data/models/merkury/13902_Earth_v1_l3.obj",
                                            ShaderProgram::Type::PHONG);
-    merkury->CreateComponent<AstronomicalObject>(48.3313f, 3.24587E-5f, 7.0047f, 5.00E-8f, 29.1241f, 1.01444E-5f, 0.387098f, 0.0f, 0.205635f, 5.59E-10f, 168.6562f, 4.0923344368f);
-    merkury->CreateComponent<Tail>(3.0f, glm::vec3(0.5f));
+    mercury->CreateComponent<AstronomicalObject>(48.3313f, 3.24587E-5f, 7.0047f, 5.0E-8f, 29.1241f, 1.01444E-5f, 0.387098f, 0.0f, 0.205635f, 5.59E-10f, 168.6562f, 4.0923344368f);
+    mercury->CreateComponent<Tail>(3.0f, glm::vec3(0.5f));
     
     
     auto venus = CreateObject("Venus");
@@ -111,13 +112,13 @@ void MainScene::CreateScene() {
     uranus->CreateComponent<Tail>(3.0f, glm::vec3(195.0f / 255.0f, 215.0f / 255.0f, 240.0f / 255.0f));
     
     
-    auto neptun = CreateObject("Neptun");
-    neptun->Transform().Scale(3.88f * EARTH_RADIUS * model_scale);
-    neptun->Transform().Rotation(model_rotation);
-    neptun->CreateComponent<MeshRenderer>("data/models/neptun/13902_Earth_v1_l3.obj",
+    auto neptune = CreateObject("Neptune");
+    neptune->Transform().Scale(3.88f * EARTH_RADIUS * model_scale);
+    neptune->Transform().Rotation(model_rotation);
+    neptune->CreateComponent<MeshRenderer>("data/models/neptun/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::PHONG);
-    neptun->CreateComponent<AstronomicalObject>(131.7806f, 3.0173E-5f, 1.7700f, 2.55E-7f, 272.8461f, 6.027E-6f, 30.05826f, 3.313E-8f, 0.008606f, 2.15E-9f, 260.2471f, 0.005995147f);
-    neptun->CreateComponent<Tail>(3.0f, glm::vec3(110.0f / 255.0f, 120.0f / 255.0f, 140.0f / 255.0f));
+    neptune->CreateComponent<AstronomicalObject>(131.7806f, 3.0173E-5f, 1.7700f, 2.55E-7f, 272.8461f, 6.027E-6f, 30.05826f, 3.313E-8f, 0.008606f, 2.15E-9f, 260.2471f, 0.005995147f);
+    neptune->CreateComponent<Tail>(3.0f, glm::vec3(110.0f / 255.0f, 120.0f / 255.0f, 140.0f / 255.0f));
     
     
     auto camera = CreateObject("Camera");
@@ -126,7 +127,7 @@ void MainScene::CreateScene() {
     camera->CreateComponent<Camera>(glm::perspective(glm::radians(45.0f), 2880.0f / 1800.0f, 0.1f, 3000.0f));
     auto camera_tpc = camera->CreateComponent<ThirdPersonController>();
     auto camera_fpc = camera->CreateComponent<FirstPersonController>();
-    camera->CreateComponent<Manager>(std::array<class Object*, 9>({sun, merkury, venus, earth, mars, jupiter, saturn, uranus, neptun}),
+    camera->CreateComponent<Manager>(std::array<class Object*, 9>({sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune}),
                                      camera_fpc,
                                      camera_tpc);
 }

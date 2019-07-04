@@ -18,6 +18,9 @@
 #include <math.h>
 #include <ctime>
 
+constexpr float M_PIf = static_cast<float>(M_PI);
+constexpr float ASTRONOMICAL_UNIT = 150.0f / 3.0f;
+
 class AstronomicalObject : public IComponent {
 public:
 	AstronomicalObject(float N1, float N2, float i1, float i2, float w1, float w2, float a1, float a2, float e1, float e2, float M1, float M2);
@@ -26,7 +29,9 @@ public:
 
 private:
 	int TimeScale();
-	float Rev(float x);
+	float Rev(float x) {
+		return x - floor(x / 360.0f) * 360.0f;
+	}
 
 	std::time_t m_RawTime;
 	float m_N1;
