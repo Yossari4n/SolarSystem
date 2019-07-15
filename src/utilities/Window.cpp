@@ -7,6 +7,6 @@ void Window::Initialize(GLFWwindow* window, unsigned int width, unsigned int hei
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-	(void*)window;
+    (void*)window;
     glViewport(0, 0, width, height);
 }

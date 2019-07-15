@@ -8,7 +8,7 @@
 
 DrawManager::DrawManager()
     : m_Skybox(nullptr)
-	, m_Camera(nullptr)
+    , m_Camera(nullptr)
     , m_Background(0.0f, 0.0f, 0.0f) {
 }
 
@@ -113,10 +113,10 @@ void DrawManager::CallDraws() const {
     // Draw skybox
     if (m_Skybox != nullptr) {
         glDepthFunc(GL_LEQUAL);
-		const ShaderProgram& skybox_shader = m_ShaderPrograms[ShaderProgram::Type::SKYBOX];
+        const ShaderProgram& skybox_shader = m_ShaderPrograms[ShaderProgram::Type::SKYBOX];
         
-		skybox_shader.Use();
-		skybox_shader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
+        skybox_shader.Use();
+        skybox_shader.Uniform("pv", m_Camera->Projection() * glm::mat4(glm::mat3(m_Camera->ViewMatrix())));
         
         m_Skybox->Draw(skybox_shader);
         

@@ -21,67 +21,67 @@ Input::Input()
 }
 
 void Input::Update(GLFWwindow *window) {
-	m_AnyKeyPressed = false;
-	m_AnyKeyHold = false;
-	m_AnyKeyReleased = false;
+    m_AnyKeyPressed = false;
+    m_AnyKeyHold = false;
+    m_AnyKeyReleased = false;
 
-	// Mouse buttons
-	for (int i = 0; i < GLFW_MOUSE_BUTTON_MIDDLE; ++i) {
-		if (glfwGetMouseButton(window, i) == GLFW_PRESS) {
-			if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
-				m_Keys[i] = KeyState::PRESSED;
-				m_AnyKeyPressed = true;
-			}
-			else if (m_Keys[i] == KeyState::PRESSED) {
-				m_Keys[i] = KeyState::HOLD;
-				m_AnyKeyHold = true;
-			}
-		}
-		else {
-			if (m_Keys[i] == KeyState::PRESSED || m_Keys[i] == KeyState::HOLD) {
-				m_Keys[i] = KeyState::RELEASED;
-				m_AnyKeyReleased = true;
-			}
-			else {
-				m_Keys[i] = KeyState::NONE;
-			}
-		}
-	}
+    // Mouse buttons
+    for (int i = 0; i < GLFW_MOUSE_BUTTON_MIDDLE; ++i) {
+        if (glfwGetMouseButton(window, i) == GLFW_PRESS) {
+            if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
+                m_Keys[i] = KeyState::PRESSED;
+                m_AnyKeyPressed = true;
+            }
+            else if (m_Keys[i] == KeyState::PRESSED) {
+                m_Keys[i] = KeyState::HOLD;
+                m_AnyKeyHold = true;
+            }
+        }
+        else {
+            if (m_Keys[i] == KeyState::PRESSED || m_Keys[i] == KeyState::HOLD) {
+                m_Keys[i] = KeyState::RELEASED;
+                m_AnyKeyReleased = true;
+            }
+            else {
+                m_Keys[i] = KeyState::NONE;
+            }
+        }
+    }
 
-	// Keyboard buttons
-	for (int i = GLFW_KEY_SPACE; i < GLFW_KEY_MENU + 1; ++i) {
-		if (glfwGetKey(window, i) == GLFW_PRESS) {
-			if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
-				m_Keys[i] = KeyState::PRESSED;
-				m_AnyKeyPressed = true;
-			}
-			else if (m_Keys[i] == KeyState::PRESSED) {
-				m_Keys[i] = KeyState::HOLD;
-				m_AnyKeyHold = true;
-			}
+    // Keyboard buttons
+    for (int i = GLFW_KEY_SPACE; i < GLFW_KEY_MENU + 1; ++i) {
+        if (glfwGetKey(window, i) == GLFW_PRESS) {
+            if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
+                m_Keys[i] = KeyState::PRESSED;
+                m_AnyKeyPressed = true;
+            }
+            else if (m_Keys[i] == KeyState::PRESSED) {
+                m_Keys[i] = KeyState::HOLD;
+                m_AnyKeyHold = true;
+            }
 
-		}
-		else {
-			if (m_Keys[i] == KeyState::PRESSED || m_Keys[i] == KeyState::HOLD) {
-				m_Keys[i] = KeyState::RELEASED;
-				m_AnyKeyReleased = true;
-			}
-			else {
-				m_Keys[i] = KeyState::NONE;
-			}
-		}
-	}
+        }
+        else {
+            if (m_Keys[i] == KeyState::PRESSED || m_Keys[i] == KeyState::HOLD) {
+                m_Keys[i] = KeyState::RELEASED;
+                m_AnyKeyReleased = true;
+            }
+            else {
+                m_Keys[i] = KeyState::NONE;
+            }
+        }
+    }
 
-	// Mouse position
-	m_MouseOffset.x = m_MousePosition.x - m_MouseLastPosition.x;
-	m_MouseOffset.y = m_MouseLastPosition.y - m_MousePosition.y;
-	m_MouseLastPosition = m_MousePosition;
+    // Mouse position
+    m_MouseOffset.x = m_MousePosition.x - m_MouseLastPosition.x;
+    m_MouseOffset.y = m_MouseLastPosition.y - m_MousePosition.y;
+    m_MouseLastPosition = m_MousePosition;
 
-	// Mouse scroll
-	if (!m_ScrollChanged) {
-		m_ScrollOffset = 0.0f;
-	}
-	m_ScrollChanged = false;
+    // Mouse scroll
+    if (!m_ScrollChanged) {
+        m_ScrollOffset = 0.0f;
+    }
+    m_ScrollChanged = false;
 }
 
 Input::KeyState Input::GetKeyState(int glfw_key_enum) const {
@@ -89,7 +89,7 @@ Input::KeyState Input::GetKeyState(int glfw_key_enum) const {
 }
 
 void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
-	(void*)window;
+    (void*)window;
 
     g_Input.m_MousePosition.x = static_cast<float>(x_pos);
     g_Input.m_MousePosition.y = static_cast<float>(y_pos);
@@ -102,8 +102,8 @@ void mouse_callback(GLFWwindow* window, double x_pos, double y_pos) {
 }
 
 void scroll_callback(GLFWwindow* window, double x_offset, double y_offset) {
-	(void*)window;
-	(void)x_offset;
+    (void*)window;
+    (void)x_offset;
     g_Input.m_ScrollOffset = static_cast<float>(y_offset);
     
     g_Input.m_ScrollChanged = true;

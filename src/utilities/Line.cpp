@@ -2,7 +2,7 @@
 
 Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
     : IDrawable(ShaderProgram::Type::PURE_COLOR)
-	, m_Start(start)
+    , m_Start(start)
     , m_End(end)
     , m_Color(color) {
     SetupLine();
@@ -10,7 +10,7 @@ Line::Line(glm::vec3 start, glm::vec3 end, glm::vec3 color)
 
 Line::Line(const Line& other)
     : IDrawable(ShaderProgram::Type::PURE_COLOR)
-	, m_Start(other.m_Start)
+    , m_Start(other.m_Start)
     , m_End(other.m_End)
     , m_Color(other.m_Color) {
     SetupLine();

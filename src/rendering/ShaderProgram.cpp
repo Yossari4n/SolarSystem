@@ -97,7 +97,7 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
         
         shader_code = shader_stream.str();
     } catch(const std::ifstream::failure &e) {
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ " << path << '\n' << e.what() << "\n\n";
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ " << path << '\n' << e.what() << "\n\n";
     }
     
     unsigned int shader = glCreateShader(shader_type);

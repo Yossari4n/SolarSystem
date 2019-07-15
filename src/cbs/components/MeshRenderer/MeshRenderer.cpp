@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
 
 MeshRenderer::MeshRenderer(std::string path, ShaderProgram::Type type)
-	: IDrawable(type) {
+    : IDrawable(type) {
     LoadModel(path);
 }
 

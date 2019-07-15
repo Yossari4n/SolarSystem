@@ -32,7 +32,7 @@ private:
     float m_DeltaTime;
     float m_FixedDeltaTime;
     float m_LastFrame;
-	unsigned int m_TimeMultiplier;
+    unsigned int m_TimeMultiplier;
 };
 
 extern Time g_Time;
