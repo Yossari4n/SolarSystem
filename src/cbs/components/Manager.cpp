@@ -4,7 +4,7 @@
 #include "Tail.h"
 
 Manager::Manager(std::array<class Object*, 9> planets, FirstPersonController* fpc, ThirdPersonController* tpc)
-    : m_Planets(planets)
+    : m_AstronomicalObjects(planets)
     , m_FPC(fpc)
     , m_TPC(tpc)
     , m_TimeMultiplayers({ 1, 2, 4, 10, 50 })
@@ -22,16 +22,12 @@ void Manager::Initialize() {
     g_Time.TimeMultiplayer(m_TimeMultiplayers[0]);
     m_TPC->Deactivate();
     
-    for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
+    for (auto it = m_AstronomicalObjects.begin() + 1; it != m_AstronomicalObjects.end(); ++it) {
         (*it)->GetComponent<Tail>()->Deactivate();
     }
 }
 
 void Manager::Update() {
-    if (g_Input.GetKeyState(GLFW_KEY_Z) == Input::PRESSED) {
-        std::cout << Object().Transform().Position().x << ' ' << Object().Transform().Position().y << ' ' << Object().Transform().Position().z << '\n';
-    }
-    
     // Exit scene
     if (g_Input.GetKeyState(GLFW_KEY_ESCAPE) == Input::KeyState::PRESSED) {
         Object().Scene().Exit();
@@ -65,14 +61,14 @@ void Manager::Update() {
         if (m_Realistic) {
             m_Realistic = false;
             
-            for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
+            for (auto it = m_AstronomicalObjects.begin() + 1; it != m_AstronomicalObjects.end(); ++it) {
                 (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::Type::PURE_TEXTURE);
                 (*it)->GetComponent<Tail>()->Activate();
             }
         } else {
             m_Realistic = true;
             
-            for (auto it = m_Planets.begin() + 1; it != m_Planets.end(); ++it) {
+            for (auto it = m_AstronomicalObjects.begin() + 1; it != m_AstronomicalObjects.end(); ++it) {
                 (*it)->GetComponent<MeshRenderer>()->ShaderType(ShaderProgram::Type::PHONG);
                 (*it)->GetComponent<Tail>()->Deactivate();
             }
@@ -96,7 +92,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 0;
-        m_TPC->Target(m_Planets[0]);
+        m_TPC->Target(m_AstronomicalObjects[0]);
         m_TPC->Radius(m_Radiuses[0]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_1) == Input::KeyState::PRESSED) {
@@ -104,7 +100,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 1;
-        m_TPC->Target(m_Planets[1]);
+        m_TPC->Target(m_AstronomicalObjects[1]);
         m_TPC->Radius(m_Radiuses[1]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_2) == Input::KeyState::PRESSED) {
@@ -112,7 +108,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 2;
-        m_TPC->Target(m_Planets[2]);
+        m_TPC->Target(m_AstronomicalObjects[2]);
         m_TPC->Radius(m_Radiuses[2]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_3) == Input::KeyState::PRESSED) {
@@ -120,7 +116,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 3;
-        m_TPC->Target(m_Planets[3]);
+        m_TPC->Target(m_AstronomicalObjects[3]);
         m_TPC->Radius(m_Radiuses[3]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_4) == Input::KeyState::PRESSED) {
@@ -128,7 +124,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 4;
-        m_TPC->Target(m_Planets[4]);
+        m_TPC->Target(m_AstronomicalObjects[4]);
         m_TPC->Radius(m_Radiuses[4]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_5) == Input::KeyState::PRESSED) {
@@ -136,7 +132,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 5;
-        m_TPC->Target(m_Planets[5]);
+        m_TPC->Target(m_AstronomicalObjects[5]);
         m_TPC->Radius(m_Radiuses[5]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_6) == Input::KeyState::PRESSED) {
@@ -144,7 +140,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 6;
-        m_TPC->Target(m_Planets[6]);
+        m_TPC->Target(m_AstronomicalObjects[6]);
         m_TPC->Radius(m_Radiuses[6]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_7) == Input::KeyState::PRESSED) {
@@ -152,7 +148,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 7;
-        m_TPC->Target(m_Planets[7]);
+        m_TPC->Target(m_AstronomicalObjects[7]);
         m_TPC->Radius(m_Radiuses[7]);
     }
     if (g_Input.GetKeyState(GLFW_KEY_8) == Input::KeyState::PRESSED) {
@@ -160,7 +156,7 @@ void Manager::Update() {
         m_TPC->Activate();
         
         m_CurrentPlanetIndex = 8;
-        m_TPC->Target(m_Planets[8]);
+        m_TPC->Target(m_AstronomicalObjects[8]);
         m_TPC->Radius(m_Radiuses[8]);
     }
     

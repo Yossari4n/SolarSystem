@@ -144,7 +144,3 @@ void MainScene::CreateScene() {
                                      camera_fpc,
                                      camera_tpc);
 }
-
-float MainScene::DateToHours(unsigned int days, unsigned int hours, unsigned int minutes, unsigned int seconds) const {
-    return 24.0f * days + hours + minutes / 60.0f + seconds / 360.0f;
-}
