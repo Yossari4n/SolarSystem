@@ -26,12 +26,12 @@ void AstronomicalObject::Initialize() {
 }
 
 void AstronomicalObject::Update() {
-	m_LerpTime = m_LerpTime + g_Time.DeltaTime();
+	m_LerpTime = m_LerpTime + g_Time.FixedDeltaTime();
 	
 	Object().Transform().Position(glm::lerp<float>(m_StartingPos, m_EndPos, m_LerpTime));
 
 	if (m_LerpTime > 1.0f) {
-		m_RawTime = m_RawTime + DAY_TO_SEC * static_cast<std::time_t>(g_Time.TimeMultiplayer());
+		m_RawTime = m_RawTime + DAY_TO_SEC;
 
 		m_StartingPos = m_EndPos;
 		m_EndPos = Position();
