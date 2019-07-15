@@ -23,7 +23,9 @@ AstronomicalObject::AstronomicalObject(OrbitalElements orbital_elements, float r
 }
 
 void AstronomicalObject::Initialize() {
-    m_StartingPos = m_EndPos = Position();
+    m_StartingPos = Position();
+    m_RawTime = m_RawTime + DAY_TO_SEC;
+    m_EndPos = Position();
 }
 
 void AstronomicalObject::Update() {
@@ -88,7 +90,7 @@ int AstronomicalObject::TimeScale() const {
     const int M = date.tm_mon + 1;
     const int D = date.tm_mday;
 
-    return 367 * Y - (7 * (Y + ((M + 9) / 12))) / 4 + (275 * M) / 9 + D - 730530;
+    return 367 * Y - 7 * (Y + (M + 9) / 12) / 4 - 3 * ((Y + (M - 9) / 7) / 100 + 1) / 4 + 275 * M / 9 + D - 730515;
 }
 
 #undef _USE_MATH_DEFINES
