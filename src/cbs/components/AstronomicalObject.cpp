@@ -2,7 +2,7 @@
 
 #include "MeshRenderer/MeshRenderer.h"
 
-AstronomicalObject::AstronomicalObject(OrbitalElements orbital_elements)
+AstronomicalObject::AstronomicalObject(OrbitalElements orbital_elements, float rotation_speed)
     : m_RawTime(time(0))
     , m_StartingPos(0.0f)
     , m_EndPos(0.0f)
@@ -18,7 +18,8 @@ AstronomicalObject::AstronomicalObject(OrbitalElements orbital_elements)
     , m_e1(orbital_elements.e1)
     , m_e2(orbital_elements.e2)
     , m_M1(orbital_elements.M1)
-    , m_M2(orbital_elements.M2) {
+    , m_M2(orbital_elements.M2)
+    , m_RotationSpeed(rotation_speed) {
 }
 
 void AstronomicalObject::Initialize() {
@@ -26,8 +27,12 @@ void AstronomicalObject::Initialize() {
 }
 
 void AstronomicalObject::Update() {
-    m_LerpTime = m_LerpTime + g_Time.FixedDeltaTime();
-    
+    float dt = g_Time.FixedDeltaTime();
+    m_LerpTime = m_LerpTime + dt;
+
+    // Rotate around the Z axis because model's original rotation
+    glm::quat rotation(glm::vec3(0.0f, 0.0f, glm::radians(m_RotationSpeed * dt)));
+    Object().Transform().Rotate(rotation);
     Object().Transform().Position(glm::lerp<float>(m_StartingPos, m_EndPos, m_LerpTime));
 
     if (m_LerpTime > 1.0f) {
@@ -44,12 +49,12 @@ void AstronomicalObject::Update() {
 glm::vec3 AstronomicalObject::Position() const {
     const int d = TimeScale();
 
-    float N = Rev(m_N1 + m_N2 * d);        // Longitude of the ascending node
-    float i = m_i1 + m_i2 * d;            // Inclination to the ecliptic (plane of the Earth's orbit)
-    float w = Rev(m_w1 + m_w2 * d);        // Argument of perihelion
-    float a = m_a1 + m_a2 * d;            // Mean distance from Sun
-    float e = m_e1 + m_e2 * d;            // Eccentricity (0=circle, 0-1=ellipse, 1=parabola)
-    float M = Rev(m_M1 + m_M2 * d);        // Mean anomaly (0 at perihelion; increases uniformly with time)
+    float N = Rev(m_N1 + m_N2 * d);     // Longitude of the ascending node
+    float i = m_i1 + m_i2 * d;          // Inclination to the ecliptic (plane of the Earth's orbit)
+    float w = Rev(m_w1 + m_w2 * d);     // Argument of perihelion
+    float a = m_a1 + m_a2 * d;          // Mean distance from Sun
+    float e = m_e1 + m_e2 * d;          // Eccentricity (0=circle, 0-1=ellipse, 1=parabola)
+    float M = Rev(m_M1 + m_M2 * d);     // Mean anomaly (0 at perihelion; increases uniformly with time)
 
     float E = M + e * (180.0f / M_PIf) * sin(glm::radians(M)) * (1.0f + e * cos(glm::radians(M)));    // Eccentric anomaly
 
@@ -58,7 +63,7 @@ glm::vec3 AstronomicalObject::Position() const {
     float yv = a * (sin(glm::radians(E)) * sqrt(1 - pow(e, 2)));
 
     float r = sqrt(pow(xv, 2) + pow(yv, 2));    // Distance
-    float v = glm::degrees(atan2(xv, yv));        // True anomaly
+    float v = glm::degrees(atan2(xv, yv));      // True anomaly
 
     // Convert to radians
     float N_rad = glm::radians(N);

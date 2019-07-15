@@ -13,12 +13,16 @@
  * TODO
  * Unit scaling 
  * 
+ * 1 sec irl = 1 day of sim
+ * 
  * Planets' radius
  * Planets' rotation speed
  * Planets' orbit length (see AstronomicalObject.h ASTRONOMICAL_UNIT)
  */
 
 constexpr float EARTH_RADIUS = 0.5f;
+constexpr float DAY_TO_HOURS = 24.0f;
+constexpr float DOUBLE_PI_DEG = 360.0f;
 
 void MainScene::CreateScene() {
     FrameRate(60);
@@ -39,7 +43,8 @@ void MainScene::CreateScene() {
     sun->Transform().Rotation(model_rotation);
     sun->CreateComponent<MeshRenderer>("data/models/sun/13902_Earth_v1_l3.obj",
                                        ShaderProgram::Type::PURE_TEXTURE);
-    sun->CreateComponent<AstronomicalObject>(OrbitalElements(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+    sun->CreateComponent<AstronomicalObject>(OrbitalElements(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                                             DAY_TO_HOURS / DateToHours(25, 9, 7, 0) * DOUBLE_PI_DEG);
     sun->CreateComponent<PointLight>(glm::vec3(0.1f),
                                      glm::vec3(0.8f),
                                      glm::vec3(0.5f),
@@ -53,7 +58,8 @@ void MainScene::CreateScene() {
     mercury->Transform().Rotation(model_rotation);
     mercury->CreateComponent<MeshRenderer>("data/models/merkury/13902_Earth_v1_l3.obj",
                                            ShaderProgram::Type::PHONG);
-    mercury->CreateComponent<AstronomicalObject>(OrbitalElements(48.3313f, 3.24587E-5f, 7.0047f, 5.0E-8f, 29.1241f, 1.01444E-5f, 0.387098f, 0.0f, 0.205635f, 5.59E-10f, 168.6562f, 4.0923344368f));
+    mercury->CreateComponent<AstronomicalObject>(OrbitalElements(48.3313f, 3.24587E-5f, 7.0047f, 5.0E-8f, 29.1241f, 1.01444E-5f, 0.387098f, 0.0f, 0.205635f, 5.59E-10f, 168.6562f, 4.0923344368f),
+                                                 DAY_TO_HOURS / DateToHours(58, 15, 26, 0) * DOUBLE_PI_DEG);
     mercury->CreateComponent<Tail>(3.0f, glm::vec3(0.5f));
     
     
@@ -62,7 +68,8 @@ void MainScene::CreateScene() {
     venus->Transform().Rotation(model_rotation);
     venus->CreateComponent<MeshRenderer>("data/models/wenus/13902_Earth_v1_l3.obj",
                                          ShaderProgram::Type::PHONG);
-    venus->CreateComponent<AstronomicalObject>(OrbitalElements(76.6799f, 2.46590E-5f, 3.3946f, 2.75E-8f, 54.8910f, 1.38374E-5f, 0.723330f, 0.0f, 0.006773f, 1.302E-9f, 48.0052f, 1.6021302244f));
+    venus->CreateComponent<AstronomicalObject>(OrbitalElements(76.6799f, 2.46590E-5f, 3.3946f, 2.75E-8f, 54.8910f, 1.38374E-5f, 0.723330f, 0.0f, 0.006773f, 1.302E-9f, 48.0052f, 1.6021302244f),
+                                               DAY_TO_HOURS / DateToHours(243, 0, 27, 0) * DOUBLE_PI_DEG);
     venus->CreateComponent<Tail>(3.0f, glm::vec3(245.0f/ 255.0f, 245.0f / 255.0f, 235.0f / 255.0f));
     
     
@@ -72,7 +79,8 @@ void MainScene::CreateScene() {
     earth->Transform().Rotate(glm::quat(glm::vec3(glm::radians(23.0f), 0.0f, 0.0f)));
     earth->CreateComponent<MeshRenderer>("data/models/earth/13902_Earth_v1_l3.obj",
                                          ShaderProgram::Type::PHONG);
-    earth->CreateComponent<AstronomicalObject>(OrbitalElements(0.0f, 0.0f, 0.0f, 0.0f, 282.9404f, 4.70935E-5f, 1.0f, 0.0f, 0.016709f, 1.151E-9f, 356.0470f, 0.9856002585f));
+    earth->CreateComponent<AstronomicalObject>(OrbitalElements(0.0f, 0.0f, 0.0f, 0.0f, 282.9404f, 4.70935E-5f, 1.0f, 0.0f, 0.016709f, 1.151E-9f, 356.0470f, 0.9856002585f),
+                                               DAY_TO_HOURS / DateToHours(0, 23, 56, 4) * DOUBLE_PI_DEG);
     earth->CreateComponent<Tail>(3.0f, glm::vec3(0.0f, 0.0f, 1.0f));
     
     
@@ -81,7 +89,8 @@ void MainScene::CreateScene() {
     mars->Transform().Rotation(model_rotation);
     mars->CreateComponent<MeshRenderer>("data/models/mars/13902_Earth_v1_l3.obj",
                                         ShaderProgram::Type::PHONG);
-    mars->CreateComponent<AstronomicalObject>(OrbitalElements(49.5574, 2.11081E-5f, 1.8497f, 1.78E-8f, 286.5016f, 2.92961E-5f, 1.523688f, 0.0f, 0.093405f, 2.516E-9f, 18.6021f, 0.5240207766f));
+    mars->CreateComponent<AstronomicalObject>(OrbitalElements(49.5574, 2.11081E-5f, 1.8497f, 1.78E-8f, 286.5016f, 2.92961E-5f, 1.523688f, 0.0f, 0.093405f, 2.516E-9f, 18.6021f, 0.5240207766f),
+                                              DAY_TO_HOURS / DateToHours(0, 24, 37, 23) * DOUBLE_PI_DEG);
     mars->CreateComponent<Tail>(3.0f, glm::vec3(1.0f, 0.0f, 0.0f));
     
     
@@ -90,7 +99,8 @@ void MainScene::CreateScene() {
     jupiter->Transform().Rotation(model_rotation);
     jupiter->CreateComponent<MeshRenderer>("data/models/jupiter/13902_Earth_v1_l3.obj",
                                            ShaderProgram::Type::PHONG);
-    jupiter->CreateComponent<AstronomicalObject>(OrbitalElements(100.4542f, 2.76854E-5f, 1.3030f, 1.557E-7f, 273.8777f, 1.64505E-5f, 5.20256f, 0.0f, 0.048498f, 4.469E-9f, 19.8950f, 0.0830853001f));
+    jupiter->CreateComponent<AstronomicalObject>(OrbitalElements(100.4542f, 2.76854E-5f, 1.3030f, 1.557E-7f, 273.8777f, 1.64505E-5f, 5.20256f, 0.0f, 0.048498f, 4.469E-9f, 19.8950f, 0.0830853001f),
+                                                 DAY_TO_HOURS / DateToHours(0, 9, 55, 30) * DOUBLE_PI_DEG);
     jupiter->CreateComponent<Tail>(3.0f, glm::vec3(137.0f / 255.0f, 105.0f / 255.0f, 70.0f / 255.0f));
     
     
@@ -99,7 +109,8 @@ void MainScene::CreateScene() {
     saturn->Transform().Rotation(model_rotation);
     saturn->CreateComponent<MeshRenderer>("data/models/saturn/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::PHONG);
-    saturn->CreateComponent<AstronomicalObject>(OrbitalElements(113.6634f, 2.38980E-5f, 2.4886f, 1.081E-7f, 339.3939f, 2.97661E-5f, 9.55475f, 0.0f, 0.055546f, 9.499E-9f, 316.9670f, 0.0334442282f));
+    saturn->CreateComponent<AstronomicalObject>(OrbitalElements(113.6634f, 2.38980E-5f, 2.4886f, 1.081E-7f, 339.3939f, 2.97661E-5f, 9.55475f, 0.0f, 0.055546f, 9.499E-9f, 316.9670f, 0.0334442282f),
+                                                DAY_TO_HOURS / DateToHours(0, 10, 39, 22) * DOUBLE_PI_DEG);
     saturn->CreateComponent<Tail>(3.0f, glm::vec3(185.0f / 255.0f, 175.0f / 255.0f, 135.0f / 255.0f));
     
     
@@ -108,7 +119,8 @@ void MainScene::CreateScene() {
     uranus->Transform().Rotation(model_rotation);
     uranus->CreateComponent<MeshRenderer>("data/models/uranus/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::PHONG);
-    uranus->CreateComponent<AstronomicalObject>(OrbitalElements(74.0005f, 1.3978E-5f, 0.7733f, 1.9E-8f, 96.6612f, 3.0565E-5f, 19.18171f, 1.55E-8f, 0.047318f, 7.45E-9f, 142.5905f, 0.011725806f));
+    uranus->CreateComponent<AstronomicalObject>(OrbitalElements(74.0005f, 1.3978E-5f, 0.7733f, 1.9E-8f, 96.6612f, 3.0565E-5f, 19.18171f, 1.55E-8f, 0.047318f, 7.45E-9f, 142.5905f, 0.011725806f),
+                                                DAY_TO_HOURS / DateToHours(0, 17, 14, 24) * DOUBLE_PI_DEG);
     uranus->CreateComponent<Tail>(3.0f, glm::vec3(195.0f / 255.0f, 215.0f / 255.0f, 240.0f / 255.0f));
     
     
@@ -117,7 +129,8 @@ void MainScene::CreateScene() {
     neptune->Transform().Rotation(model_rotation);
     neptune->CreateComponent<MeshRenderer>("data/models/neptun/13902_Earth_v1_l3.obj",
                                           ShaderProgram::Type::PHONG);
-    neptune->CreateComponent<AstronomicalObject>(OrbitalElements(131.7806f, 3.0173E-5f, 1.7700f, 2.55E-7f, 272.8461f, 6.027E-6f, 30.05826f, 3.313E-8f, 0.008606f, 2.15E-9f, 260.2471f, 0.005995147f));
+    neptune->CreateComponent<AstronomicalObject>(OrbitalElements(131.7806f, 3.0173E-5f, 1.7700f, 2.55E-7f, 272.8461f, 6.027E-6f, 30.05826f, 3.313E-8f, 0.008606f, 2.15E-9f, 260.2471f, 0.005995147f),
+                                                 DAY_TO_HOURS / DateToHours(0, 16, 6, 36) * DOUBLE_PI_DEG);
     neptune->CreateComponent<Tail>(3.0f, glm::vec3(110.0f / 255.0f, 120.0f / 255.0f, 140.0f / 255.0f));
     
     
@@ -130,4 +143,8 @@ void MainScene::CreateScene() {
     camera->CreateComponent<Manager>(std::array<class Object*, 9>({sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune}),
                                      camera_fpc,
                                      camera_tpc);
+}
+
+float MainScene::DateToHours(unsigned int days, unsigned int hours, unsigned int minutes, unsigned int seconds) const {
+    return 24.0f * days + hours + minutes / 60.0f + seconds / 360.0f;
 }

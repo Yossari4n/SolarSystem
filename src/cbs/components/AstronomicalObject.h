@@ -59,7 +59,7 @@ struct OrbitalElements {
 
 class AstronomicalObject : public IComponent {
 public:
-    AstronomicalObject(OrbitalElements orbital_elements);
+    AstronomicalObject(OrbitalElements orbital_elements, float rotation_speed);
     
     void Initialize() override;
     void Update() override;
@@ -92,6 +92,9 @@ private:
     float m_e2;
     float m_M1;
     float m_M2;
+
+    // Spinning
+    float m_RotationSpeed;
 };
 
 #endif
