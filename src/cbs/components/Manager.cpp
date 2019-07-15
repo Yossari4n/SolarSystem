@@ -164,7 +164,7 @@ void Manager::Update() {
         m_TPC->Radius(m_Radiuses[8]);
     }
     
-	// Scroll
+    // Scroll
     if (m_TPC->Active()) {
         float new_radius = m_TPC->Radius() - g_Input.ScrollOffset();
         if (new_radius < m_Radiuses[m_CurrentPlanetIndex]) {

@@ -3,7 +3,7 @@
 
 Tail::Tail(float length, glm::vec3 color)
     : IDrawable(ShaderProgram::Type::PURE_COLOR)
-	, m_MaxLength(length)
+    , m_MaxLength(length)
     , m_Color(color) {
     m_CurrentLength = 0.0f;
 }
