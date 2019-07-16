@@ -40,7 +40,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
     // Create window
-    g_Window.Initialize(glfwCreateWindow(1920, 1080, "SolarSystem", nullptr, nullptr), 2880, 1800);
+    g_Window.Initialize(glfwCreateWindow(1920, 1080, "SolarSystem", nullptr, nullptr), 1920, 1080);
     if (!g_Window) {
         glfwTerminate();
         std::cout << "Failed to create GLFW window\n";
