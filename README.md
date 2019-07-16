@@ -22,7 +22,7 @@ Programmed with C++17 and modern OpenGL (Core-profile).
 ![Alt text](Photo2.png?raw=true "Earth")
 ![Alt text](Photo3.png?raw=true "Planets")
 
-[![Watch the video](https://img.www.youtube.com/vi/wo0ZCWmGqlg/maxresdefault.jpg)](https://www.youtube.com/watch?v=wo0ZCWmGqlg)
+[![Watch the video](https://img.youtube.com/vi/wo0ZCWmGqlg/maxresdefault.jpg)](https://www.youtube.com/watch?v=wo0ZCWmGqlg)
 
 
 ### DEPENDENCIES
