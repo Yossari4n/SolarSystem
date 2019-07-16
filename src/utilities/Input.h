@@ -15,8 +15,9 @@ class Input {
 public:
     Input();
     
+    // Old style enums to allow easy check
     enum KeyState {
-        NONE = 0,   // The key is not being pressed nor been
+        FREE = 0,   // The key is not being pressed nor has been
         PRESSED,    // The key is pressed in this frame
         HOLD,       // The key is still being pressed
         RELEASED,   // The key was pressed in previous frame and is not now

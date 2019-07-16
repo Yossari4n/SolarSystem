@@ -18,12 +18,14 @@ void ShaderProgram::Use() const {
 }
 
 void ShaderProgram::AttachShaders(const char *vertex_path, const char *fragment_path, const char *geometry_path) {
+    // Compile shaders from given files
     unsigned int vertex_shader = AttachShader(vertex_path, GL_VERTEX_SHADER);
     unsigned int fragment_shader = AttachShader(fragment_path, GL_FRAGMENT_SHADER);
     unsigned int geometry_shader = geometry_path != nullptr ? AttachShader(geometry_path, GL_GEOMETRY_SHADER) : -1;
     
     LinkProgram();
     
+    // Free memory
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
     if(geometry_path != nullptr) {
@@ -89,6 +91,7 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
     
     shader_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     
+    // Read file
     try {
         shader_file.open(path);
         std::stringstream shader_stream;
@@ -100,12 +103,13 @@ unsigned int ShaderProgram::AttachShader(const char *path, GLenum shader_type) {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ " << path << '\n' << e.what() << "\n\n";
     }
     
+    // Compile shader
     unsigned int shader = glCreateShader(shader_type);
     const char *shader_code_ptr = shader_code.c_str();
     glShaderSource(shader, 1, &shader_code_ptr, nullptr);
     glCompileShader(shader);
     
-    // check compile errors
+    // Check compile errors
     GLint success;
     GLchar info_log[1024];
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);

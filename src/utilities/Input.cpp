@@ -2,23 +2,23 @@
 
 #include "Window.h"
 
+#pragma warning(disable: 26495)
 Input::Input()
-    : m_MousePosition(g_Window.Width() / 2.0f, g_Window.Height() / 2.0f)
+    : m_AnyKeyPressed(false)
+    , m_AnyKeyHold(false)
+    , m_AnyKeyReleased(false)
+    , m_MouseFirstMove(true)
+    , m_ScrollChanged(true)
+    , m_ScrollOffset(0.0f)
+    , m_MousePosition(g_Window.Width() / 2.0f, g_Window.Height() / 2.0f)
+    , m_MouseLastPosition(m_MousePosition)
     , m_MouseOffset(0.0f) {
-    m_AnyKeyPressed = false;
-    m_AnyKeyHold = false;
-    m_AnyKeyReleased = false;
-        
-    m_MouseFirstMove = true;
-    m_MouseLastPosition = m_MousePosition;
-    
-    m_ScrollChanged = true;
-    m_ScrollOffset = 0.0f;
     
     for (int i = 0; i < GLFW_KEY_MENU + 1; ++i) {
-        m_Keys[i] = KeyState::NONE;
+        m_Keys[i] = KeyState::FREE;
     }
 }
+#pragma warning(default: 26495)
 
 void Input::Update(GLFWwindow *window) {
     m_AnyKeyPressed = false;
@@ -28,7 +28,7 @@ void Input::Update(GLFWwindow *window) {
     // Mouse buttons
     for (int i = 0; i < GLFW_MOUSE_BUTTON_MIDDLE; ++i) {
         if (glfwGetMouseButton(window, i) == GLFW_PRESS) {
-            if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
+            if (m_Keys[i] == KeyState::FREE || m_Keys[i] == KeyState::RELEASED) {
                 m_Keys[i] = KeyState::PRESSED;
                 m_AnyKeyPressed = true;
             }
@@ -43,7 +43,7 @@ void Input::Update(GLFWwindow *window) {
                 m_AnyKeyReleased = true;
             }
             else {
-                m_Keys[i] = KeyState::NONE;
+                m_Keys[i] = KeyState::FREE;
             }
         }
     }
@@ -51,7 +51,7 @@ void Input::Update(GLFWwindow *window) {
     // Keyboard buttons
     for (int i = GLFW_KEY_SPACE; i < GLFW_KEY_MENU + 1; ++i) {
         if (glfwGetKey(window, i) == GLFW_PRESS) {
-            if (m_Keys[i] == KeyState::NONE || m_Keys[i] == KeyState::RELEASED) {
+            if (m_Keys[i] == KeyState::FREE || m_Keys[i] == KeyState::RELEASED) {
                 m_Keys[i] = KeyState::PRESSED;
                 m_AnyKeyPressed = true;
             }
@@ -67,7 +67,7 @@ void Input::Update(GLFWwindow *window) {
                 m_AnyKeyReleased = true;
             }
             else {
-                m_Keys[i] = KeyState::NONE;
+                m_Keys[i] = KeyState::FREE;
             }
         }
     }

@@ -31,7 +31,7 @@ void Object::Initialize() {
 
 void Object::Update() {
     // To prevent premature destruction of components deleted in update
-    // this loop can't use iterators and for each component must increment shared pointer counter
+    // this loop can't use iterators
     for (auto&& comp : m_Components) {
         comp->Update();
     }

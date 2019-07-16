@@ -6,10 +6,10 @@
 #include "../utilities/Input.h"
 #include "../utilities/Window.h"
 
-IScene::IScene():
-    m_ObjectManager(*this) {
-    m_Running = true;
-    m_FrameRate = 0.0f;
+IScene::IScene()
+    : m_ObjectManager(*this)
+    , m_Running(true)
+    , m_FrameRate(0.0f) {
 }
 
 void IScene::PreRun() {
@@ -20,17 +20,23 @@ void IScene::PreRun() {
 }
 
 void IScene::Run() {
+    // Initialize Time manager as close to game loop as possible
+    // to avoid misrepresented delta time
     g_Time.Initialize();
     
+    // Game loop
     while (m_Running && !glfwWindowShouldClose(g_Window)) {
+        // If frame rate is greater than limit then wait
         do {
             g_Time.Hold();
             glfwPollEvents();
         } while (g_Time.DeltaTime() < m_FrameRate);
         
+        // Update global systems
         g_Time.Update();
         g_Input.Update(g_Window);
         
+        // Update managers
         m_ObjectManager.UpdateObjects();
         m_DrawManager.CallDraws();
     }

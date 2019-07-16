@@ -6,9 +6,9 @@
 #include <GLFW/glfw3.h>
 #pragma warning(pop)
 
-#define FPS_LIMIT30 (1.0f / 30.0f)
-#define FPS_LIMIT60 (1.0f / 60.0f)
-#define FPS_LIMIT300 (1.0f / 300.0f)
+constexpr auto FPS_LIMIT30 = (1.0f / 30.0f);
+constexpr auto FPS_LIMIT60 = (1.0f / 60.0f);
+constexpr auto FPS_LIMIT300 = (1.0f / 300.0f);
 
 class Time {
 public:

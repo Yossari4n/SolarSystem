@@ -32,11 +32,12 @@ void AstronomicalObject::Update() {
     float dt = g_Time.FixedDeltaTime();
     m_LerpTime = m_LerpTime + dt;
 
-    // Rotate around the Z axis because model's original rotation
+    // Rotate around the Z axis because of model's original rotation
     glm::quat rotation(glm::vec3(0.0f, 0.0f, glm::radians(m_RotationSpeed * dt)));
-    Object().Transform().Rotate(rotation);
+    Object().Transform().RotateRelative(rotation);
     Object().Transform().Position(glm::lerp<float>(m_StartingPos, m_EndPos, m_LerpTime));
 
+    // Reset lerp
     if (m_LerpTime > 1.0f) {
         m_RawTime = m_RawTime + DAY_TO_SEC;
 
@@ -86,10 +87,12 @@ int AstronomicalObject::TimeScale() const {
     std::tm date;
     localtime_s(&date, &m_RawTime);
 
+    // Fixed date values
     const int Y = date.tm_year + 1900;
     const int M = date.tm_mon + 1;
     const int D = date.tm_mday;
 
+    // Formula is valid over th entire Gregorian Calendar
     return 367 * Y - 7 * (Y + (M + 9) / 12) / 4 - 3 * ((Y + (M - 9) / 7) / 100 + 1) / 4 + 275 * M / 9 + D - 730515;
 }
 

@@ -3,7 +3,7 @@
 #include "IComponent.h"
 #include "../../utilities/Time.h"
 #include "../../utilities/Input.h"
-#include "../../utilities/Cubemap.h"
+#include "../../rendering/Cubemap.h"
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -22,15 +22,15 @@ public:
     Camera(float fovy, float aspect, float near, float far);
     Camera(float left, float right, float bottom, float top, float near, float far);
     
-    void Perspective(float fovy, float aspect, float near, float far);
-    void Orthographic(float left, float right, float bottom, float top, float near, float far);
-    
     void Initialize() override;
     
     glm::mat4 ViewMatrix() const;
     const glm::mat4& Projection() const { return m_Projection; }
     
 private:
+    glm::mat4 Perspective(float fovy, float aspect, float near, float far);
+    glm::mat4 Orthographic(float left, float right, float bottom, float top, float near, float far);
+
     glm::mat4 m_ViewMatrix;
     glm::mat4 m_Projection;
     

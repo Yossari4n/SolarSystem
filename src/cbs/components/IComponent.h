@@ -33,11 +33,19 @@ public:
     }
     
     void Activate() {
+        if (m_Active) {
+            return;
+        }
+
         m_Active = true;
         OnActivate();
     }
     
     void Deactivate() {
+        if (!m_Active) {
+            return;
+        }
+
         m_Active = false;
         OnDeactivate();
     }

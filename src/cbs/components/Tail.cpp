@@ -1,5 +1,5 @@
 #include "Tail.h"
-#include "../../utilities/Line.h"
+#include "../../rendering/Line.h"
 
 Tail::Tail(float length, glm::vec3 color)
     : IDrawable(ShaderProgram::Type::PURE_COLOR)

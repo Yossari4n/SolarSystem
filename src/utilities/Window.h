@@ -19,7 +19,6 @@ private:
     GLFWwindow* m_Pointer;
     unsigned int m_Width;
     unsigned int m_Height;
-    
 };
 
 extern Window g_Window;

@@ -9,6 +9,7 @@ PointLight::PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
     , m_Constant(constant)
     , m_Linear(linear)
     , m_Quadratic(quadratic) {
+    // Make sure parameters are not negative
     m_Constant = m_Constant <= 0 ? 0.0000001f : m_Constant;
     m_Linear = m_Linear <= 0 ? 0.0000001f : m_Linear;
     m_Quadratic = m_Quadratic <= 0 ? 0.0000001f : m_Quadratic;

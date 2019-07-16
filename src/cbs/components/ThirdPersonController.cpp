@@ -5,10 +5,10 @@ ThirdPersonController::ThirdPersonController(class Object* target, float radius,
     , m_Radius(radius)
     , m_MouseSensitivity(mouse_sensitivity)
     , m_Front(1.0f, 0.0f, 0.0f)
-    , m_RotationAxis(1.0f, 0.0f, 0.0f) {
-    m_XRotation = 0.0f;
-    m_YRotation = 0.0f;
-    m_RotationAxis = glm::vec3(0.0f, 0.0f, 1.0f);
+    , m_RotationAxis(0.0f, 0.0f, 1.0f)
+    , m_XRotation(0.0f)
+    , m_YRotation(0.0f) {
+
 }
 
 void ThirdPersonController::Radius(float radius) {
@@ -42,13 +42,13 @@ void ThirdPersonController::Update() {
         m_XRotation = -DEGREES_60;
     }
     
-    // Get whole rotation around Y
+    // Get whole rotation around Y axis
     glm::quat rot_y(glm::vec3(0.0f, m_YRotation, 0.0f));
     
     // Create new arbitrary X axis
     glm::vec3 curr_rotation_axis = rot_y * m_RotationAxis;
     
-    // Calculate new pos by first rotatin point around origin and then move it in respect to m_Target
+    // Calculate new pos by first rotating point around origin and then move it in respect to m_Target
     glm::vec3 new_pos = rot_y * glm::vec3(0.0f, 0.0f, m_Radius);
     new_pos = glm::rotate(new_pos, m_XRotation, curr_rotation_axis);
     new_pos = new_pos + m_Target->Position();

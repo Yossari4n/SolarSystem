@@ -2,9 +2,11 @@
 #define DrawManager_h
 
 #include "ShaderProgram.h"
+#include "Cubemap.h"
 
 #include <vector>
 #include <array>
+#include <assert.h>
 
 #pragma warning(push, 0)
 #include <glad/glad.h>
@@ -14,13 +16,11 @@
 class Camera;
 class IDrawable;
 class ILightSource;
-class Cubemap;
 
 class DrawManager {
 public:
     DrawManager();
-    ~DrawManager();
-    
+
     void Initialize();
     
     void RegisterCamera(Camera* camera);

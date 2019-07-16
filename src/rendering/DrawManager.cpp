@@ -3,7 +3,7 @@
 #include "IDrawable.h"
 #include "ILightSource.h"
 #include "../utilities/Window.h"
-#include "../utilities/Cubemap.h"
+#include "../rendering/Cubemap.h"
 #include "../cbs/components/Camera.h"
 
 DrawManager::DrawManager()
@@ -12,11 +12,8 @@ DrawManager::DrawManager()
     , m_Background(0.0f, 0.0f, 0.0f) {
 }
 
-DrawManager::~DrawManager() {
-    
-}
-
 void DrawManager::Initialize() {
+    // Create shader programs
     m_ShaderPrograms[ShaderProgram::Type::PURE_COLOR].AttachShaders("src/shaders/PURE_COLOR.vert",
                                                                     "src/shaders/PURE_COLOR.frag");
     
@@ -54,32 +51,32 @@ void DrawManager::Background(const glm::vec3& background) {
 }
 
 void DrawManager::RegisterDrawCall(IDrawable* component) {
-    if (std::find(m_Drawables.begin(), m_Drawables.end(), component) == m_Drawables.end()) {
-        m_Drawables.push_back(component);
-    }
+    // Ensure that every component is registered at most once
+    assert(std::find(m_Drawables.begin(), m_Drawables.end(), component) == m_Drawables.end());
+    
+    m_Drawables.push_back(component);
 }
 
 void DrawManager::UnregisterDrawCall(IDrawable* component) {
-    auto it = std::find(m_Drawables.begin(), m_Drawables.end(), component);
-    
-    if (it != m_Drawables.end()) {
-        auto index = std::distance(m_Drawables.begin(), it);
-        m_Drawables.erase(m_Drawables.begin() + index);
+    // Unregistering unregistered component has no effect
+    auto to_erase = std::find(m_Drawables.begin(), m_Drawables.end(), component);
+    if (to_erase != m_Drawables.end()) {
+        m_Drawables.erase(to_erase);
     }
 }
 
 void DrawManager::RegisterLightSource(ILightSource* light_source) {
-    if (std::find(m_LightSources.begin(), m_LightSources.end(), light_source) == m_LightSources.end()) {
-        m_LightSources.push_back(light_source);
-    }
+    // Ensure that every component is registered at most once
+    assert(std::find(m_LightSources.begin(), m_LightSources.end(), light_source) == m_LightSources.end());
+
+    m_LightSources.push_back(light_source);
 }
 
 void DrawManager::UnregisterLightSource(ILightSource* light_source) {
-    auto it = std::find(m_LightSources.begin(), m_LightSources.end(), light_source);
-    
-    if (it != m_LightSources.end()) {
-        auto index = std::distance(m_LightSources.begin(), it);
-        m_LightSources.erase(m_LightSources.begin() + index);
+    // Unregistering unregistered component has no effect
+    auto to_erase = std::find(m_LightSources.begin(), m_LightSources.end(), light_source);
+    if (to_erase != m_LightSources.end()) {
+        m_LightSources.erase(to_erase);
     }
 }
 
@@ -97,7 +94,7 @@ void DrawManager::CallDraws() const {
         curr_shader.Use();
         curr_shader.Uniform("pv", pv);
         
-        // Set light properties
+        // For each trait in shader set corresponding properties 
         if (curr_shader.Traits() & ShaderProgram::Trait::LIGHT_RECEIVER) {
             curr_shader.Uniform("viewPos", m_Camera->Object().Transform().Position());
             curr_shader.Uniform("material.shininess", 32.0f);

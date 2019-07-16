@@ -54,6 +54,7 @@ public:
     
     template <class T>
     void RemoveComponent() {
+        // Find component to remove by linear search with casting
         m_Components.erase(std::remove_if(m_Components.begin(),
                                           m_Components.end(),
                                           [](IComponent* comp) {
@@ -71,6 +72,7 @@ public:
     T* GetComponent() {
         T* comp = nullptr;
         
+        // Find component by linear search with casting
         auto it = m_Components.begin();
         while (it != m_Components.end() && comp == nullptr ) {
             comp = dynamic_cast<T*>(*it);

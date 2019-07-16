@@ -1,7 +1,9 @@
 #include "Time.h"
 
 Time::Time()
-    : m_DeltaTime(0.0f)
+    : m_CurrentTime(0.0f)
+    , m_FixedCurrentTime(0.0f)
+    , m_DeltaTime(0.0f)
     , m_FixedDeltaTime(0.0f)
     , m_LastFrame(0.0f)
     , m_TimeMultiplier(1) {

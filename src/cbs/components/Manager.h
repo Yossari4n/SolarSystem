@@ -32,7 +32,7 @@ private:
     
     // Planets
     int m_CurrentPlanetIndex;
-    std::array<class Object*, 9> m_Planets;
+    std::array<class Object*, 9> m_AstronomicalObjects;
     std::array<float, 9> m_Radiuses;
 };
 

@@ -1,10 +1,14 @@
 #include "FirstPersonController.h"
 
 FirstPersonController::FirstPersonController(float movement_speed_fast, float movement_speed_slow, float mouse_sensivity)
-    : m_MovementSpeedFast(movement_speed_fast)
+    : m_CurrentMovementSpeed(0.0f)
+    , m_MovementSpeedFast(movement_speed_fast)
     , m_MovementSpeedSlow(movement_speed_slow)
-    , m_MouseSensitivity(mouse_sensivity){
-    m_VerticalRotation = 0.0f;
+    , m_MouseSensitivity(mouse_sensivity)
+    , m_VerticalRotation(0.0f)
+    , m_LastMousePos(0.0f) 
+    , m_Transform(nullptr) {
+    
 }
 
 void FirstPersonController::Initialize() {
@@ -44,8 +48,8 @@ void FirstPersonController::Update() {
     }
     
     // Update vectors
-    m_Transform->Rotate(glm::vec3(0.0f, rot_hor, 0.0f), Transform::WORLD);
-    m_Transform->Rotate(glm::vec3(0.0f, 0.0f, rot_ver), Transform::LOCAL);
+    m_Transform->Rotate(glm::vec3(0.0f, rot_hor, 0.0f));
+    m_Transform->RotateRelative(glm::vec3(0.0f, 0.0f, rot_ver));
     
     // Keyboard
     if (g_Input.GetKeyState(GLFW_KEY_LEFT_SHIFT)) {
@@ -68,5 +72,5 @@ void FirstPersonController::Update() {
         movement.z = m_CurrentMovementSpeed * g_Time.DeltaTime();;
     }
     
-    m_Transform->Move(movement, Transform::LOCAL);
+    m_Transform->MoveRelative(movement);
 }

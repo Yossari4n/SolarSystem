@@ -28,6 +28,7 @@ public:
     };
     
     ShaderProgram();
+    // Delete copy semanatics to prevent silent deletion of shader program
     ShaderProgram(const ShaderProgram&) = delete;
     ShaderProgram& operator=(const ShaderProgram&) = delete;
     ~ShaderProgram();
@@ -39,6 +40,7 @@ public:
     Trait Traits() const { return m_Traits; }
     void Traits(Trait traits) { m_Traits = traits; }
     
+    // Setters for OpenGL shaders
     void Uniform(const std::string &name, bool value) const;
     void Uniform(const std::string &name, int value) const;
     void Uniform(const std::string &name, float value) const;
