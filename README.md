@@ -2,6 +2,8 @@
 SolarSystem is rather simplistic visualization of our Solar System.
 Planet's position calculation are based on this [publication](https://stjarnhimlen.se/comp/ppcomp.html).
 All objects are in relative size and distance to each other, but to manage huge scale of Solar System all distances between planets has been reduced three times.
+By default each second of program corresponds to one day of simulation.
+This can be changed to respectively 2, 4, 10 or 50 days per second.
 
 Programmed with C++17 and modern OpenGL (Core-profile).
 
