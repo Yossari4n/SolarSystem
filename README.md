@@ -22,7 +22,8 @@ Programmed with C++17 and modern OpenGL (Core-profile).
 ![Alt text](Photo2.png?raw=true "Earth")
 ![Alt text](Photo3.png?raw=true "Planets")
 
-[![Watch the video](https://img.youtube.com/vi/wo0ZCWmGqlg/maxresdefault.jpg)](https://www.youtube.com/watch?v=wo0ZCWmGqlg)
+
+[![Watch the video](Thumbnail.png)](https://www.youtube.com/watch?v=wo0ZCWmGqlg)
 
 
 ### DEPENDENCIES
@@ -31,6 +32,7 @@ Programmed with C++17 and modern OpenGL (Core-profile).
 * GLM
 * Assimp
 * STB
+
 
 ### SPECIAL THANKS
 * 3D planet model: https://free3d.com/user/printable_models
