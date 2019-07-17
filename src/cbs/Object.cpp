@@ -1,7 +1,5 @@
 #include "Object.h"
 
-#include "components/AstronomicalObject.h"
-
 Object::Object(ObjectManager& owner, std::string name)
     : m_Name(name)
     , m_Owner(owner){

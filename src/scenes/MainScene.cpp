@@ -9,17 +9,6 @@
 #include "../cbs/components/Manager.h"
 #include "../cbs/components/Tail.h"
 
-/**
- * TODO
- * Unit scaling 
- * 
- * 1 sec irl = 1 day of sim
- * 
- * Planets' radius
- * Planets' rotation speed
- * Planets' orbit length (see AstronomicalObject.h ASTRONOMICAL_UNIT)
- */
-
 constexpr float EARTH_RADIUS = 0.5f;
 constexpr float DAY_TO_HOURS = 24.0f;
 constexpr float DOUBLE_PI_DEG = 360.0f;
@@ -89,7 +78,7 @@ void MainScene::CreateScene() {
     mars->Transform().Rotation(model_rotation);
     mars->CreateComponent<MeshRenderer>("data/models/mars/13902_Earth_v1_l3.obj",
                                         ShaderProgram::Type::PHONG);
-    mars->CreateComponent<AstronomicalObject>(OrbitalElements(49.5574, 2.11081E-5f, 1.8497f, 1.78E-8f, 286.5016f, 2.92961E-5f, 1.523688f, 0.0f, 0.093405f, 2.516E-9f, 18.6021f, 0.5240207766f),
+    mars->CreateComponent<AstronomicalObject>(OrbitalElements(49.5574f, 2.11081E-5f, 1.8497f, 1.78E-8f, 286.5016f, 2.92961E-5f, 1.523688f, 0.0f, 0.093405f, 2.516E-9f, 18.6021f, 0.5240207766f),
                                               DAY_TO_HOURS / DateToHours(0, 24, 37, 23) * DOUBLE_PI_DEG);
     mars->CreateComponent<Tail>(3.0f, glm::vec3(1.0f, 0.0f, 0.0f));
     
