@@ -11,7 +11,6 @@
 #pragma warning(pop)
 
 #define DEGREES_60 (60.0f * 3.14f / 180.0f)
-#define DEGREES_170 (170.0f * 3.14f / 180.0f)
 
 class ThirdPersonController : public IComponent {
 public:
@@ -30,7 +29,6 @@ private:
     float m_MouseSensitivity;
     
     glm::vec3 m_Front;
-    glm::vec3 m_RotationAxis;
     float m_XRotation;
     float m_YRotation;
     

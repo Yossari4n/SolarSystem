@@ -8,7 +8,6 @@ FirstPersonController::FirstPersonController(float movement_speed_fast, float mo
     , m_VerticalRotation(0.0f)
     , m_LastMousePos(0.0f) 
     , m_Transform(nullptr) {
-    
 }
 
 void FirstPersonController::Initialize() {
@@ -22,9 +21,9 @@ void FirstPersonController::OnActivate() {
     
     m_VerticalRotation = glm::angle(glm::normalize(curr_front), glm::normalize(projected_front));
     
-    // Becouse glm::angle always returns positive value angle needs to be negated manually
+    // Because glm::angle always returns positive value angle needs to be negated manually
     if (curr_front.y < 0.0f) {
-        m_VerticalRotation = -m_VerticalRotation;
+      m_VerticalRotation = -m_VerticalRotation;
     }
 }
 

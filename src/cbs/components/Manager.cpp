@@ -22,7 +22,7 @@ void Manager::Initialize() {
     g_Time.TimeMultiplayer(m_TimeMultiplayers[0]);
     m_TPC->Deactivate();
     
-    // Skip sun as it doesn't have Tail component
+    // Skip sun because it doesn't have Tail component
     for (auto it = m_AstronomicalObjects.begin() + 1; it != m_AstronomicalObjects.end(); ++it) {
         (*it)->GetComponent<Tail>()->Deactivate();
     }
