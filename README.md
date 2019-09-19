@@ -25,7 +25,7 @@ Programmed with C++17 and modern OpenGL (Core-profile).
 ![Alt text](Photo3.png?raw=true "Planets")
 
 
-[![Watch the video](Thumbnail.png)](https://www.youtube.com/watch?v=wo0ZCWmGqlg)
+[![Watch the video](Thumbnail.png)](https://www.youtube.com/watch?v=hU9H0ZCd1cY)
 
 
 ### DEPENDENCIES
