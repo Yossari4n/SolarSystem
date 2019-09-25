@@ -93,17 +93,17 @@ void MeshRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
     if (mesh->mMaterialIndex >= 0) {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         
-        std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         
-        std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
     
     m_Meshes.emplace_back(vertices, indices, textures);
 }
 
-std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string typeName) {
+std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string type_name) {
     std::vector<Texture> textures;
     
     for (unsigned int i = 0; i < material->GetTextureCount(type); ++i) {
@@ -112,7 +112,7 @@ std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial *material, ai
         
         Texture texture;
         texture.ID = TextureFromFile(string.C_Str(), m_Directory);
-        texture.Type = typeName;
+        texture.Type = type_name;
         texture.Path = string.C_Str();
         textures.push_back(texture);
     }
