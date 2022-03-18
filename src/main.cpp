@@ -14,7 +14,7 @@
 #pragma warning(disable: 6387)
 #pragma warning(disable: 28182)
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
+#include <stb_image.h>
 #pragma warning(default: 26451)
 #pragma warning(default: 6011)
 #pragma warning(default: 6262)
