@@ -26,7 +26,7 @@ Programmed with C++17 and modern OpenGL.
 
 ### HOW TO BUILD
     git clone https://github.com/Yossari4n/SolarSystem.git
-    cd RayTracer
+    cd SolarSystem
     mkdir build && cd build
     conan install ..
     cmake .. -G
